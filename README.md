@@ -1,3 +1,3 @@
 # Project
 
-We're prolly gonna to Space Invaders or something idk, but as of now its called "Project"
+We're prolly gonna to Space Invaders or maybe Mario cuz he said he wants someone to do that idk, but as of now its called "Project" until we decide
