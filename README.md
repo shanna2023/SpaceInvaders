@@ -1,3 +1,5 @@
 # SpaceInvaders
 
-We're prolly gonna to Space Invaders or maybe Mario cuz he said he wants someone to do that idk, but as of now its called "Project" until we decide
+Not much to say here, its Space Invaders.
+
+Use either 'a' and 'd' keys, or the left and right arow keys to move your character. Space is to shoot. Don't die.
