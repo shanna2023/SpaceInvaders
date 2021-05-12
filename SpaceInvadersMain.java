@@ -22,8 +22,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private Entity bob;
 	private Character s;
 	private boolean began;
-	private ArrayList<String> title;
-	private ArrayList<String> subtitle;
+	private ArrayList<Character> title;
+	private ArrayList<Character> subtitle;
 	
 	public SpaceInvadersMain()
 	{
@@ -110,9 +110,9 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				if (e.getKeyCode() == KeyEvent.VK_B && !began)
 				{
 					began = true;
-					for(String str: title)
+					for(Character str: title)
 						str.setVisible(false);
-					for(String str: subtitle)
+					for(Character str: subtitle)
 						str.setVisible(false);
 					for(Entity e: obstacles)
 						add(e);
