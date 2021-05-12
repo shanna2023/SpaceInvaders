@@ -14,30 +14,69 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 {
 	private ArrayList<Entity> enemyFire;
 	private ArrayList<Entity> friendlyFire;
-	private ArrayList<Entity> enemies;
+	private ArrayList<ArrayList<Entity>> enemies;
 	private ArrayList<Entity> obstacles;
 	private Entity player;
 	private int count;
+	private int fire;
+	private Entity frog;
+	private Entity squid;
+	private Entity bob;
+	private Character s;
+	private boolean began;
 	
 	public SpaceInvadersMain()
 	{
-		this.setBounds(50, 50, 800, 500);
+		this.setBounds(0, 0, 1250, 650);
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
 		
-		Entity ting = new Entity(50, 50, "Frog");
-		this.add(ting);
+		frog = new Entity(50, 50, "Frog");
+		this.add(frog);
+		
+		squid = new Entity(150, 50, "Squid");
+		this.add(squid);
+		
+		Entity hehe = new Entity(250, 50, "Ship");
+		this.add(hehe);
+		
+		bob = new Entity(400, 50, "Bob");
+		this.add(bob);
+		
+//		s = new Character(600, 200, 3, 'k');
+//		this.add(s);
+//		
+//		char c = 'a';
+//		for (int i = 0; i < 26; i++)
+//		{
+//			this.add(new Character(i * 25, 400, 3, c));
+//			c++;
+//		}
+		
+		String str1 = "space invaders";
+		String str2 = "press b to begin";
+		for (int i = 0; i < str1.length(); i++)
+		{
+			this.add(new Character(i * 60 + 250, 200, 10, str1.charAt(i)));
+		}
+		for (int i = 0; i < str2.length(); i++)
+		{
+			this.add(new Character(i * 20 + 500, 300, 3, str2.charAt(i)));
+		}
 		
 		count = 0;
+		fire = 0;
 
 		enemyFire = new ArrayList<Entity>();
 		friendlyFire = new ArrayList<Entity>();
 		obstacles = new ArrayList<Entity>();
-		enemies = new ArrayList<Entity>();
-		player = new Entity(400, 350, Entity.PLAYER);
+		enemies = new ArrayList<ArrayList<Entity>>();
+		player = new Entity(600, 550, Entity.PLAYER);
 		
 		SpaceInvadersMain jawn = this;
+		
+		
 
 		this.addKeyListener(new KeyListener()
 		{
@@ -63,8 +102,23 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
 				{
-					friendlyFire.add(new Entity((player.getX() * 2 + player.getWidth())/2, player.getY() - 26, Color.BLUE));
-					jawn.add(friendlyFire.get(friendlyFire.size() - 1));
+					if (player.getPower() == 3)
+					{
+						friendlyFire.add(new Entity(player.getX() + 34, player.getY() - 15, Color.BLUE));
+						jawn.add(friendlyFire.get(friendlyFire.size() - 1));
+						player.setPower(0);
+					}
+				}
+				
+				if (e.getKeyCode() == KeyEvent.VK_M)
+				{
+					enemyFire.add(new Entity(bob.getX() + 34, bob.getY() + 50, Color.RED));
+					jawn.add(enemyFire.get(enemyFire.size() - 1));
+				}
+				
+				if (e.getKeyCode() == KeyEvent.VK_B && !began)
+				{
+					began = true;
 				}
 
 			}
@@ -128,9 +182,34 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			}
 		}
 		
-		for (Entity enemy : enemies)
+		for (ArrayList<Entity> arr : enemies)
 		{
-			
+			for (Entity enemy : arr)
+			{
+				enemy.update();
+			}
 		}
+		
+		if (count % 20 == 0)
+		{
+			frog.change();
+			squid.change();
+			bob.change();
+		}
+		
+		if (player.getPower() < 3)
+		{
+			fire++;
+			if (fire % 10 == 0)
+			{
+				player.setPower(player.getPower() + 1);
+			}
+		}
+		
+		if (player.getPower() == 3)
+		{
+			fire = 0;
+		}
+		repaint();
 	}
 }
