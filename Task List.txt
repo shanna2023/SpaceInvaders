@@ -13,3 +13,6 @@ TASKS:
       a - Random one fires after specified time
 5 - Create ArrayList for obstacles
       a - Check if enemy or player is shooting, and if so then remove certain parts
+6 - Score, and Highscore, maybe leaderboard
+
+7 - MAYBEEEEEEEE username and password sign-in system for multiple levels
