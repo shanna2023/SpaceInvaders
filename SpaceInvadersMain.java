@@ -33,7 +33,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
-		this.setResizable(false);
+		this.setResizable(true);
 
 		//
 		//				frog = new Entity(50, 150, "Frog");
