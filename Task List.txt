@@ -4,4 +4,4 @@ TASKS:
 2 - Create code for movement of characters
 3 - Create code for collision detection, lives countdown, and enemy removal
 4 - Create code for when enemies fire
-5 - 
+5 - Create ArrayList for obstacles
