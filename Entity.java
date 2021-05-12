@@ -275,7 +275,6 @@ public class Entity extends JComponent
 			}
 			break;
 
-
 		case ENEMY: //Draw an enemy
 			g2.setColor(Color.WHITE);
 			if (s != null)
