@@ -335,6 +335,19 @@ public class Entity extends JComponent
 							{false, false, true , true , false, true , true , false, true , true , false, false},
 							{true , true , false, false, false, false, false, false, false, false, true , true }
 						};
+						if (Math.random()*1000 + 1 == 1)
+						{
+							image = new boolean[][] {
+								{true , true , false, false, false, true , true , false, false, true , true , false},
+								{true , false, true , false, true , false, false, true , false, true , false, true },
+								{true , false, true , false, true , false, false, true , false, true , false, true },
+								{true , true , false, false, true , false, false, true , false, true , true , false},
+								{true , false, true , false, true , false, false, true , false, true , false, true },
+								{true , false, true , false, true , false, false, true , false, true , false, true },
+								{true , false, true , false, true , false, false, true , false, true , false, true },
+								{true , true , false, false, false, true , true , false, false, true , true , false}
+							};
+						}
 						current = image;
 						break;
 					}
