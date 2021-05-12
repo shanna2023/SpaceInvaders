@@ -116,7 +116,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 						str.setVisible(false);
 					for(Entity e: obstacles)
 						add(e);
-					this.add(player);
+					jawn.add(player);
 					for(ArrayList<Entity> e: enemies)
 					{
 						for(Entity obj: e)
