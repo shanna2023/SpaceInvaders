@@ -1,0 +1,7 @@
+TASKS:
+
+1 - Create 2D ArrayList for characters
+2 - Create code for movement of characters
+3 - Create code for collisino detection, lives countdown, and enemy removal
+4 - Create code for when enemies fire
+5 - 
