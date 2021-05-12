@@ -120,7 +120,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					for(ArrayList<Entity> e: enemies)
 					{
 						for(Entity obj: e)
-							add(e);
+							add(obj);
 					}
 					t.start();
 					
