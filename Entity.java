@@ -275,18 +275,16 @@ public class Entity extends JComponent
 			}
 			break;
 			
-			
 		case ENEMY: //Draw an enemy
 			g2.setColor(Color.WHITE);
 			if (s != null)
 			{
 				if (current == null)
 				{
-					boolean[][] image = null;
 					switch (s)
 					{
 					case "Frog": //Draw a frog enemy
-						image = new boolean[][] {
+						current = new boolean[][] {
 							{false, false, true , false, false, false, false, false, true , false, false},
 							{false, false, false, true , false, false, false, true , false, false, false},
 							{false, false, true , true , true , true , true , true , true , false, false},
@@ -296,10 +294,9 @@ public class Entity extends JComponent
 							{true , false, true , false, false, false, false, false, true , false, true },
 							{false, false, false, true , true , false, true , true , false, false, false}
 						};
-						current = image;
 						break;
 					case "Squid": //Draw a squid enemy
-						image = new boolean[][] {
+						current = new boolean[][] {
 							{false, false, false, true , true , false, false, false},
 							{false, false, true , true , true , true , false, false},
 							{false, true , true , true , true , true , true , false},
@@ -309,10 +306,9 @@ public class Entity extends JComponent
 							{true , false, false, false, false, false, false, true },
 							{false, true , false, false, false, false, true , false}
 						};
-						current = image;
 						break;
 					case "Ship": //Draw a ship enemy
-						image = new boolean[][] {
+						current = new boolean[][] {
 							{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
 							{false, false, false, false, false, true , true , true , true , true , true , false, false, false, false, false},
 							{false, false, false, true , true , true , true , true , true , true , true , true , true , false, false, false},
@@ -322,10 +318,9 @@ public class Entity extends JComponent
 							{false, false, true , true , true , false, false, true , true , false, false, true , true , true , false, false},
 							{false, false, false, true , false, false, false, false, false, false, false, false, true , false, false, false}
 						};
-						current = image;
 						break;
 					case "Bob": //Bob
-						image = new boolean[][] {
+						current = new boolean[][] {
 							{false, false, false, false, true , true , true , true , false, false, false, false},
 							{false, true , true , true , true , true , true , true , true , true , true , false},
 							{true , true , true , true , true , true , true , true , true , true , true , true },
@@ -337,7 +332,7 @@ public class Entity extends JComponent
 						};
 						if (Math.random()*1000 + 1 == 1)
 						{
-							image = new boolean[][] {
+							current = new boolean[][] {
 								{true , true , false, false, false, true , true , false, false, true , true , false},
 								{true , false, true , false, true , false, false, true , false, true , false, true },
 								{true , false, true , false, true , false, false, true , false, true , false, true },
@@ -348,7 +343,6 @@ public class Entity extends JComponent
 								{true , true , false, false, false, true , true , false, false, true , true , false}
 							};
 						}
-						current = image;
 						break;
 					}
 				}
