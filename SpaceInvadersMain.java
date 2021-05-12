@@ -28,23 +28,26 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	
 	public SpaceInvadersMain()
 	{
+		enemies = new ArrayList<ArrayList<Entity>>();
 		this.setBounds(0, 0, 1250, 650);
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
+		this.setResizable(false);
+
 		
-		frog = new Entity(50, 50, "Frog");
-		this.add(frog);
-		
-		squid = new Entity(150, 50, "Squid");
-		this.add(squid);
-		
-		Entity hehe = new Entity(250, 50, "Ship");
-		this.add(hehe);
-		
-		bob = new Entity(400, 50, "Bob");
-		this.add(bob);
-		
+//		frog = new Entity(50, 150, "Frog");
+//		this.add(frog);
+//		
+//		squid = new Entity(150, 150, "Squid");
+//		this.add(squid);
+//		
+//		Entity hehe = new Entity(250, 150, "Ship");
+//		this.add(hehe);
+//		
+//		bob = new Entity(400, 50, "Bob");
+//		this.add(bob);
+//		
 //		s = new Character(600, 200, 3, 'k');
 //		this.add(s);
 //		
@@ -54,7 +57,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 //			this.add(new Character(i * 25, 400, 3, c));
 //			c++;
 //		}
-//      Revant is not a team player
+
 		
 		title = new ArrayList<Character>();
 		subtitle = new ArrayList<Character>();
@@ -131,9 +134,65 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 							add(obj);
 					}
 					t.start();
+					for(int i = 0; i < 4; i++)
+					{
+						for(int j = 0; j < 18; j++)
+						{
+							Entity pillo = new Entity(72 * j + 20, 10, "Squid");
+							enemies.add(new ArrayList<Entity>());
+							enemies.get(i).add(pillo);
+							jawn.add(pillo);
+						}
+					}
+					
+					for(int i = 0; i < 4; i++)
+					{
+						for(int j = 0; j < 18; j++)
+						{
+							Entity pillo = new Entity(72 * j + 12, 60, "Frog");
+							enemies.add(new ArrayList<Entity>());
+							enemies.get(i).add(pillo);
+							jawn.add(pillo);
+						}
+					}
+					
+					for(int i = 0; i < 4; i++)
+					{
+						for(int j = 0; j < 18; j++)
+						{
+							Entity pillo = new Entity(72 * j + 12, 110, "Frog");
+							enemies.add(new ArrayList<Entity>());
+							enemies.get(i).add(pillo);
+							jawn.add(pillo);
+						}
+					}
+					
+					for(int i = 0; i < 4; i++)
+					{
+						for(int j = 0; j < 18; j++)
+						{
+							Entity pillo = new Entity(72 * j + 10, 160, "Bob");
+							enemies.add(new ArrayList<Entity>());
+							enemies.get(i).add(pillo);
+							jawn.add(pillo);
+						}
+					}
+					
+					for(int i = 0; i < 4; i++)
+					{
+						for(int j = 0; j < 18; j++)
+						{
+							Entity pillo = new Entity(72 * j + 10, 210, "Bob");
+							enemies.add(new ArrayList<Entity>());
+							enemies.get(i).add(pillo);
+							jawn.add(pillo);
+						}
+					}
+					
 				}
+				
 			}
-
+			
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
@@ -151,7 +210,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		});
 		
 		jawn.add(player);
-
+		
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -159,6 +218,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	public static void main(String[] args)
 	{
 		new SpaceInvadersMain();
+		
 	}
 
 	@Override
@@ -182,6 +242,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			for (Entity enemy : arr)
 			{
 				enemy.update();
+				if(count % 20 == 0)
+				{
+					System.out.println("Hi");
+					enemy.change();
+					
+				}
 			}
 		}
 		
@@ -190,12 +256,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			b.update();
 		}
 		
-		if (count % 20 == 0)
-		{
-			frog.change();
-			squid.change();
-			bob.change();
-		}
+//		if (count % 20 == 0)
+//		{
+//			frog.change();
+//			squid.change();
+//			bob.change();
+//		}
 		
 		if (player.getPower() < 3)
 		{
@@ -212,4 +278,5 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		}
 		repaint();
 	}
+	
 }
