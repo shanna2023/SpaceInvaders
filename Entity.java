@@ -17,11 +17,12 @@ public class Entity extends JComponent
 	
 	private int type;
 	private int dx, dy;
+	private int power;
 	
 	private Color c;
 	
 	private Rectangle pixel;
-	
+	private boolean[][] current = null;
 	private String s;
 	
 	/**
@@ -39,7 +40,8 @@ public class Entity extends JComponent
 		switch (type)
 		{
 		case PLAYER:
-			
+			this.setSize(new Dimension(81, 41));
+			break;
 		case ENEMY:
 			this.setSize(new Dimension(89, 41));
 			break;
@@ -54,7 +56,7 @@ public class Entity extends JComponent
 	}
 	
 	/**
-	 * 
+	 * Constructor for a rectangular obstacle
 	 * @param x - x value of the location of the entity
 	 * @param y - y value of the location of the entity
 	 * @param width - width of the entity
@@ -63,7 +65,7 @@ public class Entity extends JComponent
 	public Entity(int x, int y, int width, int height)
 	{
 		this.setBounds(x, y, width + 1, height + 1);
-		this.type = 3;
+		type = OBSTACLE;
 		c = null;
 		s = null;
 	}
@@ -91,6 +93,12 @@ public class Entity extends JComponent
 		s = null;
 	}
 	
+	/**
+	 * Constructor for an enemy
+	 * @param x - x value of the location of the enemy
+	 * @param y - y value of the location of the enemy
+	 * @param s - name of the enemy type
+	 */
 	public Entity(int x, int y, String s)
 	{
 		this.setLocation(x, y);
@@ -114,6 +122,19 @@ public class Entity extends JComponent
 		}
 	}
 	
+	/**
+	 * Constructor for a player
+	 * @param x - x value of the location of the enemy
+	 * @param y - y value of the location of the enemy
+	 */
+	public Entity(int x, int y)
+	{
+		this.setLocation(x, y);
+		type = PLAYER;
+		this.setSize(new Dimension(81, 41));
+		power = 0;
+	}
+	
 	public int getDx()
 	{
 		return dx;
@@ -134,9 +155,88 @@ public class Entity extends JComponent
 		this.dy = dy;
 	}
 	
+	public int getPower()
+	{
+		return power;
+	}
+
+	public void setPower(int power)
+	{
+		this.power = power;
+	}
+
+	/**
+	 * Changes the animation frame of an enemy
+	 */
 	public void change()
 	{
-		
+		switch (s)
+		{
+		case "Frog":
+			current[1][0] = !current[1][0];
+			current[1][10] = !current[1][10];
+			
+			current[2][0] = !current[2][0];
+			current[2][10] = !current[2][10];
+			
+			current[3][0] = !current[3][0];
+			current[3][10] = !current[3][10];
+			
+			current[5][0] = !current[5][0];
+			current[5][1] = !current[5][1];
+			current[5][9] = !current[5][9];
+			current[5][10] = !current[5][10];
+			
+			current[6][0] = !current[6][0];
+			current[6][10] = !current[6][10];
+			
+			current[7][1] = !current[7][1];
+			current[7][3] = !current[7][3];
+			current[7][4] = !current[7][4];
+			current[7][6] = !current[7][6];
+			current[7][7] = !current[7][7];
+			current[7][9] = !current[7][9];
+			break;
+		case "Squid":
+			current[5][1] = !current[5][1];
+			current[5][2] = !current[5][2];
+			current[5][3] = !current[5][3];
+			current[5][4] = !current[5][4];
+			current[5][5] = !current[5][5];
+			current[5][6] = !current[5][6];
+			
+			current[6][0] = !current[6][0];
+			current[6][1] = !current[6][1];
+			current[6][3] = !current[6][3];
+			current[6][4] = !current[6][4];
+			current[6][6] = !current[6][6];
+			current[6][7] = !current[6][7];
+			
+			current[7][0] = !current[7][0];
+			current[7][1] = !current[7][1];
+			current[7][2] = !current[7][2];
+			current[7][5] = !current[7][5];
+			current[7][6] = !current[7][6];
+			current[7][7] = !current[7][7];
+			break;
+		case "Bob":
+			current[5][2] = !current[5][2];
+			current[5][9] = !current[5][9];
+			
+			current[6][1] = !current[6][1];
+			current[6][3] = !current[6][3];
+			current[6][8] = !current[6][8];
+			current[6][10] = !current[6][10];
+			
+			current[7][0] = !current[7][0];
+			current[7][1] = !current[7][1];
+			current[7][2] = !current[7][2];
+			current[7][3] = !current[7][3];
+			current[7][8] = !current[7][8];
+			current[7][9] = !current[7][9];
+			current[7][10] = !current[7][10];
+			current[7][11] = !current[7][11];
+		}
 	}
 	
 	@Override
@@ -151,9 +251,28 @@ public class Entity extends JComponent
 		
 		case PLAYER: //Draw a player
 			g2.setColor(Color.WHITE);
-			g2.fillRect(0, 0, this.getWidth(), this.getHeight());
+			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 40, 40);
 			g2.setColor(Color.BLACK);
-			g2.fill(new Ellipse2D.Double(10, 10, 10, 10));
+			g2.fillPolygon(new int[] {20, 60, 30, 50}, new int[] {0, 0, 20, 20}, 4);
+			g2.setColor(Color.WHITE);
+			g2.fillPolygon(new int[] {30, 40, 50}, new int[] {20, 0, 20}, 3);
+			g2.setColor(Color.BLACK);
+			g2.drawRect(15, 15, 50, 5);
+			g2.drawRect(15, 23, 50, 5);
+			g2.drawRect(15, 31, 50, 5);
+			g2.setColor(Color.BLUE);
+			if (power > 0)
+			{
+				g2.fillRect(15, 31, 50, 5);
+			}
+			if (power > 1)
+			{
+				g2.fillRect(15, 23, 50, 5);
+			}
+			if (power > 2)
+			{
+				g2.fillRect(15, 15, 50, 5);
+			}
 			break;
 			
 			
@@ -161,41 +280,76 @@ public class Entity extends JComponent
 			g2.setColor(Color.WHITE);
 			if (s != null)
 			{
-				boolean[][] image;
-				switch (s)
+				if (current == null)
 				{
-				case "Frog": //Draw a frog enemy
-					image = new boolean[][] {
-							{false, false, true, false, false, false, false, false, true, false, false},
-							{false, false, false, true, false, false, false, true, false, false, false},
-							{false, false, true, true, true, true, true, true, true, false, false},
-							{false, true, true, false, true, true, true, false, true, true, false},
-							{true, true, true, true, true, true, true, true, true, true, true},
-							{true, false, true, true, true, true, true, true, true, false, true},
-							{true, false, true, false, false, false, false, false, true, false, true},
-							{false, false, false, true, true, false, true, true, false, false, false}
-					};
-					for (int r = 0; r < 8; r++)
+					boolean[][] image = null;
+					switch (s)
 					{
-						for (int c = 0; c < 11; c++)
+					case "Frog": //Draw a frog enemy
+						image = new boolean[][] {
+							{false, false, true , false, false, false, false, false, true , false, false},
+							{false, false, false, true , false, false, false, true , false, false, false},
+							{false, false, true , true , true , true , true , true , true , false, false},
+							{false, true , true , false, true , true , true , false, true , true , false},
+							{true , true , true , true , true , true , true , true , true , true , true },
+							{true , false, true , true , true , true , true , true , true , false, true },
+							{true , false, true , false, false, false, false, false, true , false, true },
+							{false, false, false, true , true , false, true , true , false, false, false}
+						};
+						current = image;
+						break;
+					case "Squid": //Draw a squid enemy
+						image = new boolean[][] {
+							{false, false, false, true , true , false, false, false},
+							{false, false, true , true , true , true , false, false},
+							{false, true , true , true , true , true , true , false},
+							{true , true , false, true , true , false, true , true },
+							{true , true , true , true , true , true , true , true },
+							{false, true , false, true , true , false, true , false},
+							{true , false, false, false, false, false, false, true },
+							{false, true , false, false, false, false, true , false}
+						};
+						current = image;
+						break;
+					case "Ship": //Draw a ship enemy
+						image = new boolean[][] {
+							{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
+							{false, false, false, false, false, true , true , true , true , true , true , false, false, false, false, false},
+							{false, false, false, true , true , true , true , true , true , true , true , true , true , false, false, false},
+							{false, false, true , true , true , true , true , true , true , true , true , true , true , true , false, false},
+							{false, true , true , false, true , true , false, true , true , false, true , true , false, true , true , false},
+							{true , true , true , true , true , true , true , true , true , true , true , true , true , true , true , true },
+							{false, false, true , true , true , false, false, true , true , false, false, true , true , true , false, false},
+							{false, false, false, true , false, false, false, false, false, false, false, false, true , false, false, false}
+						};
+						current = image;
+						break;
+					case "Bob": //Bob
+						image = new boolean[][] {
+							{false, false, false, false, true , true , true , true , false, false, false, false},
+							{false, true , true , true , true , true , true , true , true , true , true , false},
+							{true , true , true , true , true , true , true , true , true , true , true , true },
+							{true , true , true , false, false, true , true , false, false, true , true , true },
+							{true , true , true , true , true , true , true , true , true , true , true , true },
+							{false, false, false, true , true , false, false, true , true , false, false, false},
+							{false, false, true , true , false, true , true , false, true , true , false, false},
+							{true , true , false, false, false, false, false, false, false, false, true , true }
+						};
+						current = image;
+						break;
+					}
+				}
+
+				for (int r = 0; r < current.length; r++)
+				{
+					for (int c = 0; c < current[r].length; c++)
+					{
+						if (current[r][c])
 						{
-							if (image[r][c])
-							{
-								pixel.setLocation(c * 5, r * 5);
-								g2.fill(pixel);
-							}
+							pixel.setLocation(c * 5, r * 5);
+							g2.fill(pixel);
 						}
 					}
-					break;
-				case "Squid": //Draw a squid enemy
-					
-					break;
-				case "Ship": //Draw a ship enemy
-					
-					break;
-				case "Bob": //Bob
-					
-					break;
 				}
 			}
 			break;
