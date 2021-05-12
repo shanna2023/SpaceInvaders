@@ -275,6 +275,8 @@ public class Entity extends JComponent
 			}
 			break;
 
+
+			
 		case ENEMY: //Draw an enemy
 			g2.setColor(Color.WHITE);
 			if (s != null)
@@ -385,9 +387,9 @@ public class Entity extends JComponent
 			g2.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
 			break;
 		}
-
+		
 	}
-
+	
 	public void update()
 	{
 		this.setLocation(this.getX() + dx, this.getY() + dy);
