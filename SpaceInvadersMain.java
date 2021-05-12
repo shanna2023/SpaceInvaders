@@ -235,7 +235,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				enemy.update();
 				if(count % 20 == 0)
 				{
-					enemy.change();		
+					enemy.change();	
+					System.out.println("Hi");
 				}
 			}
 		}
