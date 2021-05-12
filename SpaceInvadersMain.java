@@ -24,6 +24,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private boolean began;
 	private ArrayList<Character> title;
 	private ArrayList<Character> subtitle;
+	private ArrayList<Entity> bullets;
 	
 	public SpaceInvadersMain()
 	{
@@ -53,6 +54,10 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 //			this.add(new Character(i * 25, 400, 3, c));
 //			c++;
 //		}
+		
+		title = new ArrayList<Character>();
+		subtitle = new ArrayList<Character>();
+		bullets = new ArrayList<Entity>();
 		
 		String str1 = "space invaders";
 		String str2 = "press b to begin";
@@ -105,6 +110,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					if (player.getPower() == 3)
 					{
 						player.setPower(0);
+						bullets.add(new Entity(player.getX() + 33, player.getY() - 20, Color.BLUE));
+						jawn.add(bullets.get(bullets.size() - 1));
 					}
 				}
 				if (e.getKeyCode() == KeyEvent.VK_B && !began)
@@ -114,18 +121,16 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 						str.setVisible(false);
 					for(Character str: subtitle)
 						str.setVisible(false);
-					for(Entity e: obstacles)
-						add(e);
+					for(Entity o: obstacles)
+						add(o);
 					jawn.add(player);
-					for(ArrayList<Entity> e: enemies)
+					for(ArrayList<Entity> en: enemies)
 					{
-						for(Entity obj: e)
+						for(Entity obj: en)
 							add(obj);
 					}
 					t.start();
-					
 				}
-
 			}
 
 			@Override
@@ -177,6 +182,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				enemy.update();
 			}
+		}
+		
+		for (Entity b : bullets)
+		{
+			b.update();
 		}
 		
 		if (count % 20 == 0)
