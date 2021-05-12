@@ -54,6 +54,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 //			this.add(new Character(i * 25, 400, 3, c));
 //			c++;
 //		}
+//      hi
 		
 		title = new ArrayList<Character>();
 		subtitle = new ArrayList<Character>();
