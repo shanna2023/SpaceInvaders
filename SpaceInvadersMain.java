@@ -35,8 +35,9 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	
 	public SpaceInvadersMain()
 	{
-		this.setBounds(0, 0, 1280, 650);
+		this.setBounds(0, 0, 1250, 650);
 		this.setLayout(null);
+		this.setResizable(false);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
 		
@@ -272,44 +273,44 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		}
 		else if (settingUp)
 		{
-			int j = (count - 1) % 17;
+			int j = (count - 1) % 16;
 			if (j == 0)
 			{
 				enemies.add(new ArrayList<Entity>());
 			}
 			
-			if (count > 68)
+			if (count > 64)
 			{
-				Entity pillo = new Entity(72 * j + 10, 210, "Bob");
+				Entity pillo = new Entity(69 * j + 69, 210, "Bob");
 				enemies.get(4).add(pillo);
 				this.add(pillo);
-				if (count == 85)
+				if (count == 80)
 				{
 					settingUp = false;
 					began = true;
 				}
 			}
-			else if(count > 51)
+			else if(count > 48)
 			{
-				Entity pillo = new Entity(72 * j + 10, 160, "Bob");
+				Entity pillo = new Entity(69 * j + 69, 160, "Bob");
 				enemies.get(3).add(pillo);
 				this.add(pillo);
 			}
-			else if(count > 34)
+			else if(count > 32)
 			{
-				Entity pillo = new Entity(72 * j + 12, 110, "Frog");
+				Entity pillo = new Entity(69 * j + 71, 110, "Frog");
 				enemies.get(2).add(pillo);
 				this.add(pillo);
 			}
-			else if(count > 17)
+			else if(count > 16)
 			{
-				Entity pillo = new Entity(72 * j + 12, 60, "Frog");
+				Entity pillo = new Entity(69 * j + 71, 60, "Frog");
 				enemies.get(1).add(pillo);
 				this.add(pillo);
 			}
 			else if(count > 0)
 			{
-				Entity pillo = new Entity(72 * j + 20, 10, "Squid");
+				Entity pillo = new Entity(69 * j + 79, 10, "Squid");
 				enemies.get(0).add(pillo);
 				this.add(pillo);
 			}
