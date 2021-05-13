@@ -2,9 +2,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Ellipse2D.Double;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
@@ -14,17 +16,19 @@ public class Entity extends JComponent
 	public static final int ENEMY = 1;
 	public static final int BULLET = 2;
 	public static final int OBSTACLE = 3;
-
+	
 	private int type;
 	private int dx, dy;
 	private int power;
-
+	
 	private Color c;
-
+	
 	private Rectangle pixel;
 	private boolean[][] current = null;
 	private String s;
-
+	
+	private ArrayList<Ellipse2D.Double> holes;
+	
 	/**
 	 * 
 	 * @param x - x value of the location of the entity
@@ -54,7 +58,7 @@ public class Entity extends JComponent
 		default:
 		}
 	}
-
+	
 	/**
 	 * Constructor for a rectangular obstacle
 	 * @param x - x value of the location of the entity
@@ -65,11 +69,12 @@ public class Entity extends JComponent
 	public Entity(int x, int y, int width, int height)
 	{
 		this.setBounds(x, y, width + 1, height + 1);
+		holes = new ArrayList<Ellipse2D.Double>();
 		type = OBSTACLE;
 		c = null;
 		s = null;
 	}
-
+	
 	/**
 	 * Constructor for a bullet
 	 * @param x - x value for the location of the bullet
@@ -92,7 +97,7 @@ public class Entity extends JComponent
 		dx = 0;
 		s = null;
 	}
-
+	
 	/**
 	 * Constructor for an enemy
 	 * @param x - x value of the location of the enemy
@@ -121,7 +126,7 @@ public class Entity extends JComponent
 			break;
 		}
 	}
-
+	
 	/**
 	 * Constructor for a player
 	 * @param x - x value of the location of the enemy
@@ -134,27 +139,27 @@ public class Entity extends JComponent
 		this.setSize(new Dimension(81, 41));
 		power = 0;
 	}
-
+	
 	public int getDx()
 	{
 		return dx;
 	}
-
+	
 	public void setDx(int dx)
 	{
 		this.dx = dx;
 	}
-
+	
 	public int getDy()
 	{
 		return dy;
 	}
-
+	
 	public void setDy(int dy)
 	{
 		this.dy = dy;
 	}
-
+	
 	public int getPower()
 	{
 		return power;
@@ -175,21 +180,21 @@ public class Entity extends JComponent
 		case "Frog":
 			current[1][0] = !current[1][0];
 			current[1][10] = !current[1][10];
-
+			
 			current[2][0] = !current[2][0];
 			current[2][10] = !current[2][10];
-
+			
 			current[3][0] = !current[3][0];
 			current[3][10] = !current[3][10];
-
+			
 			current[5][0] = !current[5][0];
 			current[5][1] = !current[5][1];
 			current[5][9] = !current[5][9];
 			current[5][10] = !current[5][10];
-
+			
 			current[6][0] = !current[6][0];
 			current[6][10] = !current[6][10];
-
+			
 			current[7][1] = !current[7][1];
 			current[7][3] = !current[7][3];
 			current[7][4] = !current[7][4];
@@ -204,14 +209,14 @@ public class Entity extends JComponent
 			current[5][4] = !current[5][4];
 			current[5][5] = !current[5][5];
 			current[5][6] = !current[5][6];
-
+			
 			current[6][0] = !current[6][0];
 			current[6][1] = !current[6][1];
 			current[6][3] = !current[6][3];
 			current[6][4] = !current[6][4];
 			current[6][6] = !current[6][6];
 			current[6][7] = !current[6][7];
-
+			
 			current[7][0] = !current[7][0];
 			current[7][1] = !current[7][1];
 			current[7][2] = !current[7][2];
@@ -222,12 +227,12 @@ public class Entity extends JComponent
 		case "Bob":
 			current[5][2] = !current[5][2];
 			current[5][9] = !current[5][9];
-
+			
 			current[6][1] = !current[6][1];
 			current[6][3] = !current[6][3];
 			current[6][8] = !current[6][8];
 			current[6][10] = !current[6][10];
-
+			
 			current[7][0] = !current[7][0];
 			current[7][1] = !current[7][1];
 			current[7][2] = !current[7][2];
@@ -238,20 +243,20 @@ public class Entity extends JComponent
 			current[7][11] = !current[7][11];
 		}
 	}
-
+	
 	@Override
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
-
+		
 		//Switch case for what type of entity this object is
 		switch (type)
 		{
-
-
+		
+		
 		case PLAYER: //Draw a player
 			g2.setColor(Color.WHITE);
-			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 40, 40);
+			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 10, 10);
 			g2.setColor(Color.BLACK);
 			g2.fillPolygon(new int[] {20, 60, 30, 50}, new int[] {0, 0, 20, 20}, 4);
 			g2.setColor(Color.WHITE);
@@ -274,8 +279,7 @@ public class Entity extends JComponent
 				g2.fillRect(15, 15, 50, 5);
 			}
 			break;
-
-
+			
 			
 		case ENEMY: //Draw an enemy
 			g2.setColor(Color.WHITE);
@@ -308,6 +312,7 @@ public class Entity extends JComponent
 							{true , false, false, false, false, false, false, true },
 							{false, true , false, false, false, false, true , false}
 						};
+						System.out.println("hi");
 						break;
 					case "Ship": //Draw a ship enemy
 						current = new boolean[][] {
@@ -383,15 +388,46 @@ public class Entity extends JComponent
 			}
 			break;
 		case OBSTACLE:
+			g2.setColor(Color.WHITE);
+			g2.fillRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
 			g2.setColor(Color.BLACK);
-			g2.drawRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
+			for (Ellipse2D.Double r : holes)
+			{
+				g2.fill(r);
+			}
 			break;
 		}
 		
 	}
 	
+	public boolean isTouching(Entity e)
+	{
+		boolean inX;
+		boolean inY;
+		
+		inX = (getX() > e.getX() && getX() < e.getX() + e.getWidth()) || (getX() + getWidth() > e.getX() && getX() + getWidth() < e.getX() + e.getWidth());
+		inY = (getY() > e.getY() && getY() < e.getY() + e.getHeight()) || (getY() + getHeight() > e.getY() && getY() + getHeight() < e.getY() + e.getHeight());
+		
+		return (inX && inY);
+	}
+	
+	public void hitBy(Entity e)
+	{
+		if (e.isTouching(this))
+		{
+			Point contact = new Point((e.getX() * 2 + e.getWidth())/2 - getX(), e.getY() - getY());
+			holes.add(new Ellipse2D.Double(contact.x - 10, contact.y - 10, 20, 20));
+			repaint();
+		}
+	}
+	
 	public void update()
 	{
 		this.setLocation(this.getX() + dx, this.getY() + dy);
+	}
+	
+	public boolean[][] getCurrent()
+	{
+		return current;
 	}
 }
