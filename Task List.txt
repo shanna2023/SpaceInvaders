@@ -4,8 +4,8 @@ TASKS:
       a - Figure out how many Bob's can fit in each row, use that many for the other types
       b - Nested for loop to add each enemy in its correct position
       c - Make sure gap at least size of Bob at end of each row    
-2 - Create code for movement of characters
-      a - Limit the player's movement DONE YEAH YEAH YEAH YEAH YEAH
+2 - Create code for movement of characters DONE YEAH YEAH YEAH YEAH
+      a - Limit the player's movement 
       b - Move enemies left, right, and down accordingly, even when first and last column are removed
 3 - Create code for collision detection, lives countdown, and enemy removal
       a - Remove enemies from ArrayList, not just JFrame
