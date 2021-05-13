@@ -430,14 +430,12 @@ public class Entity extends JComponent
 					{
 						int state = (Integer)obstacle[r][c][1];
 						Rectangle rect = (Rectangle)obstacle[r][c][0];
-						System.out.println("hi");
 						if (state == SOLID)
 						{
 							g2.fill(rect);
 						}
 						else if (state == BROKEN)
 						{
-							System.out.println(rect.getWidth() + " " + rect.getHeight());
 							for (int i = 0; i < rect.getWidth(); i++)
 							{
 								for (int j = 0; j < rect.getHeight(); j++)
