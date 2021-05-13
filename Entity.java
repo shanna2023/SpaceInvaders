@@ -17,15 +17,22 @@ public class Entity extends JComponent
 	public static final int BULLET = 2;
 	public static final int OBSTACLE = 3;
 	
+	public static final int SOLID = 4;
+	public static final int BROKEN = 5;
+	public static final int DESTROYED = 6;
+	
 	private int type;
 	private int dx, dy;
 	private int power;
 	
 	private Color c;
-	
 	private Rectangle pixel;
 	private boolean[][] current = null;
+	private boolean[][] temp;
 	private String s;
+	
+	private Object[][][] obstacle;
+	private boolean update;
 	
 	private ArrayList<Ellipse2D.Double> holes;
 	
@@ -53,14 +60,15 @@ public class Entity extends JComponent
 			this.setSize(new Dimension(13, 26));
 			break;
 		case OBSTACLE:
-			this.setSize(new Dimension(51, 51));
+			update = true;
+			this.setSize(new Dimension(91, 41));
 			break;
 		default:
 		}
 	}
 	
 	/**
-	 * Constructor for a rectangular obstacle
+	 * Constructor for a traditional obstacle
 	 * @param x - x value of the location of the entity
 	 * @param y - y value of the location of the entity
 	 * @param width - width of the entity
@@ -71,6 +79,7 @@ public class Entity extends JComponent
 		this.setBounds(x, y, width + 1, height + 1);
 		holes = new ArrayList<Ellipse2D.Double>();
 		type = OBSTACLE;
+		obstacle = null;
 		c = null;
 		s = null;
 	}
@@ -336,23 +345,39 @@ public class Entity extends JComponent
 							{false, false, true , true , false, true , true , false, true , true , false, false},
 							{true , true , false, false, false, false, false, false, false, false, true , true }
 						};
-						if (Math.random()*1000 + 1 == 1)
-						{
-							current = new boolean[][] {
-								{true , true , false, false, false, true , true , false, false, true , true , false},
-								{true , false, true , false, true , false, false, true , false, true , false, true },
-								{true , false, true , false, true , false, false, true , false, true , false, true },
-								{true , true , false, false, true , false, false, true , false, true , true , false},
-								{true , false, true , false, true , false, false, true , false, true , false, true },
-								{true , false, true , false, true , false, false, true , false, true , false, true },
-								{true , false, true , false, true , false, false, true , false, true , false, true },
-								{true , true , false, false, false, true , true , false, false, true , true , false}
-							};
-						}
-						break;
 					}
 				}
-
+//				if (s.equals("Bob") && (int)(Math.random()*10000 + 1) == 1)
+//				{
+//					temp = new boolean[current.length][current[0].length];
+//					for (int r = 0; r < current.length; r++)
+//					{
+//						for (int c = 0; c < current[r].length; c++)
+//						{
+//							temp[r][c] = current[r][c];
+//						}
+//					}
+//					current = new boolean[][] {
+//						{true , true , false, false, false, true , true , false, false, true , true , false},
+//						{true , false, true , false, true , false, false, true , false, true , false, true },
+//						{true , false, true , false, true , false, false, true , false, true , false, true },
+//						{true , true , false, false, true , false, false, true , false, true , true , false},
+//						{true , false, true , false, true , false, false, true , false, true , false, true },
+//						{true , false, true , false, true , false, false, true , false, true , false, true },
+//						{true , false, true , false, true , false, false, true , false, true , false, true },
+//						{true , true , false, false, false, true , true , false, false, true , true , false}
+//					};
+//				}
+//				else if (s.equals("Bob") && current[0][0])
+//				{
+//					for (int r = 0; r < current.length; r++)
+//					{
+//						for (int c = 0; c < current[r].length; c++)
+//						{
+//							current[r][c] = temp[r][c];
+//						}
+//					}
+//				}
 				for (int r = 0; r < current.length; r++)
 				{
 					for (int c = 0; c < current[r].length; c++)
@@ -387,13 +412,48 @@ public class Entity extends JComponent
 			}
 			break;
 		case OBSTACLE:
-			g2.setColor(Color.WHITE);
-			g2.fillRect(0, 0, this.getWidth() - 1, this.getHeight() - 1);
-			g2.setColor(Color.BLACK);
-			for (Ellipse2D.Double r : holes)
+			g2.setColor(Color.GREEN);
+			if (obstacle == null)
 			{
-				g2.fill(r);
+				obstacle = new Object[][][] {
+						{{new Rectangle(0, 00, 30, 10), BROKEN}, {new Rectangle(30, 00, 30, 10), BROKEN}, {new Rectangle(60, 00, 30, 10), BROKEN}},
+						{{new Rectangle(0, 10, 30, 10), BROKEN}, {new Rectangle(30, 10, 30, 10), BROKEN}, {new Rectangle(60, 10, 30, 10), BROKEN}},
+						{{new Rectangle(0, 20, 30, 10), BROKEN}, {new Rectangle(30, 20, 30, 10), BROKEN}, {new Rectangle(60, 20, 30, 10), BROKEN}},
+						{{new Rectangle(0, 30, 30, 10), BROKEN}, {new Rectangle(30, 30, 30, 10), BROKEN}, {new Rectangle(60, 30, 30, 10), BROKEN}}
+				};
 			}
+			if (update)
+			{
+				for (int r = 0; r < obstacle.length; r++)
+				{
+					for (int c = 0; c < obstacle[r].length; c++)
+					{
+						int state = (Integer)obstacle[r][c][1];
+						Rectangle rect = (Rectangle)obstacle[r][c][0];
+						System.out.println("hi");
+						if (state == SOLID)
+						{
+							g2.fill(rect);
+						}
+						else if (state == BROKEN)
+						{
+							System.out.println(rect.getWidth() + " " + rect.getHeight());
+							for (int i = 0; i < rect.getWidth(); i++)
+							{
+								for (int j = 0; j < rect.getHeight(); j++)
+								{
+									if ((int)(Math.random()*50) == 0)
+									{
+										g2.drawRect((int)(i + rect.getX()), (int)(j + rect.getY()), 1, 1);
+									}
+								}
+							}
+						}
+					}
+				}
+//				update = false;
+			}
+			
 			break;
 		}
 		
@@ -414,6 +474,7 @@ public class Entity extends JComponent
 	{
 		if (e.isTouching(this))
 		{
+			update = true;
 			Point contact = new Point((e.getX() * 2 + e.getWidth())/2 - getX(), e.getY() - getY());
 			holes.add(new Ellipse2D.Double(contact.x - 10, contact.y - 10, 20, 20));
 			repaint();
