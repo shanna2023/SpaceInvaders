@@ -25,13 +25,17 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private Entity bob2;
 	private Entity hehe;
 	private boolean began;
+	private boolean settingUp;
 	private ArrayList<Character> title;
 	private ArrayList<Character> subtitle;
 	private ArrayList<Entity> bullets;
 	
+	//Temp
+	private Entity obstacle;
+	
 	public SpaceInvadersMain()
 	{
-		this.setBounds(0, 0, 1250, 650);
+		this.setBounds(0, 0, 1280, 650);
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
@@ -78,10 +82,13 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		fire = 0;
 		
 		began = false;
+		settingUp = false;
 
 		obstacles = new ArrayList<Entity>();
 		enemies = new ArrayList<ArrayList<Entity>>();
 		player = new Entity(600, 550, Entity.PLAYER);
+		obstacle = new Entity(500, 150, Entity.OBSTACLE);
+		this.add(obstacle);
 		
 		SpaceInvadersMain jawn = this;
 		
@@ -120,7 +127,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				if (e.getKeyCode() == KeyEvent.VK_B && !began)
 				{
 					t.stop();
-					began = true;
 					for(Character str: title)
 						jawn.remove(str);
 						//str.setVisible(false);
@@ -129,6 +135,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 //						str.setVisible(false);
 					for(Entity o: obstacles)
 						jawn.add(o);
+					for (Entity b : bullets)
+						jawn.remove(b);
 //					removeAll();
 					revalidate();
 					repaint();
@@ -167,49 +175,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 //						
 //					t2.stop();
 					
-					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 16; j++)
-					{
-						Entity pillo = new Entity(69 * j + 79, 10, "Squid");
-						enemies.get(0).add(pillo);
-						jawn.add(pillo);
-					}
-
-
-					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 16; j++)
-					{
-						Entity pillo = new Entity(69 * j + 71, 60, "Frog");
-						enemies.get(1).add(pillo);
-						jawn.add(pillo);
-					}
-
-
-					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 16; j++)
-					{
-						Entity pillo = new Entity(69 * j + 71, 110, "Frog");
-						enemies.get(2).add(pillo);
-						jawn.add(pillo);
-					}
-
-					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 16; j++)
-					{
-						Entity pillo = new Entity(69 * j + 69, 160, "Bob");
-						enemies.get(3).add(pillo);
-						jawn.add(pillo);
-					}
-
-
-					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 16; j++)
-					{
-						Entity pillo = new Entity(69 * j + 69, 210, "Bob");
-						enemies.get(4).add(pillo);
-						jawn.add(pillo);
-					}
 					count = 0;
+					settingUp = true;
 					t.start();
 				}
 			}
@@ -233,6 +200,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		hehe.setDx(-3);
 		
 		t.start();
+
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -300,6 +268,50 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			if (player.getPower() == 3)
 			{
 				fire = 0;
+			}
+		}
+		else if (settingUp)
+		{
+			int j = (count - 1) % 17;
+			if (j == 0)
+			{
+				enemies.add(new ArrayList<Entity>());
+			}
+			
+			if (count > 68)
+			{
+				Entity pillo = new Entity(72 * j + 10, 210, "Bob");
+				enemies.get(4).add(pillo);
+				this.add(pillo);
+				if (count == 85)
+				{
+					settingUp = false;
+					began = true;
+				}
+			}
+			else if(count > 51)
+			{
+				Entity pillo = new Entity(72 * j + 10, 160, "Bob");
+				enemies.get(3).add(pillo);
+				this.add(pillo);
+			}
+			else if(count > 34)
+			{
+				Entity pillo = new Entity(72 * j + 12, 110, "Frog");
+				enemies.get(2).add(pillo);
+				this.add(pillo);
+			}
+			else if(count > 17)
+			{
+				Entity pillo = new Entity(72 * j + 12, 60, "Frog");
+				enemies.get(1).add(pillo);
+				this.add(pillo);
+			}
+			else if(count > 0)
+			{
+				Entity pillo = new Entity(72 * j + 20, 10, "Squid");
+				enemies.get(0).add(pillo);
+				this.add(pillo);
 			}
 		}
 		else
