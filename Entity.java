@@ -312,7 +312,6 @@ public class Entity extends JComponent
 							{true , false, false, false, false, false, false, true },
 							{false, true , false, false, false, false, true , false}
 						};
-						System.out.println("hi");
 						break;
 					case "Ship": //Draw a ship enemy
 						current = new boolean[][] {
