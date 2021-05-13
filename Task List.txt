@@ -3,11 +3,7 @@ TASKS:
 1 - Create 2D ArrayList for characters  DONE YEAH YEAH YEAH YEAH
       a - Figure out how many Bob's can fit in each row, use that many for the other types
       b - Nested for loop to add each enemy in its correct position
-      c - Make sure gap at least size of Bob at end of each row
-      
-      
-      
-
+      c - Make sure gap at least size of Bob at end of each row    
 2 - Create code for movement of characters
       a - Limit the player's movement DONE YEAH YEAH YEAH YEAH YEAH
       b - Move enemies left, right, and down accordingly, even when first and last column are removed

@@ -270,6 +270,28 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				fire = 0;
 			}
+			if(left() < 0)
+			{
+				for(ArrayList<Entity> noob : enemies)
+				{
+					for(Entity bruh : noob)
+					{
+						bruh.setDx(bruh.getDx() * -1);
+						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+					}
+				}
+			}
+			if(right() > this.getContentPane().getWidth())
+			{
+				for(ArrayList<Entity> noob : enemies)
+				{
+					for(Entity bruh : noob)
+					{
+						bruh.setDx(bruh.getDx() * -1);
+						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+					}
+				}
+			}
 		}
 		else if (settingUp)
 		{
@@ -358,7 +380,21 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				squid2.change();
 				bob2.change();
 			}
+			
 		}
+		
+		if(count == 81)
+		{
+			for(ArrayList<Entity> noob : enemies)
+			{
+				for(Entity bruh : noob)
+				{
+					bruh.setDx(-2);
+				}
+			}
+		}
+		
+	
 		repaint();
 	}
 	
@@ -404,5 +440,31 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			arr.add(c);
 			this.add(c);
 		}
+	}
+	
+	public int left()
+	{
+		Entity left = enemies.get(0).get(0);
+		for(int i = 1; i < 5; i ++)
+		{
+			if(enemies.get(i).get(0).getX() < left.getX())
+			{
+				left = enemies.get(i).get(0);
+			}
+		}
+		return left.getX();
+	}
+	
+	public int right()
+	{
+		Entity right = enemies.get(0).get(enemies.get(0).size()-1);
+		for(int i = 1; i < 5; i ++)
+		{
+			if(enemies.get(i).get(enemies.get(i).size()-1).getX() + enemies.get(i).get(enemies.get(i).size()-1).getWidth() > right.getX() + right.getWidth())
+			{
+				right = enemies.get(i).get(enemies.get(i).size()-1);
+			}
+		}
+		return right.getX() + right.getWidth();
 	}
 }
