@@ -31,7 +31,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	
 	public SpaceInvadersMain()
 	{
-		this.setBounds(0, 0, 1280, 650);
+		this.setBounds(0, 0, 1250, 650);
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
@@ -168,44 +168,44 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 //					t2.stop();
 					
 					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 17; j++)
+					for(int j = 0; j < 16; j++)
 					{
-						Entity pillo = new Entity(72 * j + 20, 10, "Squid");
+						Entity pillo = new Entity(69 * j + 79, 10, "Squid");
 						enemies.get(0).add(pillo);
 						jawn.add(pillo);
 					}
 
 
 					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 17; j++)
+					for(int j = 0; j < 16; j++)
 					{
-						Entity pillo = new Entity(72 * j + 12, 60, "Frog");
+						Entity pillo = new Entity(69 * j + 71, 60, "Frog");
 						enemies.get(1).add(pillo);
 						jawn.add(pillo);
 					}
 
 
 					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 17; j++)
+					for(int j = 0; j < 16; j++)
 					{
-						Entity pillo = new Entity(72 * j + 12, 110, "Frog");
+						Entity pillo = new Entity(69 * j + 71, 110, "Frog");
 						enemies.get(2).add(pillo);
 						jawn.add(pillo);
 					}
 
 					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 17; j++)
+					for(int j = 0; j < 16; j++)
 					{
-						Entity pillo = new Entity(72 * j + 10, 160, "Bob");
+						Entity pillo = new Entity(69 * j + 69, 160, "Bob");
 						enemies.get(3).add(pillo);
 						jawn.add(pillo);
 					}
 
 
 					enemies.add(new ArrayList<Entity>());
-					for(int j = 0; j < 17; j++)
+					for(int j = 0; j < 16; j++)
 					{
-						Entity pillo = new Entity(72 * j + 10, 210, "Bob");
+						Entity pillo = new Entity(69 * j + 69, 210, "Bob");
 						enemies.get(4).add(pillo);
 						jawn.add(pillo);
 					}
@@ -233,7 +233,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		hehe.setDx(-3);
 		
 		t.start();
-
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
