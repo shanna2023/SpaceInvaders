@@ -10,32 +10,16 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
-public class Entity extends JComponent
+public abstract class Entity extends JComponent
 {
 	public static final int PLAYER = 0;
 	public static final int ENEMY = 1;
 	public static final int BULLET = 2;
 	public static final int OBSTACLE = 3;
-	
-	public static final int SOLID = 4;
-	public static final int BROKEN = 5;
-	public static final int DESTROYED = 6;
-	
+
 	private int type;
 	private int dx, dy;
-	private int power;
-	
-	private Color c;
-	private Rectangle pixel;
-	private boolean[][] current = null;
-	private boolean[][] temp;
-	private String s;
-	
-	private Object[][][] obstacle;
-	private boolean update;
-	
-	private ArrayList<Ellipse2D.Double> holes;
-	
+
 	/**
 	 * 
 	 * @param x - x value of the location of the entity
@@ -46,8 +30,6 @@ public class Entity extends JComponent
 	{
 		this.setLocation(x, y);
 		this.type = type;
-		c = null;
-		s = null;
 		switch (type)
 		{
 		case PLAYER:
@@ -60,432 +42,35 @@ public class Entity extends JComponent
 			this.setSize(new Dimension(13, 26));
 			break;
 		case OBSTACLE:
-			update = true;
 			this.setSize(new Dimension(91, 41));
 			break;
 		default:
 		}
 	}
-	
-	/**
-	 * Constructor for a traditional obstacle
-	 * @param x - x value of the location of the entity
-	 * @param y - y value of the location of the entity
-	 * @param width - width of the entity
-	 * @param height - height of the entity
-	 */
-	public Entity(int x, int y, int width, int height)
-	{
-		this.setBounds(x, y, width + 1, height + 1);
-		holes = new ArrayList<Ellipse2D.Double>();
-		type = OBSTACLE;
-		obstacle = null;
-		c = null;
-		s = null;
-	}
-	
-	/**
-	 * Constructor for a bullet
-	 * @param x - x value for the location of the bullet
-	 * @param y - y value for the location of the bullet
-	 * @param color - color of the bullet (either blue or red)
-	 */
-	public Entity(int x, int y, Color color)
-	{
-		this.c = color;
-		this.setBounds(x, y, 13, 26);
-		type = BULLET;
-		if (c.equals(Color.BLUE))
-		{
-			dy = -10;
-		}
-		else
-		{
-			dy = 5;
-		}
-		dx = 0;
-		s = null;
-	}
-	
-	/**
-	 * Constructor for an enemy
-	 * @param x - x value of the location of the enemy
-	 * @param y - y value of the location of the enemy
-	 * @param s - name of the enemy type
-	 */
-	public Entity(int x, int y, String s)
-	{
-		this.setLocation(x, y);
-		type = ENEMY;
-		pixel = new Rectangle(5, 5);
-		this.s = s;
-		switch (s)
-		{
-		case "Frog":
-			this.setSize(new Dimension(56, 41));
-			break;
-		case "Squid":
-			this.setSize(new Dimension(41, 41));
-			break;
-		case "Ship":
-			this.setSize(new Dimension(81, 41));
-			break;
-		case "Bob":
-			this.setSize(new Dimension(61, 41));
-			break;
-		}
-	}
-	
-	/**
-	 * Constructor for a player
-	 * @param x - x value of the location of the enemy
-	 * @param y - y value of the location of the enemy
-	 */
-	public Entity(int x, int y)
-	{
-		this.setLocation(x, y);
-		type = PLAYER;
-		this.setSize(new Dimension(81, 41));
-		power = 0;
-	}
-	
+
 	public int getDx()
 	{
 		return dx;
 	}
-	
+
 	public void setDx(int dx)
 	{
 		this.dx = dx;
 	}
-	
+
 	public int getDy()
 	{
 		return dy;
 	}
-	
+
 	public void setDy(int dy)
 	{
 		this.dy = dy;
 	}
-	
-	public int getPower()
-	{
-		return power;
-	}
 
-	public void setPower(int power)
-	{
-		this.power = power;
-	}
 
-	/**
-	 * Changes the animation frame of an enemy
-	 */
-	public void change()
-	{
-		switch (s)
-		{
-		case "Frog":
-			current[1][0] = !current[1][0];
-			current[1][10] = !current[1][10];
-			
-			current[2][0] = !current[2][0];
-			current[2][10] = !current[2][10];
-			
-			current[3][0] = !current[3][0];
-			current[3][10] = !current[3][10];
-			
-			current[5][0] = !current[5][0];
-			current[5][1] = !current[5][1];
-			current[5][9] = !current[5][9];
-			current[5][10] = !current[5][10];
-			
-			current[6][0] = !current[6][0];
-			current[6][10] = !current[6][10];
-			
-			current[7][1] = !current[7][1];
-			current[7][3] = !current[7][3];
-			current[7][4] = !current[7][4];
-			current[7][6] = !current[7][6];
-			current[7][7] = !current[7][7];
-			current[7][9] = !current[7][9];
-			break;
-		case "Squid":
-			current[5][1] = !current[5][1];
-			current[5][2] = !current[5][2];
-			current[5][3] = !current[5][3];
-			current[5][4] = !current[5][4];
-			current[5][5] = !current[5][5];
-			current[5][6] = !current[5][6];
-			
-			current[6][0] = !current[6][0];
-			current[6][1] = !current[6][1];
-			current[6][3] = !current[6][3];
-			current[6][4] = !current[6][4];
-			current[6][6] = !current[6][6];
-			current[6][7] = !current[6][7];
-			
-			current[7][0] = !current[7][0];
-			current[7][1] = !current[7][1];
-			current[7][2] = !current[7][2];
-			current[7][5] = !current[7][5];
-			current[7][6] = !current[7][6];
-			current[7][7] = !current[7][7];
-			break;
-		case "Bob":
-			current[5][2] = !current[5][2];
-			current[5][9] = !current[5][9];
-			
-			current[6][1] = !current[6][1];
-			current[6][3] = !current[6][3];
-			current[6][8] = !current[6][8];
-			current[6][10] = !current[6][10];
-			
-			current[7][0] = !current[7][0];
-			current[7][1] = !current[7][1];
-			current[7][2] = !current[7][2];
-			current[7][3] = !current[7][3];
-			current[7][8] = !current[7][8];
-			current[7][9] = !current[7][9];
-			current[7][10] = !current[7][10];
-			current[7][11] = !current[7][11];
-		}
-	}
-	
-	@Override
-	public void paintComponent(Graphics g)
-	{
-		Graphics2D g2 = (Graphics2D)g;
-		
-		//Switch case for what type of entity this object is
-		switch (type)
-		{
-		
-		
-		case PLAYER: //Draw a player
-			g2.setColor(Color.WHITE);
-			g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 10, 10);
-			g2.setColor(Color.BLACK);
-			g2.fillPolygon(new int[] {20, 60, 30, 50}, new int[] {0, 0, 20, 20}, 4);
-			g2.setColor(Color.WHITE);
-			g2.fillPolygon(new int[] {30, 40, 50}, new int[] {20, 0, 20}, 3);
-			g2.setColor(Color.BLACK);
-			g2.drawRect(15, 15, 50, 5);
-			g2.drawRect(15, 23, 50, 5);
-			g2.drawRect(15, 31, 50, 5);
-			g2.setColor(Color.BLUE);
-			if (power > 0)
-			{
-				g2.fillRect(15, 31, 50, 5);
-			}
-			if (power > 1)
-			{
-				g2.fillRect(15, 23, 50, 5);
-			}
-			if (power > 2)
-			{
-				g2.fillRect(15, 15, 50, 5);
-			}
-			break;
-			
-			
-		case ENEMY: //Draw an enemy
-			g2.setColor(Color.WHITE);
-			if (s != null)
-			{
-				if (current == null)
-				{
-					switch (s)
-					{
-					case "Frog": //Draw a frog enemy
-						current = new boolean[][] {
-							{false, false, true , false, false, false, false, false, true , false, false},
-							{false, false, false, true , false, false, false, true , false, false, false},
-							{false, false, true , true , true , true , true , true , true , false, false},
-							{false, true , true , false, true , true , true , false, true , true , false},
-							{true , true , true , true , true , true , true , true , true , true , true },
-							{true , false, true , true , true , true , true , true , true , false, true },
-							{true , false, true , false, false, false, false, false, true , false, true },
-							{false, false, false, true , true , false, true , true , false, false, false}
-						};
-						break;
-					case "Squid": //Draw a squid enemy
-						current = new boolean[][] {
-							{false, false, false, true , true , false, false, false},
-							{false, false, true , true , true , true , false, false},
-							{false, true , true , true , true , true , true , false},
-							{true , true , false, true , true , false, true , true },
-							{true , true , true , true , true , true , true , true },
-							{false, true , false, true , true , false, true , false},
-							{true , false, false, false, false, false, false, true },
-							{false, true , false, false, false, false, true , false}
-						};
-						break;
-					case "Ship": //Draw a ship enemy
-						current = new boolean[][] {
-							{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
-							{false, false, false, false, false, true , true , true , true , true , true , false, false, false, false, false},
-							{false, false, false, true , true , true , true , true , true , true , true , true , true , false, false, false},
-							{false, false, true , true , true , true , true , true , true , true , true , true , true , true , false, false},
-							{false, true , true , false, true , true , false, true , true , false, true , true , false, true , true , false},
-							{true , true , true , true , true , true , true , true , true , true , true , true , true , true , true , true },
-							{false, false, true , true , true , false, false, true , true , false, false, true , true , true , false, false},
-							{false, false, false, true , false, false, false, false, false, false, false, false, true , false, false, false}
-						};
-						break;
-					case "Bob": //Bob
-						current = new boolean[][] {
-							{false, false, false, false, true , true , true , true , false, false, false, false},
-							{false, true , true , true , true , true , true , true , true , true , true , false},
-							{true , true , true , true , true , true , true , true , true , true , true , true },
-							{true , true , true , false, false, true , true , false, false, true , true , true },
-							{true , true , true , true , true , true , true , true , true , true , true , true },
-							{false, false, false, true , true , false, false, true , true , false, false, false},
-							{false, false, true , true , false, true , true , false, true , true , false, false},
-							{true , true , false, false, false, false, false, false, false, false, true , true }
-						};
-					}
-				}
-//				if (s.equals("Bob") && (int)(Math.random()*10000 + 1) == 1)
-//				{
-//					temp = new boolean[current.length][current[0].length];
-//					for (int r = 0; r < current.length; r++)
-//					{
-//						for (int c = 0; c < current[r].length; c++)
-//						{
-//							temp[r][c] = current[r][c];
-//						}
-//					}
-//					current = new boolean[][] {
-//						{true , true , false, false, false, true , true , false, false, true , true , false},
-//						{true , false, true , false, true , false, false, true , false, true , false, true },
-//						{true , false, true , false, true , false, false, true , false, true , false, true },
-//						{true , true , false, false, true , false, false, true , false, true , true , false},
-//						{true , false, true , false, true , false, false, true , false, true , false, true },
-//						{true , false, true , false, true , false, false, true , false, true , false, true },
-//						{true , false, true , false, true , false, false, true , false, true , false, true },
-//						{true , true , false, false, false, true , true , false, false, true , true , false}
-//					};
-//				}
-//				else if (s.equals("Bob") && current[0][0])
-//				{
-//					for (int r = 0; r < current.length; r++)
-//					{
-//						for (int c = 0; c < current[r].length; c++)
-//						{
-//							current[r][c] = temp[r][c];
-//						}
-//					}
-//				}
-				for (int r = 0; r < current.length; r++)
-				{
-					for (int c = 0; c < current[r].length; c++)
-					{
-						if (current[r][c])
-						{
-							pixel.setLocation(c * 5, r * 5);
-							g2.fill(pixel);
-						}
-					}
-				}
-			}
-			break;
-		case BULLET:
-			if (c.equals(Color.BLUE))
-			{
-				g2.setColor(Color.BLACK);
-				g2.drawArc(0, 0, 12, 12, 0, 180);
-				g2.drawPolygon(new int[] {0, 6, 12}, new int[] {6, 25, 6}, 3);
-				g2.setColor(c);
-				g2.fillArc(0, 0, 12, 12, 0, 180);
-				g2.fillPolygon(new int[] {0, 6, 12}, new int[] {6, 25, 6}, 3);
-			}
-			else
-			{
-				g2.setColor(Color.BLACK);
-				g2.drawArc(0, 12, 12, 12, 180, 180);
-				g2.drawPolygon(new int[] {0, 6, 12}, new int[] {18, 0, 18}, 3);
-				g2.setColor(c);
-				g2.fillArc(0, 12, 12, 12, 180, 180);
-				g2.fillPolygon(new int[] {0, 6, 12}, new int[] {18, 0, 18}, 3);
-			}
-			break;
-		case OBSTACLE:
-			g2.setColor(Color.GREEN);
-			if (obstacle == null)
-			{
-				obstacle = new Object[][][] {
-						{{new Rectangle(0, 00, 30, 10), BROKEN}, {new Rectangle(30, 00, 30, 10), BROKEN}, {new Rectangle(60, 00, 30, 10), BROKEN}},
-						{{new Rectangle(0, 10, 30, 10), BROKEN}, {new Rectangle(30, 10, 30, 10), BROKEN}, {new Rectangle(60, 10, 30, 10), BROKEN}},
-						{{new Rectangle(0, 20, 30, 10), BROKEN}, {new Rectangle(30, 20, 30, 10), BROKEN}, {new Rectangle(60, 20, 30, 10), BROKEN}},
-						{{new Rectangle(0, 30, 30, 10), BROKEN}, {new Rectangle(30, 30, 30, 10), BROKEN}, {new Rectangle(60, 30, 30, 10), BROKEN}}
-				};
-			}
-			if (update)
-			{
-				for (int r = 0; r < obstacle.length; r++)
-				{
-					for (int c = 0; c < obstacle[r].length; c++)
-					{
-						int state = (Integer)obstacle[r][c][1];
-						Rectangle rect = (Rectangle)obstacle[r][c][0];
-						if (state == SOLID)
-						{
-							g2.fill(rect);
-						}
-						else if (state == BROKEN)
-						{
-							for (int i = 0; i < rect.getWidth(); i++)
-							{
-								for (int j = 0; j < rect.getHeight(); j++)
-								{
-									if ((int)(Math.random()*50) == 0)
-									{
-										g2.drawRect((int)(i + rect.getX()), (int)(j + rect.getY()), 1, 1);
-									}
-								}
-							}
-						}
-					}
-				}
-//				update = false;
-			}
-			
-			break;
-		}
-		
-	}
-	
-	public boolean isTouching(Entity e)
-	{
-		boolean inX;
-		boolean inY;
-		
-		inX = (getX() > e.getX() && getX() < e.getX() + e.getWidth()) || (getX() + getWidth() > e.getX() && getX() + getWidth() < e.getX() + e.getWidth());
-		inY = (getY() > e.getY() && getY() < e.getY() + e.getHeight()) || (getY() + getHeight() > e.getY() && getY() + getHeight() < e.getY() + e.getHeight());
-		
-		return (inX && inY);
-	}
-	
-	public void hitBy(Entity e)
-	{
-		if (e.isTouching(this))
-		{
-			update = true;
-			Point contact = new Point((e.getX() * 2 + e.getWidth())/2 - getX(), e.getY() - getY());
-			holes.add(new Ellipse2D.Double(contact.x - 10, contact.y - 10, 20, 20));
-			repaint();
-		}
-	}
-	
 	public void update()
 	{
 		this.setLocation(this.getX() + dx, this.getY() + dy);
-	}
-	
-	public boolean[][] getCurrent()
-	{
-		return current;
 	}
 }
