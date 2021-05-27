@@ -100,23 +100,36 @@ public class Obstacle extends Entity
 	{
 		if (b.isTouching(this))
 		{
-			System.out.println(1);
+
 			Point contact = new Point((b.getX() * 2 + b.getWidth())/2 - getX(), b.getY() - getY());
 			for (int i = 0; i < obstacle.length; i++)
 			{
-				System.out.println(2);
+
 				for (int j = 0; j < obstacle[i].length; j++)
 				{
-					System.out.println(3);
-					if (obstacle[i][j] != null)
+		
+					if (obstacle[i][j] != null && obstacle[i][j].getState() == SOLID)
 					{
-						System.out.println(4);
-						if (obstacle[i][j].contains(contact) && obstacle[i][j].getState() == SOLID)
+						System.out.println("h213");
+						Rectangle rec = new Rectangle(b.getX() - this.getX(), b.getY() - this.getY(), b.getWidth(), b.getHeight());			
+						if(obstacle[i][j].getS().intersects(rec))
 						{
-							System.out.println(obstacle[i][j]);
-							obstacle[i][j].setState(BROKEN);
-							return obstacle[i][j];
+							System.out.println(i + " " + j);
+							if(j + 1 < obstacle[i].length && obstacle[i][j+1] != null && obstacle[i][j+1].getS().intersects(rec))
+							{
+								System.out.println("h1");
+								obstacle[i][j].setState(BROKEN);
+								obstacle[i][j+1].setState(BROKEN);
+								return obstacle[i][j];
+							}
+							else
+							{
+								System.out.println("h2");
+								obstacle[i][j].setState(BROKEN);
+								return obstacle[i][j];
+							}
 						}
+
 					}
 				}
 			}
@@ -124,31 +137,96 @@ public class Obstacle extends Entity
 		return null;
 	}
 
+	//	public void test(Tile t)
+	//	{
+	//		if (t != null)
+	//		{
+	//			for (int i = 0; i < t.getNeighbors().size(); i++)
+	//			{
+	//				if (t.getNeighbors().get(i) != null)
+	//				{	
+	//					if (t.getNeighbors().get(i).isGone())
+	//					{
+	//						obstacle[t.getNeighbors().get(i).getR()][t.getNeighbors().get(i).getC()] = null;
+	//					}
+	//				}
+	//			}
+	//			if (t.isGone())
+	//			{
+	//				obstacle[t.getR()][t.getC()] = null;
+	//			}
+	//		}
+	//		repaint();
+	//	}
+
 	public void test(Tile t)
 	{
+		System.out.println("HBIFJKNAIDHKJFKENFKS" + obstacle[0][2].getState());
 		if (t != null)
 		{
+			System.out.println(1);
 			for (int i = 0; i < t.getNeighbors().size(); i++)
 			{
+				System.out.println(2);
 				if (t.getNeighbors().get(i) != null)
-				{	
-					if (t.getNeighbors().get(i).isGone())
+				{
+					System.out.println(3);
+					if (t.getNeighbors().get(i).isGone(t))
 					{
-						obstacle[t.getNeighbors().get(i).getR()][t.getNeighbors().get(i).getC()] = null;
+						System.out.println(4);
+						obstacle[t.getNeighbors().get(i).getR()][t.getNeighbors().get(i).getC()].setState(DESTROYED);;
 					}
 				}
 			}
 			if (t.isGone())
 			{
-				obstacle[t.getR()][t.getC()] = null;
+				System.out.println(5);
+				obstacle[t.getR()][t.getC()].setState(DESTROYED);;
 			}
 		}
+		System.out.println("*");
 		repaint();
 	}
 
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		//		Graphics2D g2 = (Graphics2D)g;
+		//		g2.setColor(Color.GREEN);
+		//		for (int r = 0; r < obstacle.length; r++)
+		//		{
+		//			for (int c = 0; c < obstacle[r].length; c++)
+		//			{
+		//				if (obstacle[r][c] != null)
+		//				{
+		//					if (obstacle[r][c].getState() == SOLID)
+		//					{
+		//						this.add(obstacle[r][c]);
+		//					}
+		//					else if (obstacle[r][c].getState() == BROKEN)
+		//					{
+		//						this.remove(obstacle[r][c]);
+		//						repaint();
+		//						if (obstacle[r][c].getBroken() == null)
+		//						{
+		//							int num = (int)(Math.random()*5);
+		//							obstacle[r][c].setBroken(broken[num]);
+		//						}
+		//						for (int i = 0; i < obstacle[r][c].getBroken().length; i++)
+		//						{
+		//							for (int j = 0; j < obstacle[r][c].getBroken()[i].length; j++)
+		//							{
+		//								if (obstacle[r][c].getBroken()[i][j])
+		//								{
+		//									g2.fillRect((int)(obstacle[r][c].getX() + j), (int)(obstacle[r][c].getY() + i), 1, 1);
+		//								}
+		//							}
+		//						}
+		//					}
+		//				}
+		//			}
+		//		}
+		//	}
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(Color.GREEN);
 		for (int r = 0; r < obstacle.length; r++)
@@ -157,32 +235,41 @@ public class Obstacle extends Entity
 			{
 				if (obstacle[r][c] != null)
 				{
-					if (obstacle[r][c].getState() == SOLID)
+					if (obstacle[r][c].getState() != DESTROYED)
 					{
-						this.add(obstacle[r][c]);
-					}
-					else if (obstacle[r][c].getState() == BROKEN)
-					{
-						this.remove(obstacle[r][c]);
-						repaint();
-						if (obstacle[r][c].getBroken() == null)
+						if (obstacle[r][c].getState() == SOLID)
 						{
-							int num = (int)(Math.random()*5);
-							obstacle[r][c].setBroken(broken[num]);
+							this.add(obstacle[r][c]);
 						}
-						for (int i = 0; i < obstacle[r][c].getBroken().length; i++)
+						else if (obstacle[r][c].getState() == BROKEN)
 						{
-							for (int j = 0; j < obstacle[r][c].getBroken()[i].length; j++)
+							this.remove(obstacle[r][c]);
+							repaint();
+							if (obstacle[r][c].getBroken() == null)
 							{
-								if (obstacle[r][c].getBroken()[i][j])
+								int num = (int)(Math.random()*5);
+								obstacle[r][c].setBroken(broken[num]);
+							}
+							for (int i = 0; i < obstacle[r][c].getBroken().length; i++)
+							{
+								for (int j = 0; j < obstacle[r][c].getBroken()[i].length; j++)
 								{
-									g2.fillRect((int)(obstacle[r][c].getX() + j), (int)(obstacle[r][c].getY() + i), 1, 1);
+									if (obstacle[r][c].getBroken()[i][j])
+									{
+										g2.fillRect((int)(obstacle[r][c].getX() + j), (int)(obstacle[r][c].getY() + i), 1, 1);
+									}
 								}
 							}
 						}
+					}
+					else
+					{
+						this.remove(obstacle[r][c]);
 					}
 				}
 			}
 		}
 	}
 }
+
+

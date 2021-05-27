@@ -93,4 +93,22 @@ public abstract class Tile extends JComponent
         }
         return !(this.getState() == Obstacle.SOLID);
     }
+    
+    public boolean isGone(Tile ti)
+    {
+        for (Tile t : neighbors)
+        {
+            if (t != null)
+            {
+                if (!t.equals(ti))
+                {
+                    if (t.getState() == Obstacle.SOLID)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+        return !(this.getState() == Obstacle.SOLID);
+    }
 }
