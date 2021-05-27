@@ -35,6 +35,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	public SpaceInvadersMain()
 	{
+		this.setResizable(false);
 		this.setBounds(0, 0, 1280, 650);
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
@@ -87,7 +88,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		obstacles = new ArrayList<Obstacle>();
 		enemies = new ArrayList<ArrayList<Enemy>>();
 		player = new Player(600, 550);
-		obstacle = new Obstacle(500, 150);
+		obstacle = new Obstacle(0, 0);
 		this.add(obstacle);
 
 		SpaceInvadersMain jawn = this;
@@ -428,7 +429,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				for(Enemy bruh : h)
 				{
-					bruh.setDx(-1);
+					bruh.setDx(-3);
 				}
 			}
 		}
