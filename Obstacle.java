@@ -121,7 +121,6 @@ public class Obstacle extends Entity
 				}
 			}
 		}
-		System.out.println("************************************");
 		return null;
 	}
 

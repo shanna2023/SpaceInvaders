@@ -1,18 +1,24 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JFrame;
 
 public class Bullet extends Entity
 {
-    private Color c;
+	private boolean isE;
+    private Rectangle noob;
+    private Rectangle noob1;
     
-    public Bullet(int x, int y, Color color)
+    public Bullet(int x, int y, boolean isEnemy)
     {
         super(x, y, Entity.BULLET);
-        this.c = color;
-        if (c.equals(Color.BLUE))
+        noob = new Rectangle(0, 0, 8, 26);
+        noob1 = new Rectangle(3, 3, 2, 20);
+        isE = isEnemy;
+
+        if (isE == false)
         {
             setDy(-10);
         }
@@ -53,23 +59,26 @@ public class Bullet extends Entity
     public void paintComponent(Graphics g)
     {
         Graphics2D g2 = (Graphics2D)g;
-        if (c.equals(Color.BLUE))
+        if (isE == false)
         {
-            g2.setColor(Color.BLACK);
-            g2.drawArc(0, 0, 12, 12, 0, 180);
-            g2.drawPolygon(new int[] {0, 6, 12}, new int[] {6, 25, 6}, 3);
-            g2.setColor(c);
-            g2.fillArc(0, 0, 12, 12, 0, 180);
-            g2.fillPolygon(new int[] {0, 6, 12}, new int[] {6, 25, 6}, 3);
+        	g2.setColor(Color.BLUE);
+        	g2.draw(noob);
+        	g2.fill(noob);
+        	g2.setColor(Color.MAGENTA);
+        	g2.draw(noob1);
+        	g2.fill(noob1);
         }
         else
         {
-            g2.setColor(Color.BLACK);
-            g2.drawArc(0, 12, 12, 12, 180, 180);
-            g2.drawPolygon(new int[] {0, 6, 12}, new int[] {18, 0, 18}, 3);
-            g2.setColor(c);
-            g2.fillArc(0, 12, 12, 12, 180, 180);
-            g2.fillPolygon(new int[] {0, 6, 12}, new int[] {18, 0, 18}, 3);
+        	g2.setColor(Color.RED);
+        	g2.draw(noob);
+        	g2.fill(noob);
+        	g2.setColor(Color.ORANGE);
+        	g2.draw(noob1);
+        	g2.fill(noob1);
         }
+
+        	
+        
     }
 }
