@@ -66,7 +66,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		bullets = new ArrayList<Bullet>();
 
 		String str1 = "space invaders";
-		String str2 = "press b to begin 0123456789";
+		String str2 = "press b to begin";
 		for (int i = 0; i < str1.length(); i++)
 		{
 			title.add(new Character(i * 60 + 210, 200, 10, str1.charAt(i)));
