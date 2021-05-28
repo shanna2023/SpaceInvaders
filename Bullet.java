@@ -29,7 +29,17 @@ public class Bullet extends Entity
         setDx(0);
     }
     
-    public boolean isTouching(Obstacle e)
+    public boolean isE() 
+    {
+		return isE;
+	}
+
+	public void setE(boolean isE) 
+	{
+		this.isE = isE;
+	}
+
+	public boolean isTouching(Obstacle e)
     {
         boolean inX;
         boolean inY;

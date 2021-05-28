@@ -171,12 +171,12 @@ public class Obstacle extends Entity
 									}
 									else
 									{
-										
+
 									}
 								}
 								else
 								{
-									
+
 								}
 							}
 							else
@@ -205,8 +205,8 @@ public class Obstacle extends Entity
 		}
 		return null;
 	}
-	*/
-	
+	 */
+
 	public Tile[] hitBy(Bullet b)
 	{
 		if (b.isTouching(this))
@@ -216,30 +216,33 @@ public class Obstacle extends Entity
 
 				for (int j = 0; j < obstacle[i].length; j++)
 				{
-		
+
 					if (obstacle[i][j] != null && obstacle[i][j].getState() == SOLID)
 					{
-						System.out.println("h213");
 						Rectangle rec = new Rectangle(b.getX() - this.getX(), b.getY() - this.getY(), b.getWidth(), b.getHeight());
 						Polygon poly = new Polygon(obstacle[i][j].getS().xpoints, obstacle[i][j].getS().ypoints, obstacle[i][j].getS().npoints);
 						poly.translate(obstacle[i][j].getX(), obstacle[i][j].getY());
-						System.out.println(rec.getBounds());
-						System.out.println(b.getBounds());
-						System.out.println(this.getBounds());
-						System.out.println(obstacle[i][j].getS().getBounds());
 						if(poly.intersects(rec))
 						{
-							System.out.println(i + " " + j);
-							if(j + 1 < obstacle[i].length && obstacle[i][j+1] != null && obstacle[i][j+1].getS().intersects(rec))
+							if(j + 1 < obstacle[i].length && obstacle[i][j+1] != null)
 							{
-								System.out.println("h1");
-								obstacle[i][j].setState(BROKEN);
-								obstacle[i][j+1].setState(BROKEN);
-								return new Tile[] {obstacle[i][j], obstacle[i][j+1]};
+								Polygon poly2 = new Polygon(obstacle[i][j+1].getS().xpoints, obstacle[i][j+1].getS().ypoints, obstacle[i][j+1].getS().npoints);
+								poly2.translate(obstacle[i][j+1].getX(), obstacle[i][j+1].getY());
+								
+								if(poly2.intersects(rec))
+								{
+									obstacle[i][j].setState(BROKEN);
+									obstacle[i][j+1].setState(BROKEN);
+									return new Tile[] {obstacle[i][j], obstacle[i][j+1]};
+								}
+								else
+								{
+									obstacle[i][j].setState(BROKEN);
+									return new Tile[] {obstacle[i][j]};
+								}
 							}
 							else
 							{
-								System.out.println("h2");
 								obstacle[i][j].setState(BROKEN);
 								return new Tile[] {obstacle[i][j]};
 							}
@@ -253,30 +256,23 @@ public class Obstacle extends Entity
 
 	public void test(Tile t)
 	{
-		System.out.println("HBIFJKNAIDHKJFKENFKS" + obstacle[0][2].getState());
 		if (t != null)
 		{
-			System.out.println(1);
 			for (int i = 0; i < t.getNeighbors().size(); i++)
 			{
-				System.out.println(2);
 				if (t.getNeighbors().get(i) != null)
 				{	
-					System.out.println(3);
 					if (t.getNeighbors().get(i).isGone(t))
 					{
-						System.out.println(4);
 						obstacle[t.getNeighbors().get(i).getR()][t.getNeighbors().get(i).getC()].setState(DESTROYED);;
 					}
 				}
 			}
 			if (t.isGone())
 			{
-				System.out.println(5);
 				obstacle[t.getR()][t.getC()].setState(DESTROYED);;
 			}
 		}
-		System.out.println("*********************");
 		repaint();
 	}
 
