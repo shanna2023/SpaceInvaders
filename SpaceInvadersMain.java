@@ -88,7 +88,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		obstacles = new ArrayList<Obstacle>();
 		enemies = new ArrayList<ArrayList<Enemy>>();
 		player = new Player(600, 550);
-		obstacle = new Obstacle(300, 300);
+		obstacle = new Obstacle(500, 150);
 		this.add(obstacle);
 		
 		SpaceInvadersMain jawn = this;
@@ -276,53 +276,53 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 * vv UPDATING ENEMIES AND BULLETS, GAME OVER IF ENEMY TOUCHES PLAYER vv
 			 * ****************************************************************************************************
 			 */
-			for (ArrayList<Enemy> arr : enemies)
-			{
-				for (Enemy enemy : arr)
-				{
-					enemy.update();
-					if (count % 20 == 0)
-					{
-						enemy.change();
-					}
-					if(enemy.getBounds().intersects(player.getBounds())) //If an enemy is touching the player
-					{
-						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
-						System.exit(0);
-					}
-				}
-			}
-			if(left() < 0)
-			{
-				for(ArrayList<Enemy> h : enemies)
-				{
-					for(Enemy bruh : h)
-					{
-						bruh.setDx(bruh.getDx() * -1);
-						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
-					}
-				}
-			}
-			if(right() > this.getContentPane().getWidth())
-			{
-				for(ArrayList<Enemy> h : enemies)
-				{
-					for(Enemy bruh : h)
-					{
-						bruh.setDx(bruh.getDx() * -1);
-						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
-					}
-				}
-			}
-
-			for(int i = 0; i < enemies.size(); i++)
-			{
-				if(enemies.get(i).isEmpty())
-				{
-					enemies.remove(i);
-					i--;
-				}
-			}
+//			for (ArrayList<Enemy> arr : enemies)
+//			{
+//				for (Enemy enemy : arr)
+//				{
+//					enemy.update();
+//					if (count % 20 == 0)
+//					{
+//						enemy.change();
+//					}
+//					if(enemy.getBounds().intersects(player.getBounds())) //If an enemy is touching the player
+//					{
+//						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
+//						System.exit(0);
+//					}
+//				}
+//			}
+//			if(left() < 0)
+//			{
+//				for(ArrayList<Enemy> h : enemies)
+//				{
+//					for(Enemy bruh : h)
+//					{
+//						bruh.setDx(bruh.getDx() * -1);
+//						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+//					}
+//				}
+//			}
+//			if(right() > this.getContentPane().getWidth())
+//			{
+//				for(ArrayList<Enemy> h : enemies)
+//				{
+//					for(Enemy bruh : h)
+//					{
+//						bruh.setDx(bruh.getDx() * -1);
+//						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+//					}
+//				}
+//			}
+//
+//			for(int i = 0; i < enemies.size(); i++)
+//			{
+//				if(enemies.get(i).isEmpty())
+//				{
+//					enemies.remove(i);
+//					i--;
+//				}
+//			}
 			/* ****************************************************************************************************
 			 * ^^ UPDATING ENEMIES, GAME OVER IF ENEMY TOUCHES PLAYER ^^
 			 * ****************************************************************************************************
@@ -357,52 +357,54 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		}
 		else if (settingUp) //Just left title screen, enemies not all on screen
 		{
-			int j = (count - 1) % 16;
-			
-			if (j == 0)
-			{
-				enemies.add(new ArrayList<Enemy>());
-			}
-
-			/* ****************************************************************************************************
-			 * vv PLACING EACH ENEMY ACCORDING TO COUNT vv
-			 * ****************************************************************************************************
-			 */
-			if (count > 64)
-			{
-				Enemy pillo = new Enemy(69 * j + 69, 210, "Bob");
-				enemies.get(4).add(pillo);
-				this.add(pillo);
-				if (count == 80)
-				{
-					settingUp = false;
-					began = true;
-				}
-			}
-			else if(count > 48)
-			{
-				Enemy pillo = new Enemy(69 * j + 69, 160, "Bob");
-				enemies.get(3).add(pillo);
-				this.add(pillo);
-			}
-			else if(count > 32)
-			{
-				Enemy pillo = new Enemy(69 * j + 71, 110, "Frog");
-				enemies.get(2).add(pillo);
-				this.add(pillo);
-			}
-			else if(count > 16)
-			{
-				Enemy pillo = new Enemy(69 * j + 71, 60, "Frog");
-				enemies.get(1).add(pillo);
-				this.add(pillo);
-			}
-			else if(count > 0)
-			{
-				Enemy pillo = new Enemy(69 * j + 79, 10, "Squid");
-				enemies.get(0).add(pillo);
-				this.add(pillo);
-			}
+			settingUp = false;
+			began = true;
+//			int j = (count - 1) % 16;
+//			
+//			if (j == 0)
+//			{
+//				enemies.add(new ArrayList<Enemy>());
+//			}
+//
+//			/* ****************************************************************************************************
+//			 * vv PLACING EACH ENEMY ACCORDING TO COUNT vv
+//			 * ****************************************************************************************************
+//			 */
+//			if (count > 64)
+//			{
+//				Enemy pillo = new Enemy(69 * j + 69, 210, "Bob");
+//				enemies.get(4).add(pillo);
+//				this.add(pillo);
+//				if (count == 80)
+//				{
+//					settingUp = false;
+//					began = true;
+//				}
+//			}
+//			else if(count > 48)
+//			{
+//				Enemy pillo = new Enemy(69 * j + 69, 160, "Bob");
+//				enemies.get(3).add(pillo);
+//				this.add(pillo);
+//			}
+//			else if(count > 32)
+//			{
+//				Enemy pillo = new Enemy(69 * j + 71, 110, "Frog");
+//				enemies.get(2).add(pillo);
+//				this.add(pillo);
+//			}
+//			else if(count > 16)
+//			{
+//				Enemy pillo = new Enemy(69 * j + 71, 60, "Frog");
+//				enemies.get(1).add(pillo);
+//				this.add(pillo);
+//			}
+//			else if(count > 0)
+//			{
+//				Enemy pillo = new Enemy(69 * j + 79, 10, "Squid");
+//				enemies.get(0).add(pillo);
+//				this.add(pillo);
+//			}
 //			/* ****************************************************************************************************
 //			 * ^^ PLACING EACH ENEMY ACCORDING TO COUNT ^^
 //			 * ****************************************************************************************************
@@ -411,25 +413,25 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		else //Title screen
 		{
 			//Flashing subtitle
-			if (count % 20 == 0)
-			{
-				for (Character c : subtitle)
-				{
-					c.setVisible(!c.isShowing());
-				}
-			}
+//			if (count % 20 == 0)
+//			{
+//				for (Character c : subtitle)
+//				{
+//					c.setVisible(!c.isShowing());
+//				}
+//			}
 			
 			//vv Ship at top shooting bullets vv
-			if (count % 20 == 0)
-			{
-				bullets.add(new Bullet(hehe.getX() + 11, hehe.getY() + 30, true));
-				this.add(bullets.get(bullets.size() - 1));
-			}
-			if ((count + 10) % 20 == 0)
-			{
-				bullets.add(new Bullet(hehe.getX() + hehe.getWidth() - 24, hehe.getY() + 30, true));
-				this.add(bullets.get(bullets.size() - 1));
-			}
+//			if (count % 20 == 0)
+//			{
+//				bullets.add(new Bullet(hehe.getX() + 11, hehe.getY() + 30, Color.RED));
+//				this.add(bullets.get(bullets.size() - 1));
+//			}
+//			if ((count + 10) % 20 == 0)
+//			{
+//				bullets.add(new Bullet(hehe.getX() + hehe.getWidth() - 24, hehe.getY() + 30, Color.RED));
+//				this.add(bullets.get(bullets.size() - 1));
+//			}
 			//^^ Ship at top shooting bullets ^^
 			
 			/* ****************************************************************************************************
@@ -470,7 +472,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				for(Enemy bruh : h)
 				{
-					bruh.setDx(-3);
+					bruh.setDx(-1);
 				}
 			}
 		}
@@ -483,11 +485,14 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		{
 			for (int i = 0; i < bullets.size(); i++)
 			{
-				Tile temp = obstacle.hitBy(bullets.get(i));
+				Tile[] temp = obstacle.hitBy(bullets.get(i));
 				if (temp != null)
 				{
 					System.out.println(0);
-					obstacle.test(temp);
+					for (Tile t : temp)
+					{
+						obstacle.test(t);
+					}
 					this.remove(bullets.get(i));
 					bullets.remove(i);
 					i--;
@@ -511,11 +516,14 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 */
 		for (int i = 0; i < bullets.size(); i++)
 		{
-			Tile temp = obstacle.hitBy(bullets.get(i));
+			Tile[]temp = obstacle.hitBy(bullets.get(i));
 			if (temp != null)
 			{
 				System.out.println(0);
-				obstacle.test(temp);
+				for (Tile t : temp)
+				{
+					obstacle.test(t);
+				}
 				this.remove(bullets.get(i));
 				bullets.remove(i);
 				i--;
