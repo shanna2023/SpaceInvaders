@@ -224,6 +224,15 @@ public class Obstacle extends Entity
 						poly.translate(obstacle[i][j].getX(), obstacle[i][j].getY());
 						if(poly.intersects(rec))
 						{
+							if(i < obstacle.length - 1 && obstacle[i+1][j] != null && obstacle[i+1][j].getState() == SOLID)
+							{
+								if(b.getDy() < 0)
+								{
+									obstacle[i+1][j].setState(BROKEN);
+									return new Tile[] {obstacle[i+1][j]};
+								}
+							}
+							
 							if(j + 1 < obstacle[i].length && obstacle[i][j+1] != null)
 							{
 								Polygon poly2 = new Polygon(obstacle[i][j+1].getS().xpoints, obstacle[i][j+1].getS().ypoints, obstacle[i][j+1].getS().npoints);
@@ -231,6 +240,14 @@ public class Obstacle extends Entity
 								
 								if(poly2.intersects(rec))
 								{
+									if(i < obstacle.length - 1 && obstacle[i+1][j+1] != null && obstacle[i+1][j+1].getState() == SOLID)
+									{
+										if(b.getDy() < 0)
+										{
+											obstacle[i+1][j+1].setState(BROKEN);
+											return new Tile[] {obstacle[i+1][j+1]};
+										}
+									}
 									obstacle[i][j].setState(BROKEN);
 									obstacle[i][j+1].setState(BROKEN);
 									return new Tile[] {obstacle[i][j], obstacle[i][j+1]};

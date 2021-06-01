@@ -78,8 +78,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			this.add(subtitle.get(i));
 		}
 		
-		String score = " YOUR MOM ";
-				
 		count = 0;
 		fire = 0;
 
@@ -198,24 +196,24 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				 * vv TEMPORARY TESTING OBSTACLE vv
 				 * ****************************************************************************************************
 				 */
-//				for(Obstacle o : obstacles)
-//				{
-//					if (e.getKeyCode() == KeyEvent.VK_1)
-//					{
-//						bullets.add(new Bullet(o.getX() + 10, o.getY() - 100, true));
-//						jawn.add(bullets.get(bullets.size() - 1));
-//					}
-//					if (e.getKeyCode() == KeyEvent.VK_2)
-//					{
-//						bullets.add(new Bullet(o.getX() + 40, o.getY() - 100, true));
-//						jawn.add(bullets.get(bullets.size() - 1));
-//					}
-//					if (e.getKeyCode() == KeyEvent.VK_3)
-//					{
-//						bullets.add(new Bullet(o.getX() + 65, o.getY() - 100, true));
-//						jawn.add(bullets.get(bullets.size() - 1));
-//					}
-//				}
+				for(Obstacle o : obstacles)
+				{
+					if (e.getKeyCode() == KeyEvent.VK_1)
+					{
+						bullets.add(new Bullet(o.getX() + 10, o.getY() - 100, true));
+						jawn.add(bullets.get(bullets.size() - 1));
+					}
+					if (e.getKeyCode() == KeyEvent.VK_2)
+					{
+						bullets.add(new Bullet(o.getX() + 40, o.getY() - 100, true));
+						jawn.add(bullets.get(bullets.size() - 1));
+					}
+					if (e.getKeyCode() == KeyEvent.VK_3)
+					{
+						bullets.add(new Bullet(o.getX() + 65, o.getY() - 100, true));
+						jawn.add(bullets.get(bullets.size() - 1));
+					}
+				}
 				/* ****************************************************************************************************
 				 * ^^ TEMPORARY TESTING OBSTACLE ^^
 				 * ****************************************************************************************************
@@ -272,6 +270,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		//If all aliens are on screen, then start moving and player start gaining power
 		if (began)
 		{
+			if(count % 100 == 0)
+			{
+				Enemy pillo = new Enemy(590, 50, "Ship");
+				this.add(pillo);
+			}
+	
 			
 			for(Obstacle o : obstacles)
 			{
@@ -360,6 +364,15 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 * ^^ LIMITING PLAYER MOVEMENT ^^
 			 * ****************************************************************************************************
 			 */
+			
+			if(count % 50 == 0)
+			{
+				int r = (int)(Math.random()*enemies.size());
+				int c = (int)(Math.random()*enemies.get(r).size());
+				Enemy pillo = enemies.get(r).get(c);
+				bullets.add(new Bullet(pillo.getX() + pillo.getWidth()/2, pillo.getY() + pillo.getHeight(), true));
+				this.add(bullets.get(bullets.size()-1));	
+			}
 
 
 			/* ****************************************************************************************************
@@ -458,7 +471,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		}
 		else if (settingUp) //Just left title screen, enemies not all on screen
 		{
-			int j = (count - 1) % 16;
+			int j = (count - 1) % 10;
 
 			if (j == 0)
 			{
@@ -469,38 +482,38 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 * vv PLACING EACH ENEMY ACCORDING TO COUNT vv
 			 * ****************************************************************************************************
 			 */
-			if (count > 64)
+			if (count > 40)
 			{
-				Enemy pillo = new Enemy(69 * j + 69, 210, "Bob");
+				Enemy pillo = new Enemy(69 * j + 291, 300, "Bob");
 				enemies.get(4).add(pillo);
 				this.add(pillo);
-				if (count == 80)
+				if (count == 50)
 				{
 					settingUp = false;
 					began = true;
 				}
 			}
-			else if(count > 48)
+			else if(count > 30)
 			{
-				Enemy pillo = new Enemy(69 * j + 69, 160, "Bob");
+				Enemy pillo = new Enemy(69 * j + 291, 250, "Bob");
 				enemies.get(3).add(pillo);
 				this.add(pillo);
 			}
-			else if(count > 32)
+			else if(count > 20)
 			{
-				Enemy pillo = new Enemy(69 * j + 71, 110, "Frog");
+				Enemy pillo = new Enemy(69 * j + 293, 200, "Frog");
 				enemies.get(2).add(pillo);
 				this.add(pillo);
 			}
-			else if(count > 16)
+			else if(count > 10)
 			{
-				Enemy pillo = new Enemy(69 * j + 71, 60, "Frog");
+				Enemy pillo = new Enemy(69 * j + 293, 150, "Frog");
 				enemies.get(1).add(pillo);
 				this.add(pillo);
 			}
 			else if(count > 0)
 			{
-				Enemy pillo = new Enemy(69 * j + 79, 10, "Squid");
+				Enemy pillo = new Enemy(69 * j + 301, 100, "Squid");
 				enemies.get(0).add(pillo);
 				this.add(pillo);
 			}
@@ -532,7 +545,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				this.add(bullets.get(bullets.size() - 1));
 			}
 			//^^ Ship at top shooting bullets ^^
-
+			
 			/* ****************************************************************************************************
 			 * vv UPDATING BULLETS, SHIP, AND ENEMIES vv
 			 * ****************************************************************************************************
@@ -566,7 +579,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		}
 
 		//Starts enemies going if left direction
-		if(count == 81)
+		if(count == 51)
 		{
 			for(ArrayList<Enemy> h : enemies)
 			{
@@ -661,5 +674,17 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		}
 		return right.getX() + right.getWidth();
 	}
-
+	
+	public int total()
+	{
+		int total = 0;
+		for(ArrayList<Enemy> en : enemies)
+		{
+			for(Enemy enemy : en)
+			{
+				total++;
+			}
+		}
+		return total;
+	}
 }
