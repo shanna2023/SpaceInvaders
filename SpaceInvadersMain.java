@@ -77,7 +77,9 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			subtitle.add(new Character(i * 20 + 470, 300, 3, str2.charAt(i)));
 			this.add(subtitle.get(i));
 		}
-
+		
+		String score = " YOUR MOM ";
+				
 		count = 0;
 		fire = 0;
 

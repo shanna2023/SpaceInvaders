@@ -11,7 +11,7 @@ public class Character extends JComponent
 	private Rectangle pixel;
 	private int size;
 	private boolean[][] image;
-	
+
 	public Character(int x, int y, int size, char c)
 	{
 		this.setLocation(x, y);
@@ -306,10 +306,119 @@ public class Character extends JComponent
 				{true , false, false, false, false},
 				{true , true , true , true , true }
 			};
+		case '0': //Number 0
+			image = new boolean[][] {
+				{false, true , true , true , false},
+				{true , false, false, false, true },
+				{true , false, false, true , true },
+				{true , false, true , false, true },
+				{true , true , false, false, true },
+				{true , false, false, false, true },
+				{false, true , true , true , false}
+			};
 			break;
+		case '1': //Number 1
+			image = new boolean[][] {
+				{false, false, true , false, false},
+				{false, true , true , false, false},
+				{false, false, true , false, false},
+				{false, false, true , false, false},
+				{false, false, true , false, false},
+				{false, false, true , false, false},
+				{false, true , true , true , false}
+			};
+			break;
+		case '2': //Number 2
+			image = new boolean[][] {
+				{false, true , true , true , false},
+				{true , false, false, false, true },
+				{false, false, false, false, true },
+				{false, false, false, true , false},
+				{false, false, true , false, false},
+				{false, true , false, false, false},
+				{true , true , true , true , true }
+			};
+			break;
+		case '3': //Number 3
+			image = new boolean[][] {
+				{false, true , true , true , false},
+				{true , false, false, false, true },
+				{false, false, false, false, true },
+				{false, false, true , true , false},
+				{false, false, false, false, true },
+				{true , false, false, false, true },
+				{false, true , true , true , false}
+			};
+			break;
+		case '4': //Number 4
+			image = new boolean[][] {
+				{false, false, true , true , false},
+				{false, true , false, true , false},
+				{false, true , false, true , false},
+				{true , false, false, true , false},
+				{true , true , true , true , true },
+				{false, false, false, true , false},
+				{false, false, false, true , false}
+			};
+			break;
+		case '5': //Number 5
+			image = new boolean[][] {
+				{true , true , true , true , true },
+				{true , false, false, false, false},
+				{true , false, false, false, false},
+				{true , true , true , true , false},
+				{false, false, false, false, true },
+				{true , false, false, false, true },
+				{false, true , true , true , false}
+			};
+			break;
+		case '6': //Number 6
+			image = new boolean[][] {
+				{false, false, true , true , true },
+				{false, true , false, false, false},
+				{true , false, false, false, false},
+				{true , true , true , true , false},
+				{true , false, false, false, true },
+				{true , false, false, false, true },
+				{false, true , true , true , false}
+			};
+			break;
+		case '7': //Number 7
+			image = new boolean[][] {
+				{true , true , true , true , true },
+				{false, false, false, false, true },
+				{false, false, false, true , false},
+				{false, false, false, true , false},
+				{false, false, true , false, false},
+				{false, false, true , false, false},
+				{false, true , false, false, false}
+			};
+			break;
+		case '8': //Number 8
+			image = new boolean[][] {
+				{false, true , true , true , false},
+				{true , false, false, false, true },
+				{true , false, false, false, true },
+				{false, true , true , true , false},
+				{true , false, false, false, true },
+				{true , false, false, false, true },
+				{false, true , true , true , false}
+			};
+			break;	
+		case '9': //Number 9
+			image = new boolean[][] {
+				{false, true , true , true , false},
+				{true , false, false, false, true },
+				{true , false, false, false, true },
+				{false, true , true , true , true },
+				{false, false, false, false, true },
+				{false, false, false, true , false},
+				{true , true , true , false, false}
+			};
+			break;	
 		}
-	}
-	
+	}	
+
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
