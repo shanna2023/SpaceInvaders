@@ -48,16 +48,16 @@ public abstract class Entity extends JComponent
 		}
 	}
 	
-	public boolean isTouching(Entity e)
-    {
-        boolean inX;
-        boolean inY;
-        
-        inX = (getX() > e.getX() && getX() < e.getX() + e.getWidth()) || (getX() + getWidth() > e.getX() && getX() + getWidth() < e.getX() + e.getWidth());
-        inY = (getY() > e.getY() && getY() < e.getY() + e.getHeight()) || (getY() + getHeight() > e.getY() && getY() + getHeight() < e.getY() + e.getHeight());
-        
-        return (inX && inY);
-    }
+//	public boolean isTouching(Entity e)
+//    {
+//        boolean inX;
+//        boolean inY;
+//        
+//        inX = (getX() > e.getX() && getX() < e.getX() + e.getWidth()) || (getX() + getWidth() > e.getX() && getX() + getWidth() < e.getX() + e.getWidth());
+//        inY = (getY() > e.getY() && getY() < e.getY() + e.getHeight()) || (getY() + getHeight() > e.getY() && getY() + getHeight() < e.getY() + e.getHeight());
+//        
+//        return (inX && inY);
+//    }
 
 	public int getDx()
 	{
