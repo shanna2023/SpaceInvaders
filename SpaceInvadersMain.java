@@ -444,7 +444,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 //								enemies.get(h).remove(j);
 								this.remove(bullets.get(i));
 								hitOrNot = true;
-								j--;
+								j--; 
 							}
 						}
 					}
