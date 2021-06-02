@@ -286,12 +286,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			
 			String score1 = "score: ";
 			String score2 = "" + this.score;
-			System.out.print(score2);
 			int numZeros = 7 - score2.length();
 
 			for(int i = 0; i < score1.length(); i++)
 			{
-				this.add(new Character(10 + 60*i, 10, 5, score1.charAt(i)));
+				this.add(new Character(10 + 20*i, 10, 3, score1.charAt(i)));
 			}
 			
 
@@ -299,12 +298,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				if(i < numZeros)
 				{
-					Character c = new Character(430 + 60*i, 10, 5, '0');
+					Character c = new Character(130 + 20*i, 10, 3, '0');
 					scoreDisplay.set(i, c);
 				}
 				else
 				{
-					Character c = new Character(430 + 60*i, 10, 5, score2.charAt(i - numZeros));
+					Character c = new Character(130 + 20*i, 10, 3, score2.charAt(i - numZeros));
 					scoreDisplay.set(i, c);
 				}			
 			}
@@ -356,7 +355,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 			for(Obstacle o : obstacles)
 			{
-				o.setVisible(true);//////////////////////////////////////////////////////////////////////////////////////////////////////
+				o.setVisible(true);
 			}
 
 			/* ****************************************************************************************************

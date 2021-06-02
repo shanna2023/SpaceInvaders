@@ -415,7 +415,18 @@ public class Character extends JComponent
 				{false, false, false, true , false},
 				{true , true , true , false, false}
 			};
-			break;	
+			break;
+		case ':':
+			image = new boolean[][] {
+				{false, false, false, false, false},
+				{false, false, true , false, false},
+				{false, false, false, false, false},
+				{false, false, false, false, false},
+				{false, false, false, false, false},
+				{false, false, true , false, false},
+				{false, false, false, false, false}
+			};
+			break;
 		}
 	}	
 
