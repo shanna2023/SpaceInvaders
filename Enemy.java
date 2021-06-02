@@ -31,12 +31,20 @@ public class Enemy extends Entity
 		case "Bob":
 			this.setSize(new Dimension(61, 41));
 			break;
+		case "Dead":
+			this.setSize(new Dimension(61, 41));
+			break;
 		}
 	}
 	
 	public String getName()
 	{
 		return s;
+	}
+	
+	public void setName(String str)
+	{
+		s = str;
 	}
 	
 	/**
@@ -113,6 +121,8 @@ public class Enemy extends Entity
 		}
 	}
 	
+	
+	
 	public boolean[][] getCurrent()
 	{
 		return current;
@@ -153,7 +163,7 @@ public class Enemy extends Entity
 						{false, true , false, false, false, false, true , false}
 					};
 					break;
-				case "Ship": //Draw a ship enemy
+				case "Ship": //Draw a ship enemy					
 					current = new boolean[][] {
 						{false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false},
 						{false, false, false, false, false, true , true , true , true , true , true , false, false, false, false, false},
@@ -163,7 +173,8 @@ public class Enemy extends Entity
 						{true , true , true , true , true , true , true , true , true , true , true , true , true , true , true , true },
 						{false, false, true , true , true , false, false, true , true , false, false, true , true , true , false, false},
 						{false, false, false, true , false, false, false, false, false, false, false, false, true , false, false, false}
-					};
+						
+					};				
 					break;
 				case "Bob": //Bob
 					current = new boolean[][] {
@@ -176,6 +187,19 @@ public class Enemy extends Entity
 						{false, false, true , true , false, true , true , false, true , true , false, false},
 						{true , true , false, false, false, false, false, false, false, false, true , true }
 					};
+					break;
+				case "Dead": //Dead
+					current = new boolean[][] {
+						{true , false, false, true , false, false, false, false, true , false, false, true },
+						{false, true , false, false, true , false, false, true , false, false, true , false},
+						{false, false, true , false, false, false, false, false, false, true , false, false},
+						{false, false, false, false, false, false, false, false, false, false, false, false},
+						{false, false, false, false, false, false, false, false, false, false, false, false},
+						{false, false, true , false, false, false, false, false, false, true , false, false},
+						{false, true , false, false, true , false, false, true , false, false, true , false},
+						{true , false, false, true , false, false, false, false, true , false, false, true }
+					};
+					break;
 				}
 			}
 			if (s.equals("Bob") && (int)(Math.random()*10000 + 1) == 1)
@@ -215,6 +239,10 @@ public class Enemy extends Entity
 				{
 					if (current[r][c])
 					{
+						if(s.equals("Ship"))
+						{
+							g2.setColor(Color.RED);
+						}
 						pixel.setLocation(c * 5, r * 5);
 						g2.fill(pixel);
 					}
@@ -223,3 +251,5 @@ public class Enemy extends Entity
 		}
 	}
 }
+
+

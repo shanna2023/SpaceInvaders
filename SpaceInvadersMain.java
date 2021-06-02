@@ -32,11 +32,13 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private int score;
 	private ArrayList<Character> scoreDisplay;
 	private HealthBar health;
+	private boolean flag;
 
 	//Temp
 
 	public SpaceInvadersMain()
 	{
+		flag = false;
 		this.setResizable(false);
 		this.setBounds(0, 0, 1280, 650);
 		this.setLayout(null);
@@ -141,12 +143,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				 */
 				if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT)
 				{
-					player.setDx(-5);
+					player.setDx(-8);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
 				{
-					player.setDx(5);
+					player.setDx(8);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
@@ -154,7 +156,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					if (player.getPower() == 3)
 					{
 						player.setPower(0);
-						bullets.add(new Bullet(player.getX() + 33, player.getY() - 20, false));
+						bullets.add(new Bullet(player.getX() + 37, player.getY() - 20, false));
 						jawn.add(bullets.get(bullets.size() - 1));
 					}
 				}
@@ -282,10 +284,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		//If all aliens are on screen, then start moving and player start gaining power
 		if (began)
 		{
+			
 			/* ****************************************************************************************************
 			 * vv ADDING SCORE DISPLAY vv
 			 * ****************************************************************************************************
 			 */
+			
 			for(int i = 0; i < scoreDisplay.size(); i++)
 			{
 				this.remove(scoreDisplay.get(i));
@@ -324,10 +328,19 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 * ****************************************************************************************************
 			 */
 			
-			if((total() == 30 || total() == 10) && hehe.getX() == -125)
+			
+			if(hehe.getX() == -125)
 			{
-				hehe.setDx(10);
+				if((total() <= 30 && total() > 10) && !flag)
+				{
+					hehe.setDx(10);
+				}
+				else if(total() <= 10 && flag)
+				{
+					hehe.setDx(10);
+				}
 			}
+		
 
 			if(hehe.getX() > this.getContentPane().getWidth())
 			{
@@ -335,10 +348,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				hehe.setLocation(1500, 50);
 			}
 
-			if((total() == 29 || total() == 9) && hehe.getX() == 1500)
+			if(((total() <= 30 && total() > 10) && !flag && hehe.getX() == 1500) || (total() <= 10 && flag && hehe.getX() == 1500))
 			{
+				flag = !flag;
 				hehe.setLocation(-125, 50);
 			}
+			
 
 			boolean hitOrNot = false;
 			for(int i = bullets.size()-1; i >= 0; i--)
@@ -413,6 +428,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 							{
 								if(enemies.get(h).get(j).getName().equals("Bob"))
 								{
+									enemies.get(h).get(j).setName("Dead");
 									score += 10;
 								}
 								else if(enemies.get(h).get(j).getName().equals("Frog"))
@@ -424,8 +440,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 									score += 30;
 								}
 
-								this.remove(enemies.get(h).get(j));
-								enemies.get(h).remove(j);
+//								this.remove(enemies.get(h).get(j));
+//								enemies.get(h).remove(j);
 								this.remove(bullets.get(i));
 								hitOrNot = true;
 								j--;
@@ -812,4 +828,5 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		}
 		return total;
 	}
+	
 }

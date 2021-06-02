@@ -427,6 +427,7 @@ public class Character extends JComponent
 				{false, false, false, false, false}
 			};
 			break;
+
 		}
 	}	
 
