@@ -34,6 +34,10 @@ public class Enemy extends Entity
 		}
 	}
 	
+	public String getName()
+	{
+		return s;
+	}
 	
 	/**
 	 * Changes the animation frame of an enemy
