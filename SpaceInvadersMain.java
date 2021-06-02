@@ -31,6 +31,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private ArrayList<Bullet> bullets;
 	private int score;
 	private ArrayList<Character> scoreDisplay;
+	private HealthBar health;
 
 	//Temp
 
@@ -86,6 +87,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			subtitle.add(new Character(i * 20 + 470, 300, 3, str2.charAt(i)));
 			this.add(subtitle.get(i));
 		}
+		
+		health = new HealthBar(1050, 10);
 
 		count = 0;
 		fire = 0;
@@ -279,6 +282,10 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		//If all aliens are on screen, then start moving and player start gaining power
 		if (began)
 		{
+			/* ****************************************************************************************************
+			 * vv ADDING SCORE DISPLAY vv
+			 * ****************************************************************************************************
+			 */
 			for(int i = 0; i < scoreDisplay.size(); i++)
 			{
 				this.remove(scoreDisplay.get(i));
@@ -292,7 +299,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				this.add(new Character(10 + 20*i, 10, 3, score1.charAt(i)));
 			}
-			
 
 			for(int i = 0; i < 7; i++)
 			{
@@ -312,6 +318,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				this.add(scoreDisplay.get(i));
 			}
+			
+			/* ****************************************************************************************************
+			 * ^^ ADDING SCORE DISPLAY ^^
+			 * ****************************************************************************************************
+			 */
 			
 			if((total() == 30 || total() == 10) && hehe.getX() == -125)
 			{
@@ -483,11 +494,22 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					{
 						enemy.change();
 					}
-					if(enemy.getBounds().intersects(player.getBounds())) //If an enemy is touching the player
+					if(enemy.getBounds().intersects(player.getBounds()) || health.getHealth() <= 0) //If an enemy is touching the player
 					{
 						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
 						System.exit(0);
 					}
+				}
+			}
+			
+			for (int i = 0; i < bullets.size(); i++)
+			{
+				if (bullets.get(i).isE() && bullets.get(i).isTouching(player))
+				{
+					health.setHealth(health.getHealth() - 40);
+					this.remove(bullets.get(i));
+					bullets.remove(i);
+					i--;
 				}
 			}
 
@@ -591,6 +613,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					this.add(hehe); /////////////////////////
 					hehe.setLocation(-125, 50);
 					hehe.setDx(0);
+					this.add(health);
 				}
 			}
 			else if(count > 30)
