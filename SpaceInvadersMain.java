@@ -30,6 +30,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private ArrayList<Character> subtitle;
 	private ArrayList<Bullet> bullets;
 	private int score;
+	private ArrayList<Character> scoreDisplay;
 
 	//Temp
 
@@ -65,6 +66,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		title = new ArrayList<Character>();
 		subtitle = new ArrayList<Character>();
 		bullets = new ArrayList<Bullet>();
+		scoreDisplay = new ArrayList<Character>();
+		
+		for (int i = 0; i < 7; i++)
+		{
+			scoreDisplay.add(new Character(430 + i*60, 10, 5, '0'));
+		}
 
 		String str1 = "space invaders";
 		String str2 = "press b to begin";
@@ -272,14 +279,39 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		//If all aliens are on screen, then start moving and player start gaining power
 		if (began)
 		{
-			String score = "score: " + this.score;
-			
-			for(int i = 0; i < score.length(); i++)
+			for(int i = 0; i < scoreDisplay.size(); i++)
 			{
-				if(i <= 6)
+				this.remove(scoreDisplay.get(i));
+			}
+			
+			String score1 = "score: ";
+			String score2 = "" + this.score;
+			System.out.print(score2);
+			int numZeros = 7 - score2.length();
+
+			for(int i = 0; i < score1.length(); i++)
+			{
+				this.add(new Character(10 + 60*i, 10, 5, score1.charAt(i)));
+			}
+			
+
+			for(int i = 0; i < 7; i++)
+			{
+				if(i < numZeros)
 				{
-					this.add(new Character(10 + 60*i, 10, 5, score.charAt(i)));
+					Character c = new Character(430 + 60*i, 10, 5, '0');
+					scoreDisplay.set(i, c);
 				}
+				else
+				{
+					Character c = new Character(430 + 60*i, 10, 5, score2.charAt(i - numZeros));
+					scoreDisplay.set(i, c);
+				}			
+			}
+			
+			for(int i = 0; i < scoreDisplay.size(); i++)
+			{
+				this.add(scoreDisplay.get(i));
 			}
 			
 			if((total() == 30 || total() == 10) && hehe.getX() == -125)
