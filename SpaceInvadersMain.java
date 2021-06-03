@@ -44,6 +44,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
+		this.setLocationRelativeTo(null);
 
 		frog = new Enemy(90, 300, "Frog");
 		this.add(frog);
