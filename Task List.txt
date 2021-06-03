@@ -29,6 +29,4 @@ Make More efficient:
 -Make 2D array for aliens not ArrayList MAYBE but it might be effort
 -Only iterate and test bullet collision if its above the lowest alien, same with obstacles
 -dont do left() and right() all the time, use integer for leftmost and rightmost, increment when aliens move, only use left() and right() when alien dies
--WHY ADDING HEALTH EVERY SINGLE ITERATION LOL
--update score display only when alien killed
 -test if bullet is hitting player only if it is within y values of player

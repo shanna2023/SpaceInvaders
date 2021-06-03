@@ -70,12 +70,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		subtitle = new ArrayList<Character>();
 		bullets = new ArrayList<Bullet>();
 		scoreDisplay = new ArrayList<Character>();
-		deaths = new ArrayList<Enemy>();
 		
-		for (int i = 0; i < 7; i++)
-		{
-			scoreDisplay.add(new Character(430 + i*60, 10, 5, '0'));
-		}
+		deaths = new ArrayList<Enemy>();
 
 		String str1 = "space invaders";
 		String str2 = "press b to begin";
@@ -284,13 +280,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		count++;
 		//If all aliens are on screen, then start moving and player start gaining power
 		if (began)
-		{
-			String healthLabel = "health ";
-			for(int i = 0; i < healthLabel.length(); i++)
-			{
-				this.add(new Character(290 + 19*i, 10, 3, healthLabel.charAt(i)));
-			}
-			
+		{	
 			if(hehe.getX() == -125)
 			{
 				if((total() <= 30 && total() > 10) && !flag)
@@ -422,47 +412,38 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				if(hitOrNot)
 				{
 					bullets.remove(i);
+					for(int k = 0; k < scoreDisplay.size(); k++)
+					{
+						this.remove(scoreDisplay.get(k));
+					}
+				
+
+					String score2 = "" + this.score;
+					int numZeros = 7 - score2.length();
+		
+					for(int k = 0; k < 7; k++)
+					{
+						if(k < numZeros)
+						{
+							Character c = new Character(130 + 20*k, 10, 3, '0');
+							scoreDisplay.set(k, c);
+						}
+						else
+						{
+							Character c = new Character(130 + 20*k, 10, 3, score2.charAt(k - numZeros));
+							System.out.println(scoreDisplay.get(k).getChar());
+							scoreDisplay.set(k, c);
+							System.out.println(scoreDisplay.get(k).getChar());
+						}			
+					}
+					
+					for(int k = 0; k < scoreDisplay.size(); k++)
+					{
+						this.add(scoreDisplay.get(k));
+					}
 					hitOrNot = false;
 				}
 			}
-			
-			for(int i = 0; i < scoreDisplay.size(); i++)
-			{
-				this.remove(scoreDisplay.get(i));
-			}
-			
-			String score1 = "score: ";
-			String score2 = "" + this.score;
-			int numZeros = 7 - score2.length();
-
-			for(int i = 0; i < score1.length(); i++)
-			{
-				this.add(new Character(10 + 20*i, 10, 3, score1.charAt(i)));
-			}
-			
-
-			for(int i = 0; i < 7; i++)
-			{
-				if(i < numZeros)
-				{
-					Character c = new Character(130 + 20*i, 10, 3, '0');
-					scoreDisplay.set(i, c);
-				}
-				else
-				{
-					Character c = new Character(130 + 20*i, 10, 3, score2.charAt(i - numZeros));
-					scoreDisplay.set(i, c);
-				}			
-			}
-			
-			for(int i = 0; i < scoreDisplay.size(); i++)
-			{
-				this.add(scoreDisplay.get(i));
-			}
-
-		
-
-
 
 
 			/* ****************************************************************************************************
@@ -635,6 +616,23 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					hehe.setLocation(-125, 50);
 					hehe.setDx(0);
 					this.add(health);
+					
+					String str = "score:0000000";
+					for (int i = 0; i < 13; i++)
+					{
+							Character c = new Character(10 + 20*i, 10, 3, str.charAt(i));
+							this.add(c);
+							if(i > 5)
+							{
+								scoreDisplay.add(c);
+							}
+					}
+					
+					String healthLabel = "health ";
+					for(int i = 0; i < healthLabel.length(); i++)
+					{
+						this.add(new Character(290 + 19*i, 10, 3, healthLabel.charAt(i)));
+					}
 				}
 			}
 			else if(count > 30)

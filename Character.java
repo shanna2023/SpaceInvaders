@@ -11,6 +11,7 @@ public class Character extends JComponent
 	private Rectangle pixel;
 	private int size;
 	private boolean[][] image;
+	private char c; 
 
 	public Character(int x, int y, int size, char c)
 	{
@@ -19,6 +20,7 @@ public class Character extends JComponent
 		pixel = new Rectangle(size, size);
 		this.size = size;
 		image = null;
+		this.c = c;
 		switch (c)
 		{
 		case 'a': //Letter A
@@ -431,6 +433,16 @@ public class Character extends JComponent
 		}
 	}	
 
+	public char getChar()
+	{
+		return c; 
+	}
+	
+	public void setChar(char c)
+	{
+		this.c = c; 
+	}
+	
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
