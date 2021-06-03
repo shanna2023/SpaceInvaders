@@ -29,7 +29,9 @@ public class HealthBar extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.WHITE);
+		g2.drawRoundRect(1, 1, 198, 19, 10, 10);
 		g2.setColor(new Color(169, 3, 252));
-		g2.fillRoundRect(1, 1, health - 2, 20, 10, 10);
+		g2.fillRoundRect(2, 2, health - 3, 17, 10, 10);
 	}
 }
