@@ -22,10 +22,10 @@ public class Obstacle extends Entity
 		super(x, y, Entity.OBSTACLE);
 		if (broken == null)
 		{
-			broken = new boolean[5][10][30];
+			broken = new boolean[5][10][20];
 			for (int i = 0; i < 10; i++)
 			{
-				for (int j = 0; j < 30; j++)
+				for (int j = 0; j < 20; j++)
 				{
 					broken[0][i][j] = (int)(Math.random()*25) == 0;
 				}
@@ -33,7 +33,7 @@ public class Obstacle extends Entity
 
 			for (int i = 0; i < 10; i++)
 			{
-				for (int j = 0; j < 30; j++)
+				for (int j = 0; j < 20; j++)
 				{
 					broken[1][i][j] = (int)(Math.random()*25) == 0;
 				}
@@ -41,7 +41,7 @@ public class Obstacle extends Entity
 
 			for (int i = 0; i < 10; i++)
 			{
-				for (int j = 0; j < 30; j++)
+				for (int j = 0; j < 20; j++)
 				{
 					broken[2][i][j] = (int)(Math.random()*25) == 0;
 				}
@@ -49,7 +49,7 @@ public class Obstacle extends Entity
 
 			for (int i = 0; i < 10; i++)
 			{
-				for (int j = 0; j < 30; j++)
+				for (int j = 0; j < 20; j++)
 				{
 					broken[3][i][j] = (int)(Math.random()*25) == 0;
 				}
@@ -57,17 +57,17 @@ public class Obstacle extends Entity
 
 			for (int i = 0; i < 10; i++)
 			{
-				for (int j = 0; j < 30; j++)
+				for (int j = 0; j < 20; j++)
 				{
 					broken[4][i][j] = (int)(Math.random()*25) == 0;
 				}
 			}
 		}
 		obstacle = new Tile[][] {
-			{new Corner(0, 0, Corner.TL, 0, 0), new Block(30, 0, 0, 1), new Corner(60, 0, Corner.TR, 0, 2)},
-			{new Block(0, 10, 1, 0), new Block(30, 10, 1, 1), new Block(60, 10, 1, 2)},
-			{new Block(0, 20, 2, 0), new Block(30, 20, 2, 1), new Block(60, 20, 2, 2)},
-			{new Corner(0, 30, Corner.BL, 3, 0), null, new Corner(60, 30, Corner.BR, 3, 2)}
+			{new Corner(0, 0, Corner.TL, 0, 0), new Block(20, 0, 0, 1), new Corner(40, 0, Corner.TR, 0, 2)},
+			{new Block(0, 10, 1, 0), new Block(20, 10, 1, 1), new Block(40, 10, 1, 2)},
+			{new Block(0, 20, 2, 0), new Block(20, 20, 2, 1), new Block(40, 20, 2, 2)},
+			{new Corner(0, 30, Corner.BL, 3, 0), null, new Corner(40, 30, Corner.BR, 3, 2)}
 		};
 
 		for (int i = 0; i < obstacle.length; i++)
