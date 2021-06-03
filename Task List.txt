@@ -7,13 +7,13 @@ TASKS:
 2 - Create code for movement of characters DONE YEAH YEAH YEAH YEAH
       a - Limit the player's movement 
       b - Move enemies left, right, and down accordingly, even when first and last column are removed
-3 - Create code for collision detection, lives countdown, and enemy removal
+3 - Create code for collision detection, lives countdown, and enemy removal DONE YEAH YEAH YEAH YEAH
       a - Remove enemies from ArrayList, not just JFrame
-4 - Create code for when enemies fire
+4 - Create code for when enemies fire DONE YEAH YEAH YEAH YEAH
       a - Random one fires after specified time
-5 - Create ArrayList for obstacles
+5 - Create ArrayList for obstacles DONE YEAH YEAH YEAH YEAH
       a - Check if enemy or player is shooting, and if so then remove certain parts
-6 - Score, and Highscore, maybe leaderboard
+6 - Score, and Highscore, maybe leaderboard ALMOST DONE YEAH YEAH YEAH YEAH
 
 7 - MAYBEEEEEEEE username and password sign-in system for multiple levels
 
