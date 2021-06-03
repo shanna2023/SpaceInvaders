@@ -200,6 +200,18 @@ public class Enemy extends Entity
 						{true , false, false, true , false, false, false, false, true , false, false, true }
 					};
 					break;
+				case "RedDead": //RedDead
+					current = new boolean[][] {
+						{true , false, false, true , false, false, false, false, true , false, false, true },
+						{false, true , false, false, true , false, false, true , false, false, true , false},
+						{false, false, true , false, false, false, false, false, false, true , false, false},
+						{false, false, false, false, false, false, false, false, false, false, false, false},
+						{false, false, false, false, false, false, false, false, false, false, false, false},
+						{false, false, true , false, false, false, false, false, false, true , false, false},
+						{false, true , false, false, true , false, false, true , false, false, true , false},
+						{true , false, false, true , false, false, false, false, true , false, false, true }
+					};
+					break;
 				}
 			}
 //			if (s.equals("Bob") && (int)(Math.random()*10000 + 1) == 1)
@@ -239,7 +251,7 @@ public class Enemy extends Entity
 				{
 					if (current[r][c])
 					{
-						if(s.equals("Ship"))
+						if(s.equals("Ship") || s.equals("RedDead"))
 						{
 							g2.setColor(Color.RED);
 						}

@@ -124,7 +124,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 		SpaceInvadersMain jawn = this;
 
-		Timer t = new Timer(25, this);
+		Timer t = new Timer(40, this);
 
 		this.addKeyListener(new KeyListener()
 		{
@@ -143,12 +143,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				 */
 				if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT)
 				{
-					player.setDx(-10);
+					player.setDx(-16);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
 				{
-					player.setDx(10);
+					player.setDx(16);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
@@ -284,40 +284,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		//If all aliens are on screen, then start moving and player start gaining power
 		if (began)
 		{
-			for(int i = 0; i < scoreDisplay.size(); i++)
-			{
-				this.remove(scoreDisplay.get(i));
-			}
-			
-			String score1 = "score: ";
-			String score2 = "" + this.score;
-			int numZeros = 7 - score2.length();
-
-			for(int i = 0; i < score1.length(); i++)
-			{
-				this.add(new Character(10 + 20*i, 10, 3, score1.charAt(i)));
-			}
-			
-
-			for(int i = 0; i < 7; i++)
-			{
-				if(i < numZeros)
-				{
-					Character c = new Character(130 + 20*i, 10, 3, '0');
-					scoreDisplay.set(i, c);
-				}
-				else
-				{
-					Character c = new Character(130 + 20*i, 10, 3, score2.charAt(i - numZeros));
-					scoreDisplay.set(i, c);
-				}			
-			}
-			
-			for(int i = 0; i < scoreDisplay.size(); i++)
-			{
-				this.add(scoreDisplay.get(i));
-			}
-			
 			String healthLabel = "health ";
 			for(int i = 0; i < healthLabel.length(); i++)
 			{
@@ -347,6 +313,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				hehe.setLocation(-125, 50);
 			}
 
+			for(int i = 0; i < deaths.size(); i++)
+			{
+				this.remove(deaths.get(i));
+				deaths.remove(i);
+				i--;
+			}
 			boolean hitOrNot = false;
 			for(int i = bullets.size()-1; i >= 0; i--)
 			{
@@ -355,6 +327,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 					if(hehe.getBounds().intersects(bullets.get(i).getBounds()))
 					{
+						deaths.add(new Enemy(hehe.getX(), hehe.getY(), "RedDead"));
+						this.add(deaths.get(deaths.size()-1));
 						hehe.setLocation(1500, 50);
 						this.remove(bullets.get(i));
 						hitOrNot = true;
@@ -407,12 +381,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 * ^^ RUNS THROUGH EACH OBSTACLE AND DETERMINES IF IT WAS HIT, REMOVES BULLETS ACCORDINGLY ^^
 			 * ****************************************************************************************************
 			 */
-			for(int i = 0; i < deaths.size(); i++)
-			{
-				this.remove(deaths.get(i));
-				deaths.remove(i);
-				i--;
-			}
+			
 			hitOrNot = false;
 			for(int i = bullets.size()-1; i >= 0; i--)
 			{
@@ -456,7 +425,40 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				}
 			}
 			
+			for(int i = 0; i < scoreDisplay.size(); i++)
+			{
+				this.remove(scoreDisplay.get(i));
+			}
 			
+			String score1 = "score: ";
+			String score2 = "" + this.score;
+			int numZeros = 7 - score2.length();
+
+			for(int i = 0; i < score1.length(); i++)
+			{
+				this.add(new Character(10 + 20*i, 10, 3, score1.charAt(i)));
+			}
+			
+
+			for(int i = 0; i < 7; i++)
+			{
+				if(i < numZeros)
+				{
+					Character c = new Character(130 + 20*i, 10, 3, '0');
+					scoreDisplay.set(i, c);
+				}
+				else
+				{
+					Character c = new Character(130 + 20*i, 10, 3, score2.charAt(i - numZeros));
+					scoreDisplay.set(i, c);
+				}			
+			}
+			
+			for(int i = 0; i < scoreDisplay.size(); i++)
+			{
+				this.add(scoreDisplay.get(i));
+			}
+
 		
 
 
@@ -486,6 +488,15 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 * ****************************************************************************************************
 			 */
 
+			for(int i = 0; i < enemies.size(); i++)
+			{
+				if(enemies.get(i).isEmpty())
+				{
+					enemies.remove(i);
+					i--;
+				}
+			}
+			
 			if(count % 15 == 0)
 			{
 				int r = (int)(Math.random()*enemies.size());
@@ -501,16 +512,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 * vv UPDATING ENEMIES AND BULLETS, GAME OVER IF ENEMY TOUCHES PLAYER vv
 			 * ****************************************************************************************************
 			 */
-			
-			for(int i = 0; i < enemies.size(); i++)
-			{
-				if(enemies.get(i).isEmpty())
-				{
-					enemies.remove(i);
-					i--;
-				}
-			}
-			
+
 			for (ArrayList<Enemy> arr : enemies)
 			{
 				for (Enemy enemy : arr)
@@ -541,14 +543,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			
 			hehe.update();
 
-			for(int i = 0; i < enemies.size(); i++)
-			{
-				if(enemies.get(i).isEmpty())
-				{
-					enemies.remove(i);
-					i--;
-				}
-			}
 
 			if(enemies.size() == 0)
 			{
@@ -599,7 +593,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			if (player.getPower() < 3)
 			{
 				fire++;
-				if (fire % 6  == 0)
+				if (fire % 5  == 0)
 				{
 					player.setPower(player.getPower() + 1);
 				}
@@ -734,7 +728,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				for(Enemy bruh : h)
 				{
-					bruh.setDx(-2);
+					bruh.setDx(-4);
 				}
 			}
 		}
@@ -750,8 +744,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 * ^^ TEMPORARY, FOR TESTING OF OBSTACLES ^^
 		 * ****************************************************************************************************
 		 */
-
-
 
 		repaint();
 	}

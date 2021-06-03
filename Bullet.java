@@ -20,11 +20,11 @@ public class Bullet extends Entity
 
         if (isE == false)
         {
-            setDy(-10);
+            setDy(-20);
         }
         else
         {
-            setDy(5);
+            setDy(12);
         }
         setDx(0);
     }
