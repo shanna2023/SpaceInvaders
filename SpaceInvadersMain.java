@@ -265,7 +265,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		t.start();
 
 		this.setVisible(true);
-		System.out.print(this.getContentPane().getWidth());
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -574,7 +573,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			if (player.getPower() < 3)
 			{
 				fire++;
-				if (fire % 1  == 0)
+				if (fire % 6  == 0)
 				{
 					player.setPower(player.getPower() + 1);
 				}
