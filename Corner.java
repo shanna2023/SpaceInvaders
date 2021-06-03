@@ -21,16 +21,16 @@ public class Corner extends Tile
         switch (type)
         {
         case TL:
-            triangle = new Polygon(new int[] {0, 30, 30}, new int[] {10, 0, 10}, 3);
+            triangle = new Polygon(new int[] {0, 20, 20}, new int[] {10, 0, 10}, 3);
             break;
         case TR:
-            triangle = new Polygon(new int[] {0, 0, 30}, new int[] {0, 10, 10}, 3);
+            triangle = new Polygon(new int[] {0, 0, 20}, new int[] {0, 10, 10}, 3);
             break;
         case BL:
-            triangle = new Polygon(new int[] {0, 0, 30}, new int[] {0, 10, 0}, 3);
+            triangle = new Polygon(new int[] {0, 0, 20}, new int[] {0, 10, 0}, 3);
             break;
         case BR:
-            triangle = new Polygon(new int[] {0, 30, 30}, new int[] {0, 0, 10}, 3);
+            triangle = new Polygon(new int[] {0, 20, 20}, new int[] {0, 0, 10}, 3);
             break;
         }
         setS(triangle);
