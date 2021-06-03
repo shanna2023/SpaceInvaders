@@ -100,7 +100,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 		obstacles = new ArrayList<Obstacle>();
 		enemies = new ArrayList<ArrayList<Enemy>>();
-		player = new Player(300, 550);
+		player = new Player(280, 550);
 
 		Obstacle obstacle = new Obstacle(76, 425);
 		obstacles.add(obstacle);
@@ -156,7 +156,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					if (player.getPower() == 3)
 					{
 						player.setPower(0);
-						bullets.add(new Bullet(player.getX() + 37, player.getY() - 20, false));
+						bullets.add(new Bullet(player.getX() + 28, player.getY() - 20, false));
 						jawn.add(bullets.get(bullets.size() - 1));
 					}
 				}
