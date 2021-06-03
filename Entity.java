@@ -33,7 +33,7 @@ public abstract class Entity extends JComponent
 		switch (type)
 		{
 		case PLAYER:
-			this.setSize(new Dimension(81, 41));
+			this.setSize(new Dimension(65, 33));
 			break;
 		case ENEMY:
 			this.setSize(new Dimension(65, 33));
@@ -42,7 +42,7 @@ public abstract class Entity extends JComponent
 			this.setSize(new Dimension(9, 27));
 			break;
 		case OBSTACLE:
-			this.setSize(new Dimension(91, 41));
+			this.setSize(new Dimension(61, 41));
 			break;
 		default:
 		}
