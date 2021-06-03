@@ -40,30 +40,30 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	public SpaceInvadersMain()
 	{
 		this.setResizable(false);
-		this.setBounds(0, 0, 1280, 650);
+		this.setBounds(0, 0, 640, 650);
 		this.setLayout(null);
 		this.setTitle("Space Invaders");
 		this.getContentPane().setBackground(Color.BLACK);
 
-		frog = new Enemy(70, 300, "Frog");
+		frog = new Enemy(90, 300, "Frog");
 		this.add(frog);
 
-		squid = new Enemy(78, 100, "Squid");
+		squid = new Enemy(96, 100, "Squid");
 		this.add(squid);
 
-		bob = new Enemy(68, 500, "Bob");
+		bob = new Enemy(88, 500, "Bob");
 		this.add(bob);
 
-		frog2 = new Enemy(1100, 300, "Frog");
+		frog2 = new Enemy(490, 300, "Frog");
 		this.add(frog2);
 
-		squid2 = new Enemy(1108, 100, "Squid");
+		squid2 = new Enemy(496, 100, "Squid");
 		this.add(squid2);
 
-		bob2 = new Enemy(1098, 500, "Bob");
+		bob2 = new Enemy(488, 500, "Bob");
 		this.add(bob2);
 
-		hehe = new Enemy(590, 50, "Ship");
+		hehe = new Enemy(280, 50, "Ship");
 		this.add(hehe);
 
 		title = new ArrayList<Character>();
@@ -82,12 +82,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		
 		for (int i = 0; i < str1.length(); i++)
 		{
-			title.add(new Character(i * 60 + 210, 200, 10, str1.charAt(i)));
+			title.add(new Character(i * 24 + 147, 220, 4, str1.charAt(i)));
 			this.add(title.get(i));
 		}
 		for (int i = 0; i < str2.length(); i++)
 		{
-			subtitle.add(new Character(i * 20 + 470, 300, 3, str2.charAt(i)));
+			subtitle.add(new Character(i * 12 + 217, 280, 2, str2.charAt(i)));
 			this.add(subtitle.get(i));
 		}
 		
@@ -100,7 +100,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 		obstacles = new ArrayList<Obstacle>();
 		enemies = new ArrayList<ArrayList<Enemy>>();
-		player = new Player(600, 550);
+		player = new Player(300, 550);
 
 		Obstacle obstacle = new Obstacle(180, 425);
 		obstacles.add(obstacle);
@@ -156,7 +156,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					if (player.getPower() == 3)
 					{
 						player.setPower(0);
-						bullets.add(new Bullet(player.getX() + 33, player.getY() - 20, false));
+						bullets.add(new Bullet(player.getX() + 37, player.getY() - 20, false));
 						jawn.add(bullets.get(bullets.size() - 1));
 					}
 				}
@@ -268,6 +268,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		t.start();
 
 		this.setVisible(true);
+		System.out.print(this.getContentPane().getWidth());
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -623,7 +624,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			 */
 			if (count > 40)
 			{
-				Enemy pillo = new Enemy(69 * j + 291, 300, "Bob");
+				Enemy pillo = new Enemy(54 * j + 45, 300, "Bob");
 				enemies.get(4).add(pillo);
 				this.add(pillo);
 				if (count == 50)
@@ -638,25 +639,25 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			}
 			else if(count > 30)
 			{
-				Enemy pillo = new Enemy(69 * j + 291, 250, "Bob");
+				Enemy pillo = new Enemy(54 * j + 45, 250, "Bob");
 				enemies.get(3).add(pillo);
 				this.add(pillo);
 			}
 			else if(count > 20)
 			{
-				Enemy pillo = new Enemy(69 * j + 293, 200, "Frog");
+				Enemy pillo = new Enemy(54 * j + 47, 200, "Frog");
 				enemies.get(2).add(pillo);
 				this.add(pillo);
 			}
 			else if(count > 10)
 			{
-				Enemy pillo = new Enemy(69 * j + 293, 150, "Frog");
+				Enemy pillo = new Enemy(54 * j + 47, 150, "Frog");
 				enemies.get(1).add(pillo);
 				this.add(pillo);
 			}
 			else if(count > 0)
 			{
-				Enemy pillo = new Enemy(69 * j + 301, 100, "Squid");
+				Enemy pillo = new Enemy(54 * j + 53, 100, "Squid");
 				enemies.get(0).add(pillo);
 				this.add(pillo);
 			}
@@ -700,7 +701,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 			hehe.update();
 
-			if (hehe.getX() < 210 || hehe.getX() + hehe.getWidth() > 990)
+			if (hehe.getX() < 147 || hehe.getX() + hehe.getWidth() > 470)
 			{
 				hehe.setDx(hehe.getDx() * -1);
 			}

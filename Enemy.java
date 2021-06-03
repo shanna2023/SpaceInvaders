@@ -15,24 +15,27 @@ public class Enemy extends Entity
 	public Enemy(int x, int y, String s)
 	{
 		super(x, y, Entity.ENEMY);
-		pixel = new Rectangle(5, 5);
+		pixel = new Rectangle(4, 4);
 		this.s = s;
 		switch (s)
 		{
 		case "Frog":
-			this.setSize(new Dimension(56, 41));
+			this.setSize(new Dimension(45, 33));
 			break;
 		case "Squid":
-			this.setSize(new Dimension(41, 41));
+			this.setSize(new Dimension(33, 33));
 			break;
 		case "Ship":
-			this.setSize(new Dimension(81, 41));
+			this.setSize(new Dimension(65, 33));
 			break;
 		case "Bob":
-			this.setSize(new Dimension(61, 41));
+			this.setSize(new Dimension(49, 33));
 			break;
 		case "Dead":
-			this.setSize(new Dimension(61, 41));
+			this.setSize(new Dimension(49, 33));
+			break;
+		case "RedDead":
+			this.setSize(new Dimension(49, 33));
 			break;
 		}
 	}
@@ -255,7 +258,7 @@ public class Enemy extends Entity
 						{
 							g2.setColor(Color.RED);
 						}
-						pixel.setLocation(c * 5, r * 5);
+						pixel.setLocation(c * 4, r * 4);
 						g2.fill(pixel);
 					}
 				}
