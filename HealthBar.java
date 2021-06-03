@@ -9,7 +9,7 @@ public class HealthBar extends JComponent
 	private int health;
 	public HealthBar(int x, int y)
 	{
-		this.setBounds(x, y, 201, 26);
+		this.setBounds(x, y, 201, 21);
 		health = 200;
 	}
 	
@@ -30,6 +30,6 @@ public class HealthBar extends JComponent
 	{
 		Graphics2D g2 = (Graphics2D)g;
 		g2.setColor(new Color(169, 3, 252));
-		g2.fillRoundRect(1, 1, health - 2, 23, 10, 10);
+		g2.fillRoundRect(1, 1, health - 2, 20, 10, 10);
 	}
 }
