@@ -32,6 +32,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private int score;
 	private ArrayList<Character> scoreDisplay;
 	private ArrayList<Enemy> deaths; 
+	private HealthBar health;
 
 	//Temp
 
@@ -88,7 +89,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			subtitle.add(new Character(i * 20 + 470, 300, 3, str2.charAt(i)));
 			this.add(subtitle.get(i));
 		}
-
+		
+		health = new HealthBar(1050, 10);
 		count = 0;
 		fire = 0;
 
@@ -494,6 +496,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					i--;
 				}
 			}
+			
 			for (ArrayList<Enemy> arr : enemies)
 			{
 				for (Enemy enemy : arr)
@@ -503,7 +506,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					{
 						enemy.change();
 					}
-					if(enemy.getBounds().intersects(player.getBounds())) //If an enemy is touching the player
+					if(enemy.getBounds().intersects(player.getBounds()) || health.getHealth() <= 0) 
 					{
 						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
 						System.exit(0);
@@ -511,6 +514,17 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				}
 			}
 
+			for (int i = 0; i < bullets.size(); i++)
+			{
+				if (bullets.get(i).isE() && bullets.get(i).isTouching(player))
+				{
+					health.setHealth(health.getHealth() - 40);
+					this.remove(bullets.get(i));
+					bullets.remove(i);
+					i--;
+				}
+			}
+			
 			hehe.update();
 
 			for(int i = 0; i < enemies.size(); i++)
@@ -611,6 +625,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					this.add(hehe); /////////////////////////
 					hehe.setLocation(-125, 50);
 					hehe.setDx(0);
+					this.add(health);
 				}
 			}
 			else if(count > 30)
