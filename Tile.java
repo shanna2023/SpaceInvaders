@@ -20,7 +20,7 @@ public abstract class Tile extends JComponent
     {
         this.r = r;
         this.c = c;
-        this.setBounds(x, y, 30, 10);
+        this.setBounds(x, y, 20, 10);
         state = Obstacle.SOLID;
         hit = false;
         neighbors = new ArrayList<Tile>();
