@@ -91,7 +91,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			this.add(subtitle.get(i));
 		}
 		
-		health = new HealthBar(1050, 10);
+		health = new HealthBar(415, 10);
 		count = 0;
 		fire = 0;
 
@@ -102,16 +102,16 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		enemies = new ArrayList<ArrayList<Enemy>>();
 		player = new Player(300, 550);
 
-		Obstacle obstacle = new Obstacle(180, 425);
+		Obstacle obstacle = new Obstacle(76, 425);
 		obstacles.add(obstacle);
 
-		Obstacle obstacle1 = new Obstacle(451, 425);
+		Obstacle obstacle1 = new Obstacle(213, 425);
 		obstacles.add(obstacle1);
 
-		Obstacle obstacle2 = new Obstacle(722, 425);
+		Obstacle obstacle2 = new Obstacle(350, 425);
 		obstacles.add(obstacle2);
 
-		Obstacle obstacle3 = new Obstacle(993, 425);
+		Obstacle obstacle3 = new Obstacle(487, 425);
 		obstacles.add(obstacle3);
 
 
@@ -124,7 +124,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 		SpaceInvadersMain jawn = this;
 
-		Timer t = new Timer(40, this);
+		Timer t = new Timer(25, this);
 
 		this.addKeyListener(new KeyListener()
 		{
@@ -143,12 +143,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				 */
 				if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT)
 				{
-					player.setDx(-16);
+					player.setDx(-10);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
 				{
-					player.setDx(16);
+					player.setDx(10);
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
@@ -288,7 +288,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			String healthLabel = "health ";
 			for(int i = 0; i < healthLabel.length(); i++)
 			{
-				this.add(new Character(925 + 20*i, 10, 3, healthLabel.charAt(i)));
+				this.add(new Character(290 + 19*i, 10, 3, healthLabel.charAt(i)));
 			}
 			
 			if(hehe.getX() == -125)
@@ -594,7 +594,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			if (player.getPower() < 3)
 			{
 				fire++;
-				if (fire % 5  == 0)
+				if (fire % 1  == 0)
 				{
 					player.setPower(player.getPower() + 1);
 				}
@@ -729,7 +729,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				for(Enemy bruh : h)
 				{
-					bruh.setDx(-4);
+					bruh.setDx(-1);
 				}
 			}
 		}
