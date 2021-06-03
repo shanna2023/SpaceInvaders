@@ -29,25 +29,25 @@ public class Player extends Entity
 		g2.setColor(Color.WHITE);
 		g2.fillRoundRect(0, 0, this.getWidth(), this.getHeight(), 10, 10);
 		g2.setColor(Color.BLACK);
-		g2.fillPolygon(new int[] {20, 60, 30, 50}, new int[] {0, 0, 20, 20}, 4);
+		g2.fillPolygon(new int[] {16, 48, 24, 40}, new int[] {0, 0, 15, 15}, 4);
 		g2.setColor(Color.WHITE);
-		g2.fillPolygon(new int[] {30, 40, 50}, new int[] {20, 0, 20}, 3);
+		g2.fillPolygon(new int[] {24, 32, 40}, new int[] {15, 0, 15}, 3);
 		g2.setColor(Color.BLACK);
-		g2.drawRect(15, 15, 50, 5);
-		g2.drawRect(15, 23, 50, 5);
-		g2.drawRect(15, 31, 50, 5);
+		g2.drawRect(12, 12, 40, 4);
+		g2.drawRect(12, 19, 40, 4);
+		g2.drawRect(12, 26, 40, 4);
 		g2.setColor(Color.BLUE);
 		if (power > 0)
 		{
-			g2.fillRect(15, 31, 50, 5);
+			g2.fillRect(12, 26, 40, 4);
 		}
 		if (power > 1)
 		{
-			g2.fillRect(15, 23, 50, 5);
+			g2.fillRect(12, 19, 40, 4);
 		}
 		if (power > 2)
 		{
-			g2.fillRect(15, 15, 50, 5);
+			g2.fillRect(12, 12, 40, 4);
 		}
 	}
 }
