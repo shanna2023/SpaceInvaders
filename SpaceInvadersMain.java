@@ -432,9 +432,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 						else
 						{
 							Character c = new Character(130 + 20*k, 10, 3, score2.charAt(k - numZeros));
-							System.out.println(scoreDisplay.get(k).getChar());
 							scoreDisplay.set(k, c);
-							System.out.println(scoreDisplay.get(k).getChar());
 						}			
 					}
 					
