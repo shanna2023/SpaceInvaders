@@ -317,9 +317,9 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				{
 					file.createNewFile();
 				} 
-				catch (IOException e3) 
+				catch (IOException e1) 
 				{
-					e3.printStackTrace();
+					e1.printStackTrace();
 				}
 				
 				try
@@ -375,7 +375,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					}
 					in.close();
 				}
-				catch(FileNotFoundException e1)
+				catch(Exception e1)
 				{
 					e1.printStackTrace();
 				}
