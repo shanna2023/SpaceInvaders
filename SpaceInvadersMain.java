@@ -708,8 +708,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		{
 			frozen = false;
 			playerSpeed = 10;
-			fireSpeed = 3;
-			
+			fireSpeed = 3;		
 		}
 		else 
 		{
