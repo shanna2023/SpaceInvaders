@@ -550,6 +550,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				this.remove(scoreDisplay.get(i));
 			}
+			for(Obstacle o : obstacles)
+			{
+				this.add(o);
+				o.setVisible(false);
+			}
 		}
 		player.setDx(0);
 		player.setLocation(280, 550);
@@ -568,7 +573,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 */
 		if (count > 40)
 		{
-
 			Enemy pillo = new Enemy(54 * j + 45, 300, "Bob");
 			enemies.get(4).add(pillo);
 			this.add(pillo);
@@ -631,12 +635,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 				Obstacle obstacle3 = new Obstacle(487, 425);
 				obstacles.add(obstacle3);
-
-				for(Obstacle o : obstacles)
-				{
-					this.add(o);
-					o.setVisible(false);
-				}
 
 
 				this.add(player);
