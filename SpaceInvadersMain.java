@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -302,7 +303,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		else //Title screen
 		{
 			if(count == 1)
-			{
+			{	
 				String str = "high score:";
 				for (int i = 0; i < 11; i++)
 				{
@@ -312,13 +313,21 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 				}
 				File file = new File("HighScore.txt");
+				try 
+				{
+					file.createNewFile();
+				} 
+				catch (IOException e3) 
+				{
+					e3.printStackTrace();
+				}
+				
 				try
 				{
-					Scanner in = new Scanner(file);
 					boolean temp = true;
+					Scanner in = new Scanner(file);
 					while(in.hasNext())
 					{
-						temp = false;
 						String num = in.next();
 						highScore = Integer.parseInt(num);
 						int numZeros = 7 - num.length();
@@ -340,9 +349,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 						{
 							this.add(scoreDisplay.get(k));
 						}
+						temp = false;
 					}
-					
-					
 					if(temp)
 					{
 						String num = "0";
@@ -358,16 +366,16 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 							{
 								Character c = new Character(220 + 20*k, 10, 3, num.charAt(k - numZeros));
 								scoreDisplay.add(k, c);
-							}			
+							}		
 						}
-
 						for(int k = 0; k < scoreDisplay.size(); k++)
 						{
 							this.add(scoreDisplay.get(k));
 						}
 					}
+					in.close();
 				}
-				catch(Exception e1)
+				catch(FileNotFoundException e1)
 				{
 					e1.printStackTrace();
 				}
