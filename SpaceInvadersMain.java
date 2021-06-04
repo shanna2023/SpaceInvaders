@@ -1040,6 +1040,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 			if(enemies.size() == 0)
 			{
+				frozen = false;
 				repaint();
 				JOptionPane.showMessageDialog(this, "Level Complete", getTitle(), 1);
 				nextLevel = true;
