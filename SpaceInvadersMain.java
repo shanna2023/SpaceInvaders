@@ -995,13 +995,18 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					}
 					if(enemy.getY() + enemy.getHeight() > divider.getY() + divider.getHeight() || health.getHealth() <= 0 ) 
 					{
-						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
+						String s = "";
 						try
 						{
 							PrintWriter pw = new PrintWriter(new FileWriter("HighScore.txt"));
 							if(score > highScore)
 							{
 								pw.println(score);
+								s = "New High Score!";
+							}
+							else
+							{
+								s = "Game Over";
 							}
 							pw.flush();
 							pw.close();
@@ -1010,6 +1015,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 						{
 							e.printStackTrace();
 						}
+						JOptionPane.showMessageDialog(this, s, getTitle(), 0);
 						System.exit(0);
 					}
 				}
@@ -1115,5 +1121,3 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	}
 }
-
-
