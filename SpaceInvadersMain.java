@@ -550,6 +550,18 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			{
 				this.remove(scoreDisplay.get(i));
 			}
+
+			Obstacle obstacle = new Obstacle(76, 425);
+			obstacles.add(obstacle);
+
+			Obstacle obstacle1 = new Obstacle(213, 425);
+			obstacles.add(obstacle1);
+
+			Obstacle obstacle2 = new Obstacle(350, 425);
+			obstacles.add(obstacle2);
+
+			Obstacle obstacle3 = new Obstacle(487, 425);
+			obstacles.add(obstacle3);
 			for(Obstacle o : obstacles)
 			{
 				this.add(o);
@@ -624,17 +636,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				{
 					this.add(new Character(375 + 19*i, 10, 3, healthLabel.charAt(i)));
 				}
-				Obstacle obstacle = new Obstacle(76, 425);
-				obstacles.add(obstacle);
-
-				Obstacle obstacle1 = new Obstacle(213, 425);
-				obstacles.add(obstacle1);
-
-				Obstacle obstacle2 = new Obstacle(350, 425);
-				obstacles.add(obstacle2);
-
-				Obstacle obstacle3 = new Obstacle(487, 425);
-				obstacles.add(obstacle3);
 
 
 				this.add(player);
@@ -654,6 +655,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				}
 				
 				this.add(divider);
+				
+				for(Obstacle o : obstacles)
+				{
+					o.setVisible(true);
+				}
 			}
 		}
 		else if(count > 30)
