@@ -1064,8 +1064,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					{
 						if(count % 2 == 0)
 						{
-							bruh.setDx(bruh.getDx() * -1);
-							bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+							if(!frozen)
+							{
+								bruh.setDx(bruh.getDx() * -1);
+								bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+							}
 						}
 					}
 				}
@@ -1078,8 +1081,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					{
 						if(count % 2 == 0)
 						{
-							bruh.setDx(bruh.getDx() * -1);
-							bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+							if(!frozen)
+							{
+								bruh.setDx(bruh.getDx() * -1);
+								bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+							}
 						}
 					}
 				}
