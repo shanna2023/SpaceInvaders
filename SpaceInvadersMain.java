@@ -50,6 +50,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private boolean frozen;
 	private int highScore;
 	private ArrayList<Character> highScoreDisplay;
+	private Divider divider;
 
 	public SpaceInvadersMain()
 	{
@@ -95,6 +96,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		fireSpeed = 3;
 		frozen = false;
 		highScore = 0;
+		divider = new Divider(10, 530, 700, 5);
 		
 
 
@@ -284,6 +286,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		
 		count++;
 		//If all aliens are on screen, then start moving and player start gaining power
 		if(began && !nextLevel)
@@ -338,6 +341,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 							this.add(scoreDisplay.get(k));
 						}
 					}
+					
+					
 					if(temp)
 					{
 						String num = "0";
@@ -431,7 +436,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 * ^^ TEMPORARY, FOR TESTING OF OBSTACLES ^^
 		 * ****************************************************************************************************
 		 */
-
+		
 		repaint();
 	}
 
@@ -534,6 +539,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	public void settingUp(int eDx)
 	{
+		
 		if(count == 1)
 		{
 			for(int i = 0; i < highScoreDisplay.size(); i++)
@@ -674,10 +680,14 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			enemies.get(0).add(pillo);
 			this.add(pillo);
 		}
+		
+		
 		//			/* ****************************************************************************************************
 		//			 * ^^ PLACING EACH ENEMY ACCORDING TO COUNT ^^
 		//			 * ****************************************************************************************************
 		//			 */
+		
+		this.add(divider);
 	}
 
 
@@ -984,7 +994,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					{
 						enemy.change();
 					}
-					if(enemy.getY() + enemy.getHeight() > player.getY() || health.getHealth() <= 0 ) 
+					if(enemy.getY() + enemy.getHeight() > divider.getY() + divider.getHeight() || health.getHealth() <= 0 ) 
 					{
 						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
 						try
