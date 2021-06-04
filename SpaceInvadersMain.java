@@ -523,6 +523,37 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		return total;
 	}
 
+	public void updateScore()
+	{
+		for(int k = 0; k < scoreDisplay.size(); k++)
+		{
+			this.remove(scoreDisplay.get(k));
+		}
+
+
+		String score2 = "" + this.score;
+		int numZeros = 7 - score2.length();
+
+		for(int k = 0; k < 7; k++)
+		{
+			if(k < numZeros)
+			{
+				Character c = new Character(130 + 20*k, 10, 3, '0');
+				scoreDisplay.set(k, c);
+			}
+			else
+			{
+				Character c = new Character(130 + 20*k, 10, 3, score2.charAt(k - numZeros));
+				scoreDisplay.set(k, c);
+			}			
+		}
+
+		for(int k = 0; k < scoreDisplay.size(); k++)
+		{
+			this.add(scoreDisplay.get(k));
+		}
+	}
+	
 	public void reset()
 	{
 		count = 0;
@@ -786,6 +817,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			deaths.remove(i);
 			i--;
 		}
+		int tempScore = score;
 		boolean hit = false;
 		for(int i = bullets.size()-1; i >= 0; i--)
 		{
@@ -799,7 +831,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					redShip.setLocation(1500, 50);
 					this.remove(bullets.get(i));
 					hit = true;
-					score += 200; 				
+					score += 200;
 				}
 			}
 
@@ -898,34 +930,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			if(hit)
 			{
 				bullets.remove(i);
-				for(int k = 0; k < scoreDisplay.size(); k++)
-				{
-					this.remove(scoreDisplay.get(k));
-				}
-
-
-				String score2 = "" + this.score;
-				int numZeros = 7 - score2.length();
-
-				for(int k = 0; k < 7; k++)
-				{
-					if(k < numZeros)
-					{
-						Character c = new Character(130 + 20*k, 10, 3, '0');
-						scoreDisplay.set(k, c);
-					}
-					else
-					{
-						Character c = new Character(130 + 20*k, 10, 3, score2.charAt(k - numZeros));
-						scoreDisplay.set(k, c);
-					}			
-				}
-
-				for(int k = 0; k < scoreDisplay.size(); k++)
-				{
-					this.add(scoreDisplay.get(k));
-				}
+				updateScore();
 				hit = false;
+			}
+			else if(tempScore != score)
+			{
+				updateScore();
 			}
 		}
 
