@@ -21,8 +21,8 @@ public class Divider extends JComponent
 
 		for(int i = 0; i < 11; i++)
 		{
-			recs.add(new Rectangle(35, h));
-			recs.get(i).setLocation(i * 59, 0);			
+			recs.add(new Rectangle(39, h));
+			recs.get(i).setLocation(i * 65, 0);			
 		}
 	}
 
