@@ -1006,6 +1006,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 							}
 							else
 							{
+								pw.println(highScore);
 								s = "Game Over";
 							}
 							pw.flush();
