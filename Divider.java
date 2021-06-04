@@ -29,7 +29,7 @@ public class Divider extends JComponent
 	public void paintComponent(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setColor(Color.WHITE);
+		g2.setColor(Color.LIGHT_GRAY);
 		for(Rectangle r : recs)
 		{
 			g2.fill(r);
