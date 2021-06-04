@@ -14,8 +14,8 @@ public class Bullet extends Entity
     public Bullet(int x, int y, boolean isEnemy)
     {
         super(x, y, Entity.BULLET);
-        noob = new Rectangle(0, 0, 8, 26);
-        noob1 = new Rectangle(3, 3, 2, 20);
+        noob = new Rectangle(0, 0, 5, 14);
+        noob1 = new Rectangle(2, 2, 1, 10);
         isE = isEnemy;
 
         if (isE == false)
