@@ -21,7 +21,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private Enemy squid;
 	private Enemy bob;
 	private Enemy frog2;
-	private Enemy squid2;
+	private Enemy squid2;                          
 	private Enemy bob2;
 	private Enemy hehe;
 	private boolean began;
@@ -34,11 +34,13 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private ArrayList<Enemy> deaths; 
 	private HealthBar health;
 	private boolean flag;
+	private boolean nextLevel;
 
 	//Temp
 
 	public SpaceInvadersMain()
 	{
+		nextLevel = false;
 		this.setResizable(false);
 		this.setBounds(0, 0, 640, 650);
 		this.setLayout(null);
@@ -99,25 +101,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		enemies = new ArrayList<ArrayList<Enemy>>();
 		player = new Player(280, 550);
 
-		Obstacle obstacle = new Obstacle(76, 425);
-		obstacles.add(obstacle);
-
-		Obstacle obstacle1 = new Obstacle(213, 425);
-		obstacles.add(obstacle1);
-
-		Obstacle obstacle2 = new Obstacle(350, 425);
-		obstacles.add(obstacle2);
-
-		Obstacle obstacle3 = new Obstacle(487, 425);
-		obstacles.add(obstacle3);
-
-
-
-		for(Obstacle o : obstacles)
-		{
-			this.add(o);
-			o.setVisible(false);
-		}
+		
 
 		SpaceInvadersMain jawn = this;
 
@@ -183,7 +167,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 					revalidate();
 					repaint();
-					jawn.add(player);
 
 					jawn.remove(frog);
 					jawn.remove(frog2);
@@ -271,6 +254,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	public static void main(String[] args)
 	{
+		
 		new SpaceInvadersMain();
 	}
 
@@ -279,399 +263,17 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	{
 		count++;
 		//If all aliens are on screen, then start moving and player start gaining power
-		if (began)
-		{	
-			if(hehe.getX() == -125)
-			{
-				if((total() <= 30 && total() > 10) && !flag)
-				{
-					hehe.setDx(5);
-				}
-				else if(total() <= 10 && flag)
-				{
-					hehe.setDx(5);
-				}
-			}
 
-			if(hehe.getX() > this.getContentPane().getWidth())
-			{
-				hehe.setDx(0);
-				hehe.setLocation(1500, 50);
-			}
-			if(((total() <= 30 && total() > 10) && !flag && hehe.getX() == 1500) || (total() <= 10 && flag && hehe.getX() == 1500))
-			{
-				flag = !flag;
-				hehe.setLocation(-125, 50);
-			}
-
-			for(int i = 0; i < deaths.size(); i++)
-			{
-				this.remove(deaths.get(i));
-				deaths.remove(i);
-				i--;
-			}
-			boolean hitOrNot = false;
-			for(int i = bullets.size()-1; i >= 0; i--)
-			{
-				if(!bullets.get(i).isE())
-				{
-
-					if(hehe.getBounds().intersects(bullets.get(i).getBounds()))
-					{
-						deaths.add(new Enemy(hehe.getX(), hehe.getY(), "RedDead"));
-						this.add(deaths.get(deaths.size()-1));
-						hehe.setLocation(1500, 50);
-						this.remove(bullets.get(i));
-						hitOrNot = true;
-						score += 200; 				
-					}
-				}
-
-				if(hitOrNot)
-				{
-					bullets.remove(i);
-					hitOrNot = false;
-				}
-			}
-
-
-
-			for(Obstacle o : obstacles)
-			{
-				o.setVisible(true);
-			}
-
-			/* ****************************************************************************************************
-			 * vv RUNS THROUGH EACH OBSTACLE AND DETERMINES IF IT WAS HIT, REMOVES BULLETS ACCORDINGLY vv
-			 * ****************************************************************************************************
-			 */
-			for (Obstacle o : obstacles)
-			{
-				for (int i = 0; i < bullets.size(); i++)
-				{
-					Tile[] temp = o.hitBy(bullets.get(i));
-					if (temp != null)
-					{
-						for (Tile t : temp)
-						{
-							o.test(t);
-						}
-						this.remove(bullets.get(i));
-						bullets.remove(i);
-						i--;
-					}
-					else if (bullets.get(i).isOutsideOf(this))
-					{
-						this.remove(bullets.get(i));
-						bullets.remove(i);
-						i--;
-					}
-				}
-			}
-			/* ****************************************************************************************************
-			 * ^^ RUNS THROUGH EACH OBSTACLE AND DETERMINES IF IT WAS HIT, REMOVES BULLETS ACCORDINGLY ^^
-			 * ****************************************************************************************************
-			 */
-
-			hitOrNot = false;
-			for(int i = bullets.size()-1; i >= 0; i--)
-			{
-				if(!bullets.get(i).isE())
-				{
-					for(int h = 0; h < enemies.size(); h++)
-					{
-						for(int j = 0; j < enemies.get(h).size(); j++)
-						{
-							if(enemies.get(h).get(j).getBounds().intersects(bullets.get(i).getBounds()))
-							{
-								Enemy en = enemies.get(h).get(j);
-								if(enemies.get(h).get(j).getName().equals("Bob"))
-								{
-									score += 10;
-								}
-								else if(enemies.get(h).get(j).getName().equals("Frog"))
-								{
-									score += 20;
-								}
-								else if(enemies.get(h).get(j).getName().equals("Squid"))
-								{
-									score += 30;
-								}
-								this.remove(enemies.get(h).get(j));
-								enemies.get(h).remove(j);
-								this.remove(bullets.get(i));
-								hitOrNot = true;
-								j--;	
-
-								deaths.add(new Enemy(en.getX(), en.getY(), "Dead"));
-								this.add(deaths.get(deaths.size() - 1));
-							}	
-						}
-					}
-				}
-				if(hitOrNot)
-				{
-					bullets.remove(i);
-					for(int k = 0; k < scoreDisplay.size(); k++)
-					{
-						this.remove(scoreDisplay.get(k));
-					}
-
-
-					String score2 = "" + this.score;
-					int numZeros = 7 - score2.length();
-
-					for(int k = 0; k < 7; k++)
-					{
-						if(k < numZeros)
-						{
-							Character c = new Character(130 + 20*k, 10, 3, '0');
-							scoreDisplay.set(k, c);
-						}
-						else
-						{
-							Character c = new Character(130 + 20*k, 10, 3, score2.charAt(k - numZeros));
-							scoreDisplay.set(k, c);
-						}			
-					}
-
-					for(int k = 0; k < scoreDisplay.size(); k++)
-					{
-						this.add(scoreDisplay.get(k));
-					}
-					hitOrNot = false;
-				}
-			}
-
-
-			/* ****************************************************************************************************
-			 * vv LIMITING PLAYER MOVEMENT vv
-			 * ****************************************************************************************************
-			 */
-			if (player.getX() >= 0 && player.getX() + player.getWidth() <= this.getWidth() - this.getInsets().right - this.getInsets().left)
-			{
-				if (player.getX() + player.getDx() < 0)
-				{
-					player.setLocation(0, player.getY());
-				}
-				else if (player.getX() + player.getWidth() + player.getDx() > this.getWidth() - this.getInsets().right - this.getInsets().left)
-				{
-					player.setLocation(this.getWidth() - this.getInsets().right - this.getInsets().left - player.getWidth(), player.getY());
-				}
-				else
-				{
-					player.update();
-				}
-			}
-			/* ****************************************************************************************************
-			 * ^^ LIMITING PLAYER MOVEMENT ^^
-			 * ****************************************************************************************************
-			 */
-
-			for(int i = 0; i < enemies.size(); i++)
-			{
-				if(enemies.get(i).isEmpty())
-				{
-					enemies.remove(i);
-					i--;
-				}
-			}
-
-			if(count % 25 == 0)
-			{
-				int r = (int)(Math.random()*enemies.size());
-				int c = (int)(Math.random()*enemies.get(r).size());
-				Enemy pillo = enemies.get(r).get(c);
-				bullets.add(new Bullet(pillo.getX() + pillo.getWidth()/2, pillo.getY() + pillo.getHeight(), true));
-				this.add(bullets.get(bullets.size()-1));	
-			}
-
-
-
-			/* ****************************************************************************************************
-			 * vv UPDATING ENEMIES AND BULLETS, GAME OVER IF ENEMY TOUCHES PLAYER vv
-			 * ****************************************************************************************************
-			 */
-
-			for (ArrayList<Enemy> arr : enemies)
-			{
-				for (Enemy enemy : arr)
-				{
-					if(count % 2 == 0)
-					{
-						enemy.update();
-					}
-
-					if (count % 20 == 0)
-					{
-						enemy.change();
-					}
-					if(enemy.getY() + enemy.getHeight() > player.getY() || health.getHealth() <= 0 ) 
-					{
-						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
-						System.exit(0);
-					}
-				}
-			}
-
-			for (int i = 0; i < bullets.size(); i++)
-			{
-				if (bullets.get(i).isE() && bullets.get(i).isTouching(player))
-				{
-					health.setHealth(health.getHealth() - 40);
-					this.remove(bullets.get(i));
-					bullets.remove(i);
-					i--;
-				}
-			}
-
-			hehe.update();
-
-
-			if(enemies.size() == 0)
-			{
-				repaint();				
-				JOptionPane.showMessageDialog(this, "You Win", getTitle(), 1);
-				System.exit(0);
-			}
-
-
-			if(left() < 0)
-			{
-				for(ArrayList<Enemy> h : enemies)
-				{
-					for(Enemy bruh : h)
-					{
-						if(count % 2 == 0)
-						{
-							bruh.setDx(bruh.getDx() * -1);
-							bruh.setLocation(bruh.getX(), bruh.getY() + 20);
-						}
-					}
-				}
-			}
-			if(right() > this.getContentPane().getWidth())
-			{
-				for(ArrayList<Enemy> h : enemies)
-				{
-					for(Enemy bruh : h)
-					{
-						if(count % 2 == 0)
-						{
-							bruh.setDx(bruh.getDx() * -1);
-							bruh.setLocation(bruh.getX(), bruh.getY() + 20);
-						}
-					}
-				}
-			}
-
-
-			/* ****************************************************************************************************
-			 * ^^ UPDATING ENEMIES, GAME OVER IF ENEMY TOUCHES PLAYER ^^
-			 * ****************************************************************************************************
-			 */
-
-			/* ****************************************************************************************************
-			 * vv UPDATING BULLETS AND PLAYER POWER vv
-			 * ****************************************************************************************************
-			 */
-			for (Entity b : bullets)
-			{
-				b.update();
-			}
-
-			if (player.getPower() < 3)
-			{
-				fire++;
-				if (fire % 3  == 0)
-				{
-					player.setPower(player.getPower() + 1);
-				}
-			}
-
-			if (player.getPower() == 3)
-			{
-				fire = 0;
-			}
-			/* ****************************************************************************************************
-			 * ^^ UPDATING BULLETS AND PLAYER POWER ^^
-			 * ****************************************************************************************************
-			 */
-		}
-		else if (settingUp) //Just left title screen, enemies not all on screen
+		if(began && !nextLevel)
 		{
-			int j = (count - 1) % 10;
-
-			if (j == 0)
-			{
-				enemies.add(new ArrayList<Enemy>());
-			}
-
-			/* ****************************************************************************************************
-			 * vv PLACING EACH ENEMY ACCORDING TO COUNT vv
-			 * ****************************************************************************************************
-			 */
-			if (count > 40)
-			{
-				Enemy pillo = new Enemy(54 * j + 45, 300, "Bob");
-				enemies.get(4).add(pillo);
-				this.add(pillo);
-				if (count == 50)
-				{
-					settingUp = false;
-					began = true;
-					this.add(hehe); /////////////////////////
-					hehe.setLocation(-125, 50);
-					hehe.setDx(0);
-					this.add(health);
-
-					String str = "score:0000000";
-					for (int i = 0; i < 13; i++)
-					{
-						Character c = new Character(10 + 20*i, 10, 3, str.charAt(i));
-						this.add(c);
-						if(i > 5)
-						{
-							scoreDisplay.add(c);
-						}
-					}
-
-					String healthLabel = "health ";
-					for(int i = 0; i < healthLabel.length(); i++)
-					{
-						this.add(new Character(290 + 19*i, 10, 3, healthLabel.charAt(i)));
-					}
-				}
-			}
-			else if(count > 30)
-			{
-				Enemy pillo = new Enemy(54 * j + 45, 250, "Bob");
-				enemies.get(3).add(pillo);
-				this.add(pillo);
-			}
-			else if(count > 20)
-			{
-				Enemy pillo = new Enemy(54 * j + 47, 200, "Frog");
-				enemies.get(2).add(pillo);
-				this.add(pillo);
-			}
-			else if(count > 10)
-			{
-				Enemy pillo = new Enemy(54 * j + 47, 150, "Frog");
-				enemies.get(1).add(pillo);
-				this.add(pillo);
-			}
-			else if(count > 0)
-			{
-				Enemy pillo = new Enemy(54 * j + 53, 100, "Squid");
-				enemies.get(0).add(pillo);
-				this.add(pillo);
-			}
-			//			/* ****************************************************************************************************
-			//			 * ^^ PLACING EACH ENEMY ACCORDING TO COUNT ^^
-			//			 * ****************************************************************************************************
-			//			 */
+			again();
+			
 		}
+		else if(settingUp)
+		{
+			settingUp();
+		}
+		
 		else //Title screen
 		{
 			//Flashing subtitle
@@ -753,6 +355,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 */
 
 		repaint();
+
+
 	}
 
 	/**
@@ -836,5 +440,466 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			}
 		}
 		return total;
+	}
+
+	public void reset()
+	{
+		count = 0;
+		health.reset();
+		enemies = new ArrayList<ArrayList<Enemy>>();
+		obstacles = new ArrayList<Obstacle>();
+		bullets = new ArrayList<Bullet>();
+		scoreDisplay = new ArrayList<Character>();
+		deaths = new ArrayList<Enemy>(); 
+		this.getContentPane().removeAll();
+		repaint();
+
+	}
+
+	public void settingUp()
+	{
+		player.setDx(0);
+		player.setLocation(280, 550);
+
+		int j = (count - 1) % 10;
+		
+		if (j == 0)
+		{
+			enemies.add(new ArrayList<Enemy>());
+		}
+		
+	
+		/* ****************************************************************************************************
+		 * vv PLACING EACH ENEMY ACCORDING TO COUNT vv
+		 * ****************************************************************************************************
+		 */
+		if (count > 40)
+		{
+			
+			Enemy pillo = new Enemy(54 * j + 45, 300, "Bob");
+			enemies.get(4).add(pillo);
+			this.add(pillo);
+			if (count == 50)
+			{
+				settingUp = false;
+				nextLevel = false;
+				began = true;
+				this.add(hehe); /////////////////////////
+				hehe.setLocation(-125, 50);
+				hehe.setDx(0);
+				this.add(health);
+
+				String str = "score:";
+				String s = this.score + "";
+				int numZeros = 7 - s.length();
+				for (int i = 0; i < 6; i++)
+				{
+					Character c = new Character(10 + 20*i, 10, 3, str.charAt(i));
+					this.add(c);
+					
+				}
+				
+				for(int k = 0; k < 7; k++)
+				{
+					if(k < numZeros)
+					{
+						Character c = new Character(130 + 20*k, 10, 3, '0');
+						scoreDisplay.add(k, c);
+					}
+					else
+					{
+						Character c = new Character(130 + 20*k, 10, 3, s.charAt(k - numZeros));
+						scoreDisplay.add(k, c);
+					}			
+				}
+				
+				for(int k = 0; k < scoreDisplay.size(); k++)
+				{
+					this.add(scoreDisplay.get(k));
+				}
+					
+				String healthLabel = "hp ";
+				for(int i = 0; i < healthLabel.length(); i++)
+				{
+					this.add(new Character(375 + 19*i, 10, 3, healthLabel.charAt(i)));
+				}
+				Obstacle obstacle = new Obstacle(76, 425);
+				obstacles.add(obstacle);
+
+				Obstacle obstacle1 = new Obstacle(213, 425);
+				obstacles.add(obstacle1);
+
+				Obstacle obstacle2 = new Obstacle(350, 425);
+				obstacles.add(obstacle2);
+
+				Obstacle obstacle3 = new Obstacle(487, 425);
+				obstacles.add(obstacle3);
+
+				for(Obstacle o : obstacles)
+				{
+					this.add(o);
+					o.setVisible(false);
+				}
+				
+				
+				this.add(player);
+			}
+		}
+		else if(count > 30)
+		{
+			Enemy pillo = new Enemy(54 * j + 45, 250, "Bob");
+			enemies.get(3).add(pillo);
+			this.add(pillo);
+		}
+		else if(count > 20)
+		{
+			Enemy pillo = new Enemy(54 * j + 47, 200, "Frog");
+			enemies.get(2).add(pillo);
+			this.add(pillo);
+		}
+		else if(count > 10)
+		{
+			Enemy pillo = new Enemy(54 * j + 47, 150, "Frog");
+			enemies.get(1).add(pillo);
+			this.add(pillo);
+		}
+		else if(count > 0)
+		{
+			Enemy pillo = new Enemy(54 * j + 53, 100, "Squid");
+			enemies.get(0).add(pillo);
+			this.add(pillo);
+		}
+		//			/* ****************************************************************************************************
+		//			 * ^^ PLACING EACH ENEMY ACCORDING TO COUNT ^^
+		//			 * ****************************************************************************************************
+		//			 */
+	}
+
+
+
+	public void again()
+	{
+		if(hehe.getX() == -125)
+		{
+			if((total() <= 30 && total() > 10) && !flag)
+			{
+				hehe.setDx(5);
+			}
+			else if(total() <= 10 && flag)
+			{
+				hehe.setDx(5);
+			}
+		}
+
+		if(hehe.getX() > this.getContentPane().getWidth())
+		{
+			hehe.setDx(0);
+			hehe.setLocation(1500, 50);
+		}
+		if(((total() <= 30 && total() > 10) && !flag && hehe.getX() == 1500) || (total() <= 10 && flag && hehe.getX() == 1500))
+		{
+			flag = !flag;
+			hehe.setLocation(-125, 50);
+		}
+
+		for(int i = 0; i < deaths.size(); i++)
+		{
+			this.remove(deaths.get(i));
+			deaths.remove(i);
+			i--;
+		}
+		boolean hitOrNot = false;
+		for(int i = bullets.size()-1; i >= 0; i--)
+		{
+			if(!bullets.get(i).isE())
+			{
+
+				if(hehe.getBounds().intersects(bullets.get(i).getBounds()))
+				{
+					deaths.add(new Enemy(hehe.getX(), hehe.getY(), "RedDead"));
+					this.add(deaths.get(deaths.size()-1));
+					hehe.setLocation(1500, 50);
+					this.remove(bullets.get(i));
+					hitOrNot = true;
+					score += 200; 				
+				}
+			}
+
+			if(hitOrNot)
+			{
+				bullets.remove(i);
+				hitOrNot = false;
+			}
+		}
+
+
+
+		for(Obstacle o : obstacles)
+		{
+			o.setVisible(true);
+		}
+
+		/* ****************************************************************************************************
+		 * vv RUNS THROUGH EACH OBSTACLE AND DETERMINES IF IT WAS HIT, REMOVES BULLETS ACCORDINGLY vv
+		 * ****************************************************************************************************
+		 */
+		for (Obstacle o : obstacles)
+		{
+			for (int i = 0; i < bullets.size(); i++)
+			{
+				Tile[] temp = o.hitBy(bullets.get(i));
+				if (temp != null)
+				{
+					for (Tile t : temp)
+					{
+						o.test(t);
+					}
+					this.remove(bullets.get(i));
+					bullets.remove(i);
+					i--;
+				}
+				else if (bullets.get(i).isOutsideOf(this))
+				{
+					this.remove(bullets.get(i));
+					bullets.remove(i);
+					i--;
+				}
+			}
+		}
+		/* ****************************************************************************************************
+		 * ^^ RUNS THROUGH EACH OBSTACLE AND DETERMINES IF IT WAS HIT, REMOVES BULLETS ACCORDINGLY ^^
+		 * ****************************************************************************************************
+		 */
+
+		hitOrNot = false;
+		for(int i = bullets.size()-1; i >= 0; i--)
+		{
+			if(!bullets.get(i).isE())
+			{
+				for(int h = 0; h < enemies.size(); h++)
+				{
+					for(int j = 0; j < enemies.get(h).size(); j++)
+					{
+						if(enemies.get(h).get(j).getBounds().intersects(bullets.get(i).getBounds()))
+						{
+							Enemy en = enemies.get(h).get(j);
+							if(enemies.get(h).get(j).getName().equals("Bob"))
+							{
+								score += 10;
+							}
+							else if(enemies.get(h).get(j).getName().equals("Frog"))
+							{
+								score += 20;
+							}
+							else if(enemies.get(h).get(j).getName().equals("Squid"))
+							{
+								score += 30;
+							}
+							this.remove(enemies.get(h).get(j));
+							enemies.get(h).remove(j);
+							this.remove(bullets.get(i));
+							hitOrNot = true;
+							j--;	
+
+							deaths.add(new Enemy(en.getX(), en.getY(), "Dead"));
+							this.add(deaths.get(deaths.size() - 1));
+						}	
+					}
+				}
+			}
+			if(hitOrNot)
+			{
+				bullets.remove(i);
+				for(int k = 0; k < scoreDisplay.size(); k++)
+				{
+					this.remove(scoreDisplay.get(k));
+				}
+
+
+				String score2 = "" + this.score;
+				int numZeros = 7 - score2.length();
+
+				for(int k = 0; k < 7; k++)
+				{
+					if(k < numZeros)
+					{
+						Character c = new Character(130 + 20*k, 10, 3, '0');
+						scoreDisplay.set(k, c);
+					}
+					else
+					{
+						Character c = new Character(130 + 20*k, 10, 3, score2.charAt(k - numZeros));
+						scoreDisplay.set(k, c);
+					}			
+				}
+
+				for(int k = 0; k < scoreDisplay.size(); k++)
+				{
+					this.add(scoreDisplay.get(k));
+				}
+				hitOrNot = false;
+			}
+		}
+
+
+		/* ****************************************************************************************************
+		 * vv LIMITING PLAYER MOVEMENT vv
+		 * ****************************************************************************************************
+		 */
+		if (player.getX() >= 0 && player.getX() + player.getWidth() <= this.getWidth() - this.getInsets().right - this.getInsets().left)
+		{
+			if (player.getX() + player.getDx() < 0)
+			{
+				player.setLocation(0, player.getY());
+			}
+			else if (player.getX() + player.getWidth() + player.getDx() > this.getWidth() - this.getInsets().right - this.getInsets().left)
+			{
+				player.setLocation(this.getWidth() - this.getInsets().right - this.getInsets().left - player.getWidth(), player.getY());
+			}
+			else
+			{
+				player.update();
+			}
+		}
+		/* ****************************************************************************************************
+		 * ^^ LIMITING PLAYER MOVEMENT ^^
+		 * ****************************************************************************************************
+		 */
+
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			if(enemies.get(i).isEmpty())
+			{
+				enemies.remove(i);
+				i--;
+			}
+		}
+
+		if(count % 25 == 0 &&  enemies.size() > 0)
+		{
+			int r = (int)(Math.random()*enemies.size());
+			int c = (int)(Math.random()*enemies.get(r).size());
+			Enemy pillo = enemies.get(r).get(c);
+			bullets.add(new Bullet(pillo.getX() + pillo.getWidth()/2, pillo.getY() + pillo.getHeight(), true));
+			this.add(bullets.get(bullets.size()-1));	
+		}
+
+
+
+		/* ****************************************************************************************************
+		 * UPDATING ENEMIES AND BULLETS, GAME OVER IF ENEMY TOUCHES PLAYER vv
+		 * ****************************************************************************************************
+		 */
+
+
+		for (ArrayList<Enemy> arr : enemies)
+		{
+			for (Enemy enemy : arr)
+			{
+				if(count % 2 == 0)
+				{
+					enemy.update();
+				}
+
+				if (count % 20 == 0)
+				{
+					enemy.change();
+				}
+				if(enemy.getY() + enemy.getHeight() > player.getY() || health.getHealth() <= 0 ) 
+				{
+					JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
+					System.exit(0);
+				}
+			}
+		}
+
+		for (int i = 0; i < bullets.size(); i++)
+		{
+			if (bullets.get(i).isE() && bullets.get(i).isTouching(player))
+			{
+				health.setHealth(health.getHealth() - 40);
+				this.remove(bullets.get(i));
+				bullets.remove(i);
+				i--;
+			}
+		}
+
+		hehe.update();
+
+
+		if(enemies.size() == 0)
+		{
+			repaint();
+			JOptionPane.showMessageDialog(this, "You Win", getTitle(), 1);
+			nextLevel = true;
+			began = false;
+			settingUp = true;
+			reset();
+			return;
+		}
+
+
+		if(left() < 0)
+		{
+			for(ArrayList<Enemy> h : enemies)
+			{
+				for(Enemy bruh : h)
+				{
+					if(count % 2 == 0)
+					{
+						bruh.setDx(bruh.getDx() * -1);
+						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+					}
+				}
+			}
+		}
+		if(right() > this.getContentPane().getWidth())
+		{
+			for(ArrayList<Enemy> h : enemies)
+			{
+				for(Enemy bruh : h)
+				{
+					if(count % 2 == 0)
+					{
+						bruh.setDx(bruh.getDx() * -1);
+						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+					}
+				}
+			}
+		}
+
+
+		/* ****************************************************************************************************
+		 * ^^ UPDATING ENEMIES, GAME OVER IF ENEMY TOUCHES PLAYER ^^
+		 * ****************************************************************************************************
+		 */
+
+		/* ****************************************************************************************************
+		 * vv UPDATING BULLETS AND PLAYER POWER vv
+		 * ****************************************************************************************************
+		 */
+		for (Entity b : bullets)
+		{
+			b.update();
+		}
+
+		if (player.getPower() < 3)
+		{
+			fire++;
+			if (fire % 1  == 0)
+			{
+				player.setPower(player.getPower() + 1);
+			}
+		}
+
+		if (player.getPower() == 3)
+		{
+			fire = 0;
+		}
+		/* ****************************************************************************************************
+		 * ^^ UPDATING BULLETS AND PLAYER POWER ^^
+		 * ****************************************************************************************************
+		 */
+
 	}
 }

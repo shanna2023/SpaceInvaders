@@ -24,6 +24,12 @@ public class HealthBar extends JComponent
 	public void setHealth(int health) {
 		this.health = health;
 	}
+	
+	public void reset()
+	{
+		setHealth(200);
+		repaint();
+	}
 
 
 	public void paintComponent(Graphics g)
