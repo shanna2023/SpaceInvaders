@@ -39,7 +39,7 @@ public abstract class Entity extends JComponent
 			this.setSize(new Dimension(65, 33));
 			break;
 		case BULLET:
-			this.setSize(new Dimension(9, 27));
+			this.setSize(new Dimension(6, 15));
 			break;
 		case OBSTACLE:
 			this.setSize(new Dimension(61, 41));
