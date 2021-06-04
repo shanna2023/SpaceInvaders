@@ -157,7 +157,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					player.setDx(1 * playerSpeed); //speed is throw
 				}
 
-				if (e.getKeyCode() == KeyEvent.VK_SPACE)
+				if (e.getKeyCode() == KeyEvent.VK_F)
 				{
 					if (player.getPower() == 3)
 					{
