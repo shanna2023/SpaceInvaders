@@ -96,7 +96,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		fireSpeed = 3;
 		frozen = false;
 		highScore = 0;
-		divider = new Divider(10, 530, 700, 5);
+		divider = new Divider(0, 530, 700, 5);
 		
 
 
@@ -654,6 +654,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				{
 					this.eFire -= 2;
 				}
+				
+				this.add(divider);
 			}
 		}
 		else if(count > 30)
@@ -686,8 +688,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		//			 * ^^ PLACING EACH ENEMY ACCORDING TO COUNT ^^
 		//			 * ****************************************************************************************************
 		//			 */
-		
-		this.add(divider);
 	}
 
 
