@@ -35,7 +35,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private HealthBar health;
 	private boolean flag;
 	private boolean nextLevel;
-
+	private int eDx; 
+	private int eFire;
 	//Temp
 
 	public SpaceInvadersMain()
@@ -93,6 +94,8 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		health = new HealthBar(415, 10);
 		count = 0;
 		fire = 0;
+		eDx = 1;
+		eFire = 27;
 
 		began = false;
 		settingUp = false;
@@ -137,7 +140,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					if (player.getPower() == 3)
 					{
 						player.setPower(0);
-						bullets.add(new Bullet(player.getX() + 28, player.getY() - 20, false));
+						bullets.add(new Bullet(player.getX() + 29, player.getY() - 20, false));
 						jawn.add(bullets.get(bullets.size() - 1));
 					}
 				}
@@ -266,12 +269,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 		if(began && !nextLevel)
 		{
-			again();
+			again(eFire);
 			
 		}
 		else if(settingUp)
 		{
-			settingUp();
+			settingUp(eDx);
 		}
 		
 		else //Title screen
@@ -330,20 +333,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 		}
 
-		//Starts enemies going if left direction
-		if(count == 51)
-		{
-			for(ArrayList<Enemy> h : enemies)
-			{
-				for(Enemy bruh : h)
-				{
-					bruh.setDx(-1);
-				}
-			}
-		}
-
-
-
 		/* ****************************************************************************************************
 		 * vv TEMPORARY, FOR TESTING OF OBSTACLES vv
 		 * ****************************************************************************************************
@@ -355,8 +344,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 */
 
 		repaint();
-
-
 	}
 
 	/**
@@ -456,7 +443,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	}
 
-	public void settingUp()
+	public void settingUp(int eDx)
 	{
 		player.setDx(0);
 		player.setLocation(280, 550);
@@ -543,6 +530,20 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				
 				
 				this.add(player);
+				
+				//Starts enemies going if left direction
+				for(ArrayList<Enemy> h : enemies)
+				{
+					for(Enemy bruh : h)
+					{
+						bruh.setDx(-1 * eDx);
+					}
+				}
+				this.eDx++;
+				if (this.eFire > 2)
+				{
+					this.eFire -= 2;
+				}
 			}
 		}
 		else if(count > 30)
@@ -577,7 +578,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 
 
-	public void again()
+	public void again(int eFire)
 	{
 		if(hehe.getX() == -125)
 		{
@@ -775,7 +776,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			}
 		}
 
-		if(count % 25 == 0 &&  enemies.size() > 0)
+		if(count % eFire == 0 &&  enemies.size() > 0)
 		{
 			int r = (int)(Math.random()*enemies.size());
 			int c = (int)(Math.random()*enemies.get(r).size());
@@ -830,7 +831,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		if(enemies.size() == 0)
 		{
 			repaint();
-			JOptionPane.showMessageDialog(this, "You Win", getTitle(), 1);
+			JOptionPane.showMessageDialog(this, "Level Complete", getTitle(), 1);
 			nextLevel = true;
 			began = false;
 			settingUp = true;
@@ -886,7 +887,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		if (player.getPower() < 3)
 		{
 			fire++;
-			if (fire % 1  == 0)
+			if (fire % 1 == 0)
 			{
 				player.setPower(player.getPower() + 1);
 			}
@@ -903,3 +904,4 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	}
 }
+
