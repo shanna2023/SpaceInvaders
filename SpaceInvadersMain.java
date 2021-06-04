@@ -51,7 +51,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private int highScore;
 	private ArrayList<Character> highScoreDisplay;
 	private Divider divider;
-
+	
 	public SpaceInvadersMain()
 	{
 		nextLevel = false;
