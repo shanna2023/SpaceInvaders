@@ -215,29 +215,10 @@ public class Enemy extends Entity
 						{true , false, false, true , false, false, false, false, true , false, false, true }
 					};
 					break;
+					
 				}
 			}
-//			if (s.equals("Bob") && (int)(Math.random()*10000 + 1) == 1)
-//			{
-//				temp = new boolean[current.length][current[0].length];
-//				for (int r = 0; r < current.length; r++)
-//				{
-//					for (int c = 0; c < current[r].length; c++)
-//					{
-//						temp[r][c] = current[r][c];
-//					}
-//				}
-//				current = new boolean[][] {
-//					{true , true , false, false, false, true , true , false, false, true , true , false},
-//					{true , false, true , false, true , false, false, true , false, true , false, true },
-//					{true , false, true , false, true , false, false, true , false, true , false, true },
-//					{true , true , false, false, true , false, false, true , false, true , true , false},
-//					{true , false, true , false, true , false, false, true , false, true , false, true },
-//					{true , false, true , false, true , false, false, true , false, true , false, true },
-//					{true , false, true , false, true , false, false, true , false, true , false, true },
-//					{true , true , false, false, false, true , true , false, false, true , true , false}
-//				};
-//			}
+			
 			if (s.equals("Bob") && current[0][0])
 			{
 				for (int r = 0; r < current.length; r++)
@@ -248,6 +229,29 @@ public class Enemy extends Entity
 					}
 				}
 			}
+			
+			if (s.equals("Bob") && (int)(Math.random()*10000 + 1) == 1)
+			{
+				temp = new boolean[current.length][current[0].length];
+				for (int r = 0; r < current.length; r++)
+				{
+					for (int c = 0; c < current[r].length; c++)
+					{
+						temp[r][c] = current[r][c];
+					}
+				}
+				current = new boolean[][] {
+					{true , true , false, false, false, true , true , false, false, true , true , false},
+					{true , false, true , false, true , false, false, true , false, true , false, true },
+					{true , false, true , false, true , false, false, true , false, true , false, true },
+					{true , true , false, false, true , false, false, true , false, true , true , false},
+					{true , false, true , false, true , false, false, true , false, true , false, true },
+					{true , false, true , false, true , false, false, true , false, true , false, true },
+					{true , false, true , false, true , false, false, true , false, true , false, true },
+					{true , true , false, false, false, true , true , false, false, true , true , false}
+				};
+			}
+			
 			for (int r = 0; r < current.length; r++)
 			{
 				for (int c = 0; c < current[r].length; c++)

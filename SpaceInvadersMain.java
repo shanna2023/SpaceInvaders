@@ -3,7 +3,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -23,7 +28,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private Enemy frog2;
 	private Enemy squid2;                          
 	private Enemy bob2;
-	private Enemy hehe;
+	private Enemy redShip;
 	private boolean began;
 	private boolean settingUp;
 	private ArrayList<Character> title;
@@ -32,12 +37,19 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	private int score;
 	private ArrayList<Character> scoreDisplay;
 	private ArrayList<Enemy> deaths; 
+	private ArrayList<PowerUp> powerUps;
 	private HealthBar health;
 	private boolean flag;
 	private boolean nextLevel;
 	private int eDx; 
 	private int eFire;
-	//Temp
+	private String[] types;
+	private int time;
+	private int playerSpeed;
+	private int fireSpeed;
+	private boolean frozen;
+	private int highScore;
+	private ArrayList<Character> highScoreDisplay;
 
 	public SpaceInvadersMain()
 	{
@@ -67,15 +79,24 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		bob2 = new Enemy(488, 500, "Bob");
 		this.add(bob2);
 
-		hehe = new Enemy(280, 50, "Ship");
-		this.add(hehe);
+		redShip = new Enemy(280, 50, "Ship");
+		this.add(redShip);
 
 		title = new ArrayList<Character>();
 		subtitle = new ArrayList<Character>();
 		bullets = new ArrayList<Bullet>();
 		scoreDisplay = new ArrayList<Character>();
-
+		powerUps = new ArrayList<PowerUp>();
 		deaths = new ArrayList<Enemy>();
+		highScoreDisplay = new ArrayList<Character>();
+		types = new String[] {"Med", "Freeze", "Fire Speed", "Player Speed"};
+		time = 150;
+		playerSpeed = 10;
+		fireSpeed = 3;
+		frozen = false;
+		highScore = 0;
+		
+
 
 		String str1 = "space invaders";
 		String str2 = "press b to begin";
@@ -96,7 +117,6 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		fire = 0;
 		eDx = 1;
 		eFire = 27;
-
 		began = false;
 		settingUp = false;
 
@@ -104,7 +124,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		enemies = new ArrayList<ArrayList<Enemy>>();
 		player = new Player(280, 550);
 
-		
+
 
 		SpaceInvadersMain jawn = this;
 
@@ -127,12 +147,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				 */
 				if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT)
 				{
-					player.setDx(-10);
+					player.setDx(-1 * playerSpeed); //-speed is throw
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT)
 				{
-					player.setDx(10);
+					player.setDx(1 * playerSpeed); //speed is throw
 				}
 
 				if (e.getKeyCode() == KeyEvent.VK_SPACE)
@@ -177,7 +197,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					jawn.remove(squid2);
 					jawn.remove(bob);
 					jawn.remove(bob2);
-					jawn.remove(hehe);
+					jawn.remove(redShip);
 
 					count = 0;
 					settingUp = true;
@@ -246,7 +266,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 		});
 
-		hehe.setDx(-3);
+		redShip.setDx(-3);
 
 		t.start();
 
@@ -257,7 +277,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	public static void main(String[] args)
 	{
-		
+
 		new SpaceInvadersMain();
 	}
 
@@ -266,19 +286,87 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 	{
 		count++;
 		//If all aliens are on screen, then start moving and player start gaining power
-
 		if(began && !nextLevel)
 		{
 			again(eFire);
-			
+
 		}
 		else if(settingUp)
 		{
 			settingUp(eDx);
 		}
-		
+
 		else //Title screen
 		{
+			if(count == 1)
+			{
+				String str = "high score:";
+				for (int i = 0; i < 11; i++)
+				{
+					Character c = new Character(10 + 19*i, 10, 3, str.charAt(i));
+					this.add(c);
+					highScoreDisplay.add(c);
+
+				}
+				File file = new File("HighScore.txt");
+				try
+				{
+					Scanner in = new Scanner(file);
+					boolean temp = true;
+					while(in.hasNext())
+					{
+						temp = false;
+						String num = in.next();
+						highScore = Integer.parseInt(num);
+						int numZeros = 7 - num.length();
+						for(int k = 0; k < 7; k++)
+						{
+							if(k < numZeros)
+							{
+								Character c = new Character(220 + 20*k, 10, 3, '0');
+								scoreDisplay.add(k, c);
+							}
+							else
+							{
+								Character c = new Character(220 + 20*k, 10, 3, num.charAt(k - numZeros));
+								scoreDisplay.add(k, c);
+							}			
+						}
+
+						for(int k = 0; k < scoreDisplay.size(); k++)
+						{
+							this.add(scoreDisplay.get(k));
+						}
+					}
+					if(temp)
+					{
+						String num = "0";
+						int numZeros = 7 - num.length();
+						for(int k = 0; k < 7; k++)
+						{
+							if(k < numZeros)
+							{
+								Character c = new Character(220 + 20*k, 10, 3, '0');
+								scoreDisplay.add(k, c);
+							}
+							else
+							{
+								Character c = new Character(220 + 20*k, 10, 3, num.charAt(k - numZeros));
+								scoreDisplay.add(k, c);
+							}			
+						}
+
+						for(int k = 0; k < scoreDisplay.size(); k++)
+						{
+							this.add(scoreDisplay.get(k));
+						}
+					}
+				}
+				catch(Exception e1)
+				{
+					e1.printStackTrace();
+				}
+			}
 			//Flashing subtitle
 			if (count % 20 == 0)
 			{
@@ -291,12 +379,12 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			//vv Ship at top shooting bullets vv
 			if (count % 20 == 0)
 			{
-				bullets.add(new Bullet(hehe.getX() + 11, hehe.getY() + 30, true));
+				bullets.add(new Bullet(redShip.getX() + 11, redShip.getY() + 30, true));
 				this.add(bullets.get(bullets.size() - 1));
 			}
 			if ((count + 10) % 20 == 0)
 			{
-				bullets.add(new Bullet(hehe.getX() + hehe.getWidth() - 24, hehe.getY() + 30, true));
+				bullets.add(new Bullet(redShip.getX() + redShip.getWidth() - 24, redShip.getY() + 30, true));
 				this.add(bullets.get(bullets.size() - 1));
 			}
 			//^^ Ship at top shooting bullets ^^
@@ -310,11 +398,11 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				en.update();
 			}
 
-			hehe.update();
+			redShip.update();
 
-			if (hehe.getX() < 147 || hehe.getX() + hehe.getWidth() > 470)
+			if (redShip.getX() < 147 || redShip.getX() + redShip.getWidth() > 470)
 			{
-				hehe.setDx(hehe.getDx() * -1);
+				redShip.setDx(redShip.getDx() * -1);
 			}
 
 			if (count % 20 == 0)
@@ -326,6 +414,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				squid2.change();
 				bob2.change();
 			}
+
 			/* ****************************************************************************************************
 			 * ^^ UPDATING BULLETS, SHIP, AND ENEMIES ^^
 			 * ****************************************************************************************************
@@ -445,24 +534,35 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	public void settingUp(int eDx)
 	{
+		if(count == 1)
+		{
+			for(int i = 0; i < highScoreDisplay.size(); i++)
+			{
+				this.remove(highScoreDisplay.get(i));
+			}
+			for(int i = 0; i < scoreDisplay.size(); i++)
+			{
+				this.remove(scoreDisplay.get(i));
+			}
+		}
 		player.setDx(0);
 		player.setLocation(280, 550);
 
 		int j = (count - 1) % 10;
-		
+
 		if (j == 0)
 		{
 			enemies.add(new ArrayList<Enemy>());
 		}
-		
-	
+
+
 		/* ****************************************************************************************************
 		 * vv PLACING EACH ENEMY ACCORDING TO COUNT vv
 		 * ****************************************************************************************************
 		 */
 		if (count > 40)
 		{
-			
+
 			Enemy pillo = new Enemy(54 * j + 45, 300, "Bob");
 			enemies.get(4).add(pillo);
 			this.add(pillo);
@@ -471,9 +571,9 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				settingUp = false;
 				nextLevel = false;
 				began = true;
-				this.add(hehe); /////////////////////////
-				hehe.setLocation(-125, 50);
-				hehe.setDx(0);
+				this.add(redShip); /////////////////////////
+				redShip.setLocation(-125, 50);
+				redShip.setDx(0);
 				this.add(health);
 
 				String str = "score:";
@@ -483,28 +583,28 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				{
 					Character c = new Character(10 + 20*i, 10, 3, str.charAt(i));
 					this.add(c);
-					
+
 				}
-				
+
 				for(int k = 0; k < 7; k++)
 				{
 					if(k < numZeros)
 					{
 						Character c = new Character(130 + 20*k, 10, 3, '0');
-						scoreDisplay.add(k, c);
+						scoreDisplay.set(k, c);
 					}
 					else
 					{
 						Character c = new Character(130 + 20*k, 10, 3, s.charAt(k - numZeros));
-						scoreDisplay.add(k, c);
+						scoreDisplay.set(k, c);
 					}			
 				}
-				
+
 				for(int k = 0; k < scoreDisplay.size(); k++)
 				{
 					this.add(scoreDisplay.get(k));
 				}
-					
+
 				String healthLabel = "hp ";
 				for(int i = 0; i < healthLabel.length(); i++)
 				{
@@ -527,10 +627,10 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 					this.add(o);
 					o.setVisible(false);
 				}
-				
-				
+
+
 				this.add(player);
-				
+
 				//Starts enemies going if left direction
 				for(ArrayList<Enemy> h : enemies)
 				{
@@ -580,27 +680,87 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 
 	public void again(int eFire)
 	{
-		if(hehe.getX() == -125)
+		for(int i = powerUps.size() - 1; i >= 0; i--)
 		{
-			if((total() <= 30 && total() > 10) && !flag)
+			powerUps.get(i).update();
+			if(powerUps.get(i).getY() + powerUps.get(i).getHeight() > this.getContentPane().getHeight())
 			{
-				hehe.setDx(5);
-			}
-			else if(total() <= 10 && flag)
-			{
-				hehe.setDx(5);
+				this.remove(powerUps.get(i));
+				powerUps.remove(i);
 			}
 		}
 
-		if(hehe.getX() > this.getContentPane().getWidth())
+		if(time == 0)
 		{
-			hehe.setDx(0);
-			hehe.setLocation(1500, 50);
+			frozen = false;
+			playerSpeed = 10;
+			fireSpeed = 3;
+
 		}
-		if(((total() <= 30 && total() > 10) && !flag && hehe.getX() == 1500) || (total() <= 10 && flag && hehe.getX() == 1500))
+		else 
+		{
+			time --;
+		}
+
+		if(!frozen)
+		{
+			for(int i = powerUps.size() - 1; i >= 0; i--)
+			{	
+				if(player.getBounds().intersects(powerUps.get(i).getBounds()))
+				{
+					frozen = false;
+					time = 150;
+					playerSpeed = 10;
+					fireSpeed = 3;
+					switch(powerUps.get(i).getType())
+					{
+					case "Med": 
+						health.reset();
+						this.remove(powerUps.get(i));
+						powerUps.remove(i);
+						break;
+					case "Freeze":
+						frozen = true;
+						this.remove(powerUps.get(i));
+						powerUps.remove(i);
+						break;
+					case "Fire Speed":
+						fireSpeed = 1;
+						this.remove(powerUps.get(i));
+						powerUps.remove(i);
+						break;
+					case "Player Speed":			
+						playerSpeed = 20;
+						this.remove(powerUps.get(i));
+						powerUps.remove(i);
+						break;
+					}
+				}
+
+			}
+		}
+
+		if(redShip.getX() == -125)
+		{
+			if((total() <= 30 && total() > 10) && !flag)
+			{
+				redShip.setDx(5);
+			}
+			else if(total() <= 10 && flag)
+			{
+				redShip.setDx(5);
+			}
+		}
+
+		if(redShip.getX() > this.getContentPane().getWidth())
+		{
+			redShip.setDx(0);
+			redShip.setLocation(1500, 50);
+		}
+		if(((total() <= 30 && total() > 10) && !flag && redShip.getX() == 1500) || (total() <= 10 && flag && redShip.getX() == 1500))
 		{
 			flag = !flag;
-			hehe.setLocation(-125, 50);
+			redShip.setLocation(-125, 50);
 		}
 
 		for(int i = 0; i < deaths.size(); i++)
@@ -609,27 +769,27 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			deaths.remove(i);
 			i--;
 		}
-		boolean hitOrNot = false;
+		boolean hit = false;
 		for(int i = bullets.size()-1; i >= 0; i--)
 		{
 			if(!bullets.get(i).isE())
 			{
 
-				if(hehe.getBounds().intersects(bullets.get(i).getBounds()))
+				if(redShip.getBounds().intersects(bullets.get(i).getBounds()))
 				{
-					deaths.add(new Enemy(hehe.getX(), hehe.getY(), "RedDead"));
+					deaths.add(new Enemy(redShip.getX(), redShip.getY(), "RedDead"));
 					this.add(deaths.get(deaths.size()-1));
-					hehe.setLocation(1500, 50);
+					redShip.setLocation(1500, 50);
 					this.remove(bullets.get(i));
-					hitOrNot = true;
+					hit = true;
 					score += 200; 				
 				}
 			}
 
-			if(hitOrNot)
+			if(hit)
 			{
 				bullets.remove(i);
-				hitOrNot = false;
+				hit = false;
 			}
 		}
 
@@ -672,7 +832,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 * ****************************************************************************************************
 		 */
 
-		hitOrNot = false;
+		hit = false;
 		for(int i = bullets.size()-1; i >= 0; i--)
 		{
 			if(!bullets.get(i).isE())
@@ -699,16 +859,26 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 							this.remove(enemies.get(h).get(j));
 							enemies.get(h).remove(j);
 							this.remove(bullets.get(i));
-							hitOrNot = true;
+							hit = true;
 							j--;	
 
 							deaths.add(new Enemy(en.getX(), en.getY(), "Dead"));
 							this.add(deaths.get(deaths.size() - 1));
+
+							if(!frozen)
+							{
+								if((int) (Math.random() * 15) == 0)
+								{
+									String s = types[(int) (Math.random() * 4)];
+									powerUps.add(new PowerUp(en.getX() + 13, en.getY(), s));
+									this.add(powerUps.get(powerUps.size() - 1));
+								}
+							}
 						}	
 					}
 				}
 			}
-			if(hitOrNot)
+			if(hit)
 			{
 				bullets.remove(i);
 				for(int k = 0; k < scoreDisplay.size(); k++)
@@ -738,7 +908,7 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 				{
 					this.add(scoreDisplay.get(k));
 				}
-				hitOrNot = false;
+				hit = false;
 			}
 		}
 
@@ -776,13 +946,16 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 			}
 		}
 
-		if(count % eFire == 0 &&  enemies.size() > 0)
+		if(!frozen)
 		{
-			int r = (int)(Math.random()*enemies.size());
-			int c = (int)(Math.random()*enemies.get(r).size());
-			Enemy pillo = enemies.get(r).get(c);
-			bullets.add(new Bullet(pillo.getX() + pillo.getWidth()/2, pillo.getY() + pillo.getHeight(), true));
-			this.add(bullets.get(bullets.size()-1));	
+			if(count % eFire == 0 &&  enemies.size() > 0)
+			{
+				int r = (int)(Math.random()*enemies.size());
+				int c = (int)(Math.random()*enemies.get(r).size());
+				Enemy pillo = enemies.get(r).get(c);
+				bullets.add(new Bullet(pillo.getX() + pillo.getWidth()/2, pillo.getY() + pillo.getHeight(), true));
+				this.add(bullets.get(bullets.size()-1));	
+			}
 		}
 
 
@@ -792,116 +965,142 @@ public class SpaceInvadersMain extends JFrame implements ActionListener
 		 * ****************************************************************************************************
 		 */
 
-
-		for (ArrayList<Enemy> arr : enemies)
+		if(!frozen)
 		{
-			for (Enemy enemy : arr)
+			for (ArrayList<Enemy> arr : enemies)
 			{
-				if(count % 2 == 0)
-				{
-					enemy.update();
-				}
-
-				if (count % 20 == 0)
-				{
-					enemy.change();
-				}
-				if(enemy.getY() + enemy.getHeight() > player.getY() || health.getHealth() <= 0 ) 
-				{
-					JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
-					System.exit(0);
-				}
-			}
-		}
-
-		for (int i = 0; i < bullets.size(); i++)
-		{
-			if (bullets.get(i).isE() && bullets.get(i).isTouching(player))
-			{
-				health.setHealth(health.getHealth() - 40);
-				this.remove(bullets.get(i));
-				bullets.remove(i);
-				i--;
-			}
-		}
-
-		hehe.update();
-
-
-		if(enemies.size() == 0)
-		{
-			repaint();
-			JOptionPane.showMessageDialog(this, "Level Complete", getTitle(), 1);
-			nextLevel = true;
-			began = false;
-			settingUp = true;
-			reset();
-			return;
-		}
-
-
-		if(left() < 0)
-		{
-			for(ArrayList<Enemy> h : enemies)
-			{
-				for(Enemy bruh : h)
+				for (Enemy enemy : arr)
 				{
 					if(count % 2 == 0)
 					{
-						bruh.setDx(bruh.getDx() * -1);
-						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+						enemy.update();
 					}
-				}
-			}
-		}
-		if(right() > this.getContentPane().getWidth())
-		{
-			for(ArrayList<Enemy> h : enemies)
-			{
-				for(Enemy bruh : h)
-				{
-					if(count % 2 == 0)
+
+					if (count % 20 == 0)
 					{
-						bruh.setDx(bruh.getDx() * -1);
-						bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+						enemy.change();
+					}
+					if(enemy.getY() + enemy.getHeight() > player.getY() || health.getHealth() <= 0 ) 
+					{
+						JOptionPane.showMessageDialog(this, "Game Over", getTitle(), 0);
+						try
+						{
+							PrintWriter pw = new PrintWriter(new FileWriter("HighScore.txt"));
+							if(score > highScore)
+							{
+								pw.println(score);
+							}
+							pw.flush();
+							pw.close();
+						}
+						catch(Exception e)
+						{
+							e.printStackTrace();
+						}
+						System.exit(0);
 					}
 				}
 			}
 		}
 
-
-		/* ****************************************************************************************************
-		 * ^^ UPDATING ENEMIES, GAME OVER IF ENEMY TOUCHES PLAYER ^^
-		 * ****************************************************************************************************
-		 */
-
-		/* ****************************************************************************************************
-		 * vv UPDATING BULLETS AND PLAYER POWER vv
-		 * ****************************************************************************************************
-		 */
-		for (Entity b : bullets)
-		{
-			b.update();
-		}
-
-		if (player.getPower() < 3)
-		{
-			fire++;
-			if (fire % 1 == 0)
+			for (int i = 0; i < bullets.size(); i++)
 			{
-				player.setPower(player.getPower() + 1);
+				if (bullets.get(i).isE() && bullets.get(i).isTouching(player))
+				{
+					health.setHealth(health.getHealth() - 40);
+					this.remove(bullets.get(i));
+					bullets.remove(i);
+					i--;
+				}
 			}
-		}
 
-		if (player.getPower() == 3)
-		{
-			fire = 0;
-		}
-		/* ****************************************************************************************************
-		 * ^^ UPDATING BULLETS AND PLAYER POWER ^^
-		 * ****************************************************************************************************
-		 */
+			if(!frozen)
+			{
+				redShip.update();
+			}
+
+			if(enemies.size() == 0)
+			{
+				repaint();
+				JOptionPane.showMessageDialog(this, "Level Complete", getTitle(), 1);
+				nextLevel = true;
+				began = false;
+				settingUp = true;
+				reset();
+				return;
+			}
+
+
+			if(left() < 0)
+			{
+				for(ArrayList<Enemy> h : enemies)
+				{
+					for(Enemy bruh : h)
+					{
+						if(count % 2 == 0)
+						{
+							bruh.setDx(bruh.getDx() * -1);
+							bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+						}
+					}
+				}
+			}
+			if(right() > this.getContentPane().getWidth())
+			{
+				for(ArrayList<Enemy> h : enemies)
+				{
+					for(Enemy bruh : h)
+					{
+						if(count % 2 == 0)
+						{
+							bruh.setDx(bruh.getDx() * -1);
+							bruh.setLocation(bruh.getX(), bruh.getY() + 20);
+						}
+					}
+				}
+			}
+
+
+			/* ****************************************************************************************************
+			 * ^^ UPDATING ENEMIES, GAME OVER IF ENEMY TOUCHES PLAYER ^^
+			 * ****************************************************************************************************
+			 */
+
+			/* ****************************************************************************************************
+			 * vv UPDATING BULLETS AND PLAYER POWER vv
+			 * ****************************************************************************************************
+			 */
+
+			for (Bullet b : bullets)
+			{
+				if((b.isE() && !frozen) || !b.isE()) 
+				{
+					b.update();
+				}
+			}
+
+			if (player.getPower() < 3)
+			{
+				fire++;
+				if (fire % fireSpeed == 0)
+				{
+					player.setPower(player.getPower() + 1);
+				}
+			}
+
+			if (player.getPower() == 3)
+			{
+				fire = 0;
+			}
+			/* ****************************************************************************************************
+			 * ^^ UPDATING BULLETS AND PLAYER POWER ^^
+			 * ****************************************************************************************************
+			 */
+
+		
+
 
 	}
 }
+
 

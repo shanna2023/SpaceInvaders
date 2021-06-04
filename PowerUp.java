@@ -11,9 +11,11 @@ public class PowerUp extends JComponent
 {
 	private Ellipse2D.Double circle;
 	private String type;
+	private int dy;
 	
 	public PowerUp(int x, int y, String type)
 	{
+		dy = 10;
 		this.setLocation(x, y);
 		this.type = type;
 		switch (type)
@@ -91,5 +93,19 @@ public class PowerUp extends JComponent
 			g2.drawLine(15, 10, 10, 15);
 			break;
 		}
+	}
+	
+	public void update()
+	{
+		setLocation(getX(), getY() + dy);
+	}
+	public String getType() 
+	{
+		return type;
+	}
+	
+	public void setType(String type) 
+	{
+		this.type = type;
 	}
 }
